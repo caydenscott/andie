@@ -11,6 +11,8 @@ import javax.imageio.*;
  * 
  * this is a change made by daniel
  * 
+ * this is a change made by cayden
+ * 
  * <p>
  * This class is the entry point for the program.
  * It creates a Graphical User Interface (GUI) that provides access to various image editing and processing operations.

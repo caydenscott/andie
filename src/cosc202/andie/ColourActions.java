@@ -35,6 +35,7 @@ public class ColourActions {
     public ColourActions() {
         actions = new ArrayList<Action>();
         actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new InvertImageAction("Invert", null, "Invert colours", Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**
@@ -95,6 +96,19 @@ public class ColourActions {
             target.getParent().revalidate();
         }
 
+    }
+
+    public class InvertImageAction extends ImageAction {
+
+        InvertImageAction(String name, ImageIcon icon, String desc, Integer mneumonic){
+            super(name, icon, desc, mneumonic);
+        }
+        
+        public void actionPerformed(ActionEvent e){
+            target.getImage().apply(new InvertImage());
+            target.repaint();
+            target.getParent().revalidate(); 
+        }
     }
 
 }

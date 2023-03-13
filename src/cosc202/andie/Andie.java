@@ -38,6 +38,7 @@ public class Andie {
      * These operations are implemented {@link ImageOperation}s and triggerd via 
      * {@code ImageAction}s grouped by their general purpose into menus.
      * </p>
+     * timothy
      * 
      * @see ImagePanel
      * @see ImageAction

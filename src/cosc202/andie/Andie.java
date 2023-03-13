@@ -9,6 +9,8 @@ import javax.imageio.*;
  * Main class for A Non-Destructive Image Editor (ANDIE).
  * </p>
  * 
+ * this is a change made by daniel
+ * 
  * <p>
  * This class is the entry point for the program.
  * It creates a Graphical User Interface (GUI) that provides access to various image editing and processing operations.

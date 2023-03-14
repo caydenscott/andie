@@ -33,7 +33,7 @@ public class InvertImage implements ImageOperation, java.io.Serializable{
 
                 r = 255 - r;
                 g = 255 - g;
-                b = 255 - g; 
+                b = 255 - b; 
 
                 argb =  (a << 24) | (r << 16) | (g << 8) | b;
                 input.setRGB(x, y, argb);

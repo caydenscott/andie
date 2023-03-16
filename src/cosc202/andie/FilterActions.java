@@ -37,6 +37,7 @@ public class FilterActions {
         actions.add(new MeanFilterAction("Mean filter", null, "Apply a mean filter", Integer.valueOf(KeyEvent.VK_M)));
         actions.add(new SoftBlurAction("Soft blur", null, "Apply a soft blur", Integer.valueOf(KeyEvent.VK_B)));
         actions.add(new SharpenImageAction("Sharpen image", null, "Apply a sharpening filter", Integer.valueOf(KeyEvent.VK_B)));
+        actions.add(new GaussianFilterAction("Gaussian Filter", null, "Apply a gaussianmg filter", Integer.valueOf(KeyEvent.VK_B)));
     }
 
     /**
@@ -144,5 +145,46 @@ public class FilterActions {
         target.repaint();
         target.getParent().revalidate();
         }
+    }
+
+    public class GaussianFilterAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a new gaussian filter action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        GaussianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+
+            // Determine the radius - ask the user.
+            int radius = 1;
+
+            // Pop-up dialog box to ask for the radius value.
+            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 50, 1);
+            JSpinner radiusSpinner = new JSpinner(radiusModel);
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (option == JOptionPane.OK_OPTION) {
+                radius = radiusModel.getNumber().intValue();
+            }
+
+            // Create and apply the filter
+            target.getImage().apply(new GaussianFilter(radius));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
     }
 }

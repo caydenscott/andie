@@ -36,6 +36,7 @@ public class ColourActions {
         actions = new ArrayList<Action>();
         actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
         actions.add(new InvertImageAction("Invert", null, "Invert colours", Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new BrightnessAndContrastAction("Brightness and Contrast",null, "Apply Brightness and Contrast", Integer.valueOf(KeyEvent.VK_B)));
     }
 
     /**
@@ -109,6 +110,25 @@ public class ColourActions {
             target.repaint();
             target.getParent().revalidate(); 
         }
+    }
+
+    public class BrightnessAndContrastAction extends ImageAction{
+
+        BrightnessAndContrastAction(String name, ImageIcon Icon, String desc, Integer mneumonic){
+            super(name, Icon, desc, mneumonic);
+        }
+
+        public void actionPerformed(ActionEvent e){
+            int brightness = 50;
+            int contrast = 50;
+
+            //i need to still add pop up box to ask for two inputs in UI, using fixed values here for testing
+
+            target.getInteger().apply(new BrightnessAndContrast(brightness, contrast));
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
     }
 
 }

@@ -231,8 +231,32 @@ class EditableImage {
      * </p>
      */
     public void undo() {
+        // check if there is something to undo first
+        if (!isUndoable()) {
+            return;
+        }
+        
         redoOps.push(ops.pop());
+        
         refresh();
+    }
+
+    /**
+     * <p>
+     * Checks if there are any {@link ImageOperation} to undo.
+     * @return if there is something in the stack to undo.
+     */
+    private boolean isUndoable() {
+        return ops.size() > 0;
+    }
+
+    /**
+     * <p>
+     * Checks if there are any {@link ImageOperation} to redo.
+     * @return if there is something in the stack to redo.
+     */
+    private boolean isRedoable() {
+        return redoOps.size() > 0;
     }
 
     /**
@@ -241,6 +265,10 @@ class EditableImage {
      * </p>
      */
     public void redo()  {
+        // only redo the last operation if there is something to redo
+        if (!isRedoable()) {
+            return;
+        }
         apply(redoOps.pop());
     }
 

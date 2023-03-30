@@ -1,6 +1,5 @@
 package cosc202.andie;
 
-import java.awt.Graphics2D;
 import java.awt.image.*;
 import java.util.*;
 
@@ -50,61 +49,58 @@ public class MedianFilter implements ImageOperation, java.io.Serializable {
      * @return The resulting (blurred) image.
      */
     public BufferedImage apply(BufferedImage input) {
-        int height = input.getHeight();
-        int width = input.getWidth();
-        
-        /**
-         * had issues with black chunk being cut off at bottom of image. to fix, i added padding pixels around the outside
-         * of the image, such that they would get cut off instead. then just crop the image back to its original size. 
-         * a padding amout of 1 has shown to be sufficient.
-         */
+        int size = 2*radius+1; //calculates size of filter
+        BufferedImage output = new BufferedImage(input.getColorModel(), input.copyData(null), input.isAlphaPremultiplied(), null);//creates new image with same charateristics as original to serve as output 
 
-        // Choose how many extra pixels to add around the edges
-        int padAmount = 1;
-        
-        // Create a new image with padding around the edges
-        BufferedImage padding = new BufferedImage(width + padAmount * 2, height + padAmount * 2, input.getType());
-        Graphics2D g = padding.createGraphics();
-        g.drawImage(input, padAmount, padAmount, null);
-        g.dispose();
-        
-        // Get the pixels of the padded image
-        int[] pixels = padding.getRGB(0, 0, width + padAmount * 2, height + padAmount * 2, null, 0, width + padAmount * 2);
-        int[] neighbourhood;
-        
-        // Create a new output image with padding around the edges
-        BufferedImage output = new BufferedImage(width + padAmount * 2, height + padAmount * 2, input.getType());
-        int[] pixelsOutput = output.getRGB(0, 0, width + padAmount * 2, height + padAmount * 2, null, 0, width + padAmount * 2);
-        
-        // Loop through each pixel in the input image
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int startX = Math.max(x - radius, 0);
-                int endX = Math.min(x + radius, width - 1);
-                int startY = Math.max(y - radius, 0);
-                int endY = Math.min(y + radius, height - 1);
-                
-                // Create a neighbourhood array of pixel values
-                neighbourhood = new int[(endX - startX + 1) * (endY - startY + 1)];
+        //loops over every pixel in the input image
+        for (int y = 0; y < input.getHeight(); ++y) {
+            for (int x = 0; x < input.getWidth(); ++x) {
+                //create arrays to store the rgb values of the pixels
+                int[] r = new int[size*size];
+                int[] g = new int[size*size];
+                int[] b = new int[size*size];
                 int index = 0;
-                for (int i = startY; i <= endY; i++) {
-                    for (int j = startX; j <= endX; j++) {
-                        int pixel = pixels[j + i * (width + padAmount * 2)];
-                        neighbourhood[index] = pixel;
-                        index++;
+                //loops over every pixel
+                for(int i = -radius; i <= radius; i++){
+                    for(int j = -radius; j <= radius; j++){
+                        int pixelX = x + j;
+                        int pixelY = y + i;
+                        //ensures pixel is inside input image, then gets rgb values and stores them
+                        if (pixelX >= 0 && pixelX < input.getWidth() && pixelY >= 0 && pixelY < input.getHeight()) {
+                            int argb = input.getRGB(pixelX, pixelY);
+                            r[index] = (argb & 0x00FF0000) >> 16;
+                            g[index] = (argb & 0x0000FF00) >> 8;
+                            b[index] = (argb & 0x000000FF);
+                            index++;
+                            
+                        }
                     }
                 }
+                //sorts arrays, and then gets median values
+                Arrays.sort(r, 0, index);
+                Arrays.sort(g, 0, index);
+                Arrays.sort(b, 0, index);
+                int rMedian = 0;
+                int gMedian = 0;
+                int bMedian = 0;
+                if(index % 2 == 0){
+                    rMedian = r[index / 2];
+                    gMedian = g[index / 2];
+                    bMedian = b[index / 2];
+                }else{
+                    rMedian = r[(index - 1)/ 2];
+                    gMedian = g[(index - 1)/ 2];
+                    bMedian = b[(index - 1)/ 2];
+                }
                 
-                // Sort the neighbourhood array and set the pixel value in the output image
-                Arrays.sort(neighbourhood);
-                pixelsOutput[(y + padAmount) * (width + padAmount * 2) + x + padAmount] = neighbourhood[neighbourhood.length / 2];
+                //combines rgb values into single argb value, sets these values to output
+                int argb = (input.getRGB(x, y) & 0xFF000000) | (rMedian << 16) | (gMedian << 8) | bMedian;
+                output.setRGB(x, y, argb);
             }
         }
         
-        // Set the pixels of the output image and crop the padded edges
-        output.setRGB(0, 0, width + padAmount * 2, height + padAmount * 2, pixelsOutput, 0, width + padAmount * 2);
-        BufferedImage croppedOutput = output.getSubimage(padAmount, padAmount, width, height);
-        return croppedOutput;
+        
+        return output;
     }
 
 }

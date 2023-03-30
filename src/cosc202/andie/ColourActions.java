@@ -3,6 +3,7 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.BoundedRangeModel;
 
 /**
  * <p>
@@ -119,12 +120,24 @@ public class ColourActions {
         }
 
         public void actionPerformed(ActionEvent e){
-            int brightness = 50;
-            int contrast = 50;
+            int brightness = 0;
+            int contrast = 0;
 
             //i need to still add pop up box to ask for two inputs in UI, using fixed values here for testing
 
-            target.getInteger().apply(new BrightnessAndContrast(brightness, contrast));
+            BoundedRangeModel radiusModel =  new DefaultBoundedRangeModel();
+            JSlider radiusSpinner = new JSlider(radiusModel);
+            
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (option == JOptionPane.OK_OPTION) {
+                brightness = radiusModel.getValue();
+            }
+
+            target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
             target.repaint();
             target.getParent().revalidate();
         }

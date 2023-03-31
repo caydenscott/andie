@@ -213,6 +213,33 @@ class EditableImage {
         save();
     }
 
+
+    /**
+     * <p>
+     * Export the image to a speficied file.
+     * </p>
+     * 
+     * <p>
+     * Export the image to the file provided as a parameter.
+     * At the moment, only can 
+     * </p>
+     * 
+     * @param imageFilename The file location to save the image to.
+     * @throws Exception If something goes wrong.
+     */
+
+    public void export(String imageFilename) throws Exception {
+        /** 
+         * The commented out code below should determine the image's format and save 
+         * it to the new path, but it seems not work on my computer, so gonna test it 
+         * in somewhere else to check?
+        */
+        //String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
+        //ImageIO.write(current, extension, new File(imageFilename));
+        this.imageFilename = imageFilename;
+        ImageIO.write(current, "png", new File(imageFilename));
+    }
+
     /**
      * <p>
      * Apply an {@link ImageOperation} to this image.

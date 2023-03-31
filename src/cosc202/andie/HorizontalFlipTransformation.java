@@ -1,6 +1,5 @@
 package cosc202.andie;
 
-import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 
 /**

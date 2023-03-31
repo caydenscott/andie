@@ -221,7 +221,6 @@ class EditableImage {
      * 
      * <p>
      * Export the image to the file provided as a parameter.
-     * At the moment, only can 
      * </p>
      * 
      * @param imageFilename The file location to save the image to.

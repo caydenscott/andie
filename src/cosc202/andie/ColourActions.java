@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -26,6 +27,7 @@ public class ColourActions {
     
     /** A list of actions for the Colour menu. */
     protected ArrayList<Action> actions;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
     /**
      * <p>
@@ -34,8 +36,10 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
-        actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new InvertImageAction("Invert", null, "Invert colours", Integer.valueOf(KeyEvent.VK_G)));
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        actions.add(new ConvertToGreyAction(bundle.getString("colour_1"), null, bundle.getString("colour_1_desc"), Integer.valueOf(KeyEvent.VK_C)));
+        actions.add(new InvertImageAction(bundle.getString("colour_2"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_I)));
     }
 
     /**
@@ -46,13 +50,14 @@ public class ColourActions {
      * @return The colour menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("Colour");
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        JMenu colourMenu = new JMenu(bundle.getString("colour_tt"));
 
         for(Action action: actions) {
-            fileMenu.add(new JMenuItem(action));
+            colourMenu.add(new JMenuItem(action));
         }
 
-        return fileMenu;
+        return colourMenu;
     }
 
     /**

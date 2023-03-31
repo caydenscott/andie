@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -26,6 +27,7 @@ public class FileActions {
     
     /** A list of actions for the File menu. */
     protected ArrayList<Action> actions;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
     /**
      * <p>
@@ -33,12 +35,14 @@ public class FileActions {
      * </p>
      */
     public FileActions() {
-        actions = new ArrayList<Action>();
-        actions.add(new FileOpenAction("Open", null, "Open a file", Integer.valueOf(KeyEvent.VK_O)));
-        actions.add(new FileSaveAction("Save", null, "Save the file", Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new FileSaveAsAction("Save As", null, "Save a copy", Integer.valueOf(KeyEvent.VK_A)));
-        actions.add(new FileExportAction("Export", null, "Export the image", Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new FileExitAction("Exit", null, "Exit the program", Integer.valueOf(0)));
+        actions = new ArrayList<Action>(); 
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+        actions.add(new FileOpenAction(bundle.getString("file_1"), null, bundle.getString("file_1_desc"), Integer.valueOf(KeyEvent.VK_O)));
+        actions.add(new FileSaveAction(bundle.getString("file_2"), null, bundle.getString("file_2_desc"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new FileSaveAsAction(bundle.getString("file_3"), null, bundle.getString("file_3_desc"), Integer.valueOf(KeyEvent.VK_A)));
+        actions.add(new FileExportAction(bundle.getString("file_4"), null, bundle.getString("file_4_desc"), Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new FileExitAction(bundle.getString("file_5"), null, bundle.getString("file_5_desc"), Integer.valueOf(0)));
     }
 
     /**
@@ -49,7 +53,8 @@ public class FileActions {
      * @return The File menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("File");
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        JMenu fileMenu = new JMenu(bundle.getString("file_tt"));
 
         for(Action action: actions) {
             fileMenu.add(new JMenuItem(action));
@@ -233,12 +238,12 @@ public class FileActions {
 
         /**
          * <p>
-         * Callback for when the file-save-as action is triggered.
+         * Callback for when the file-export action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the FileSaveAsAction is triggered.
-         * It prompts the user to select a file and saves the image to it.
+         * This method is called whenever the FileExportAction is triggered.
+         * It prompts the user to select a file and export the image to it.
          * </p>
          * 
          * @param e The event triggering this callback.

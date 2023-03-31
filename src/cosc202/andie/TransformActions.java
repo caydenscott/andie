@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -26,6 +27,7 @@ import javax.swing.*;
 public class TransformActions {
     /** A list of actions for the Translate menu. */
     protected ArrayList<Action> actions;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
     /**
      * <p>
@@ -33,12 +35,14 @@ public class TransformActions {
      * </p>
      */
     public TransformActions() {
-        actions = new ArrayList<Action>();
-        actions.add(new ResizeTransformationAction("Resize", null, "Scale the image", Integer.valueOf(KeyEvent.VK_R)));
-        actions.add(new ClockwiseRotateTransformationAction("Rotate (clockwise)", null, "Rotate the image clockwise onto its side", Integer.valueOf(KeyEvent.VK_R)));
-        actions.add(new AnticlockwiseRotateTransformationAction("Rotate (anticlockwise)", null, "Rotate the image anticlockwise onto its side", Integer.valueOf(KeyEvent.VK_R)));
-        actions.add(new HorizontalFlipTransformationAction("Horizontal Flip", null, "Flip the image horizontally", Integer.valueOf(KeyEvent.VK_R)));
-        actions.add(new VerticalFlipTransformationAction("Vertical Flip", null, "Flip the image vertically", Integer.valueOf(KeyEvent.VK_R)));
+        actions = new ArrayList<Action>(); 
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+        actions.add(new ResizeTransformationAction(bundle.getString("transform_1"), null, bundle.getString("transform_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
+        actions.add(new ClockwiseRotateTransformationAction(bundle.getString("transform_2"), null, bundle.getString("transform_2_desc"), Integer.valueOf(KeyEvent.VK_C)));
+        actions.add(new AnticlockwiseRotateTransformationAction(bundle.getString("transform_3"), null, bundle.getString("transform_3_desc"), Integer.valueOf(KeyEvent.VK_A)));
+        actions.add(new HorizontalFlipTransformationAction(bundle.getString("transform_4"), null, bundle.getString("transform_4_desc"), Integer.valueOf(KeyEvent.VK_H)));
+        actions.add(new VerticalFlipTransformationAction(bundle.getString("transform_5"), null, bundle.getString("transform_5_desc"), Integer.valueOf(KeyEvent.VK_V)));
     }
 
     /**
@@ -49,13 +53,14 @@ public class TransformActions {
      * @return The transform menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("Transform");
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        JMenu transformMenu = new JMenu(bundle.getString("transform_tt"));
 
         for(Action action: actions) {
-            fileMenu.add(new JMenuItem(action));
+            transformMenu.add(new JMenuItem(action));
         }
 
-        return fileMenu;
+        return transformMenu;
     }
 
     // --- action classes ---

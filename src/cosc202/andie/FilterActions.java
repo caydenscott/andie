@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -26,6 +27,7 @@ public class FilterActions {
     
     /** A list of actions for the Filter menu. */
     protected ArrayList<Action> actions;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
     /**
      * <p>
@@ -33,12 +35,14 @@ public class FilterActions {
      * </p>
      */
     public FilterActions() {
-        actions = new ArrayList<Action>();
-        actions.add(new MeanFilterAction("Mean filter", null, "Apply a mean filter", Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new SoftBlurAction("Soft blur", null, "Apply a soft blur", Integer.valueOf(KeyEvent.VK_B)));
-        actions.add(new SharpenImageAction("Sharpen image", null, "Apply a sharpening filter", Integer.valueOf(KeyEvent.VK_B)));
-        actions.add(new GaussianFilterAction("Gaussian Filter", null, "Apply a gaussian filter", Integer.valueOf(KeyEvent.VK_B)));
-        actions.add(new MedianFilterAction("Median Filter", null, "Apply a median filter", Integer.valueOf(KeyEvent.VK_B)));
+        actions = new ArrayList<Action>(); 
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+        actions.add(new MeanFilterAction(bundle.getString("filter_1"), null, bundle.getString("filter_1_desc"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new SoftBlurAction(bundle.getString("filter_2"), null, bundle.getString("filter_2_desc"), Integer.valueOf(KeyEvent.VK_B)));
+        actions.add(new SharpenImageAction(bundle.getString("filter_3"), null, bundle.getString("filter_3_desc"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new GaussianFilterAction(bundle.getString("filter_4"), null, bundle.getString("filter_4_desc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new MedianFilterAction(bundle.getString("filter_5"), null, bundle.getString("filter_5_desc"), Integer.valueOf(KeyEvent.VK_F)));
     }
 
     /**
@@ -49,13 +53,14 @@ public class FilterActions {
      * @return The filter menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("Filter");
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        JMenu filterMenu = new JMenu(bundle.getString("filter_tt"));
 
         for(Action action: actions) {
-            fileMenu.add(new JMenuItem(action));
+            filterMenu.add(new JMenuItem(action));
         }
 
-        return fileMenu;
+        return filterMenu;
     }
 
     /**

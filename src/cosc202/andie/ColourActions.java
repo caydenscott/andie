@@ -125,16 +125,37 @@ public class ColourActions {
 
             //i need to still add pop up box to ask for two inputs in UI, using fixed values here for testing
 
-            BoundedRangeModel radiusModel =  new DefaultBoundedRangeModel();
-            JSlider radiusSpinner = new JSlider(radiusModel);
-            
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            BoundedRangeModel brightnessModel =  new DefaultBoundedRangeModel();
+            BoundedRangeModel contrastModel =  new DefaultBoundedRangeModel();
+            JSlider brightnessSlider = new JSlider(-100, 100, 0);
+            brightnessSlider.setModel(brightnessModel);
+            JSlider contrastSlider = new JSlider(-100, 100, 0);
+            contrastSlider.setModel(contrastModel);
+
+            brightnessSlider.setMajorTickSpacing(50);
+            brightnessSlider.setMinorTickSpacing(50);
+            brightnessSlider.setPaintTicks(true);
+            brightnessSlider.setPaintLabels(true);
+
+            contrastSlider.setMajorTickSpacing(50);
+            contrastSlider.setMinorTickSpacing(50);
+            contrastSlider.setPaintTicks(true);
+            contrastSlider.setPaintLabels(true);
+
+
+            Object[] message = {
+                ("brightnesslabel"), brightnessSlider,
+                ("contrastlabel"), contrastSlider
+            };
+
+            int option = JOptionPane.showOptionDialog(null, message, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
-                brightness = radiusModel.getValue();
+                brightness = brightnessModel.getValue();
+                contrast = contrastModel.getValue();
             }
 
             target.getImage().apply(new BrightnessAndContrast(brightness, contrast));

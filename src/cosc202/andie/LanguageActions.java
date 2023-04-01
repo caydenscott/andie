@@ -5,6 +5,17 @@ import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * <p>
+ * Actions provided by the Language menu.
+ * </p>
+ * 
+ * <p>
+ * The Language menu contains actions that change program's output language.
+ * So far it contains English(New Zealand), Maori and Italian(Italy), and more 
+ * language can be added.
+ * </p>
+ */
 public class LanguageActions {
     protected ArrayList<Action> actions;
     protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);

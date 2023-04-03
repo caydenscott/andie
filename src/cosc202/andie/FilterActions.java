@@ -114,7 +114,7 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius",
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
@@ -131,7 +131,7 @@ public class FilterActions {
                 target.getParent().revalidate();
             } catch (NullPointerException NPEx) {
                 Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("filter_error_2"),
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
                         bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, options, options[0]);
             }
@@ -154,7 +154,7 @@ public class FilterActions {
                 target.getParent().revalidate();
             } catch (NullPointerException NPEx) {
                 Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("filter_error_2"),
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
                         bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, options, options[0]);
             }
@@ -176,7 +176,7 @@ public class FilterActions {
                 target.getParent().revalidate();
             } catch (NullPointerException NPEx) {
                 Object[] options = { "OK" };
-            JOptionPane.showOptionDialog(null, bundle.getString("filter_error_2"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
         }
     }
@@ -205,7 +205,7 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 50, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius",
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
@@ -222,7 +222,7 @@ public class FilterActions {
                 target.getParent().revalidate();
             } catch (NullPointerException NPEx) {
                 Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("filter_error_2"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
         }
 
@@ -272,7 +272,7 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius",
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
@@ -289,7 +289,7 @@ public class FilterActions {
                 target.getParent().revalidate();
             } catch (NullPointerException NPEx) {
                 Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("filter_error_2"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
 
         }

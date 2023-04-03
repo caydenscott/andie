@@ -115,10 +115,16 @@ public class TransformActions {
             } else if (option == JOptionPane.OK_OPTION) {
                 scale = resizeModel.getNumber().intValue();
             }
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new ResizeTransformation(scale));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("transform_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-            target.getImage().apply(new ResizeTransformation(scale));
-            target.repaint();
-            target.getParent().revalidate();
+            }
         }
 
     }
@@ -160,10 +166,16 @@ public class TransformActions {
          */
         public void actionPerformed(ActionEvent e) {
             // rotate the image 90 degrees clockwise
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new RotateTransformation(RotateTransformation.ROTATECLOCKWISE));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("transform_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-            target.getImage().apply(new RotateTransformation(RotateTransformation.ROTATECLOCKWISE));
-            target.repaint();
-            target.getParent().revalidate();
+            }
         }
 
     }
@@ -205,10 +217,16 @@ public class TransformActions {
          */
         public void actionPerformed(ActionEvent e) {
             // rotate the image 90 degrees anticlockwise
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new RotateTransformation(RotateTransformation.ROTATEANTICLOCKWISE));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("transform_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-            target.getImage().apply(new RotateTransformation(RotateTransformation.ROTATEANTICLOCKWISE));
-            target.repaint();
-            target.getParent().revalidate();
+            }
         }
 
     }
@@ -249,10 +267,16 @@ public class TransformActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new HorizontalFlipTransformation());
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("transform_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-            target.getImage().apply(new HorizontalFlipTransformation());
-            target.repaint();
-            target.getParent().revalidate();
+            }
         }
 
     }
@@ -293,10 +317,16 @@ public class TransformActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new VerticalFlipTransformation());
+                target.repaint();
+                target.getParent().revalidate();
+            } catch (NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("transform_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-            target.getImage().apply(new VerticalFlipTransformation());
-            target.repaint();
-            target.getParent().revalidate();
+            }
         }
 
     }

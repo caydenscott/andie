@@ -96,9 +96,16 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            target.getImage().apply(new ConvertToGrey());
-            target.repaint();
-            target.getParent().revalidate();
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new ConvertToGrey());
+                target.repaint();
+                target.getParent().revalidate();
+            } catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+            }
         }
 
     }
@@ -110,9 +117,16 @@ public class ColourActions {
         }
         
         public void actionPerformed(ActionEvent e){
-            target.getImage().apply(new InvertImage());
-            target.repaint();
-            target.getParent().revalidate(); 
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new InvertImage());
+                target.repaint();
+                target.getParent().revalidate(); 
+            }catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+            }
         }
     }
 

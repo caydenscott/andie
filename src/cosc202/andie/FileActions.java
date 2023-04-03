@@ -106,8 +106,12 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().open(imageFilepath);
-                } catch (Exception ex) {
-                    System.exit(1);
+                } catch(NullPointerException nEx){
+                    Object[] options = { "OK" };
+                    JOptionPane.showOptionDialog(null, "Unable to open file. Must be an image file.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                }catch (Exception ex) {
+                    Object[] options = { "OK" };
+                    JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
 
@@ -154,9 +158,14 @@ public class FileActions {
          */
         public void actionPerformed(ActionEvent e) {
             try {
-                target.getImage().save();           
+                target.getImage().save();    
+            }catch(NullPointerException nEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, "Unable to save, you must first open a file", "File unable to save", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             } catch (Exception ex) {
-                System.exit(1);
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            
             }
         }
 
@@ -205,8 +214,12 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().saveAs(imageFilepath);
+                }catch(NullPointerException nEx){
+                        Object[] options = { "OK" };
+                        JOptionPane.showOptionDialog(null, "Unable to save, you must first open a file", "File unable to save", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]); 
                 } catch (Exception ex) {
-                    System.exit(1);
+                    Object[] options = { "OK" };
+                    JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
         }
@@ -257,8 +270,12 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().export(imageFilepath);
+                }catch (IllegalArgumentException iAEx){
+                    Object[] options = { "OK" };
+                    JOptionPane.showOptionDialog(null, "No file is open, please first open a file.", "Unable to export", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }catch (Exception ex) {
-                    System.exit(1);
+                    Object[] options = { "OK" };
+                    JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
         }

@@ -99,6 +99,7 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             JFileChooser fileChooser = new JFileChooser();
             int result = fileChooser.showOpenDialog(target);
 
@@ -108,10 +109,10 @@ public class FileActions {
                     target.getImage().open(imageFilepath);
                 } catch(NullPointerException nEx){
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, "Unable to open file. Must be an image file.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_2"), bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }catch (Exception ex) {
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
 
@@ -157,14 +158,15 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             try {
                 target.getImage().save();    
             }catch(NullPointerException nEx){
                 Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, "Unable to save, you must first open a file", "File unable to save", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                JOptionPane.showOptionDialog(null, bundle.getString("file_save_error_2"), bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             } catch (Exception ex) {
                 Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             
             }
         }
@@ -207,6 +209,7 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             JFileChooser fileChooser = new JFileChooser();
             int result = fileChooser.showSaveDialog(target);
 
@@ -216,10 +219,10 @@ public class FileActions {
                     target.getImage().saveAs(imageFilepath);
                 }catch(NullPointerException nEx){
                         Object[] options = { "OK" };
-                        JOptionPane.showOptionDialog(null, "Unable to save, you must first open a file", "File unable to save", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]); 
+                        JOptionPane.showOptionDialog(null, bundle.getString("file_save_error_2"), bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]); 
                 } catch (Exception ex) {
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
         }
@@ -263,6 +266,7 @@ public class FileActions {
          */
 
         public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             JFileChooser fileChooser = new JFileChooser();
             int result = fileChooser.showSaveDialog(target);
 
@@ -272,10 +276,10 @@ public class FileActions {
                     target.getImage().export(imageFilepath);
                 }catch (IllegalArgumentException iAEx){
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, "No file is open, please first open a file.", "Unable to export", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("file_export_error_2"), bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }catch (Exception ex) {
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, "An unknown error has occured:   " + ex, "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
         }

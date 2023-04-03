@@ -112,7 +112,7 @@ public class FileActions {
                     JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_2"), bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }catch (Exception ex) {
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ex, bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
 
@@ -161,12 +161,12 @@ public class FileActions {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             try {
                 target.getImage().save();    
-            }catch(NullPointerException nEx){
+            }catch(NullPointerException NEx){
                 Object[] options = { "OK" };
                 JOptionPane.showOptionDialog(null, bundle.getString("file_save_error_2"), bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             } catch (Exception ex) {
                 Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ex, bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             
             }
         }
@@ -217,12 +217,12 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().saveAs(imageFilepath);
-                }catch(NullPointerException nEx){
+                }catch(IllegalArgumentException IAEx){
                         Object[] options = { "OK" };
                         JOptionPane.showOptionDialog(null, bundle.getString("file_save_error_2"), bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]); 
                 } catch (Exception ex) {
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ex, bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
         }
@@ -279,7 +279,7 @@ public class FileActions {
                     JOptionPane.showOptionDialog(null, bundle.getString("file_export_error_2"), bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }catch (Exception ex) {
                     Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, bundle.getString("unknown_error_2") + ex, bundle.getString("unknown_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ex, bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 }
             }
         }

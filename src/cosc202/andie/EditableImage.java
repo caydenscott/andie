@@ -228,13 +228,6 @@ class EditableImage {
      */
 
     public void export(String imageFilename) throws Exception {
-        /** 
-         * The commented out code below should determine the image's format and save 
-         * it to the new path, but it seems not work on my computer, so gonna test it 
-         * in somewhere else to check?
-        */
-        //String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
-        //ImageIO.write(current, extension, new File(imageFilename));
         this.imageFilename = imageFilename;
         ImageIO.write(current, "png", new File(imageFilename));
     }

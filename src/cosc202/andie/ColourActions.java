@@ -125,11 +125,11 @@ public class ColourActions {
 
             //i need to still add pop up box to ask for two inputs in UI, using fixed values here for testing
 
-            BoundedRangeModel brightnessModel =  new DefaultBoundedRangeModel();
-            BoundedRangeModel contrastModel =  new DefaultBoundedRangeModel();
-            JSlider brightnessSlider = new JSlider(-100, 100, 0);
+            BoundedRangeModel brightnessModel =  new DefaultBoundedRangeModel(0, 0, -100, 100);
+            BoundedRangeModel contrastModel =  new DefaultBoundedRangeModel(0, 0, -100, 100);
+            JSlider brightnessSlider = new JSlider(0, 200, 200);
             brightnessSlider.setModel(brightnessModel);
-            JSlider contrastSlider = new JSlider(-100, 100, 0);
+            JSlider contrastSlider = new JSlider(0, 200, 200);
             contrastSlider.setModel(contrastModel);
 
             brightnessSlider.setMajorTickSpacing(50);
@@ -144,11 +144,11 @@ public class ColourActions {
 
 
             Object[] message = {
-                ("brightnesslabel"), brightnessSlider,
-                ("contrastlabel"), contrastSlider
+                ("brightness"), brightnessSlider,
+                ("contrast"), contrastSlider
             };
 
-            int option = JOptionPane.showOptionDialog(null, message, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = JOptionPane.showOptionDialog(null, message, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 50);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
@@ -161,6 +161,7 @@ public class ColourActions {
             target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
             target.repaint();
             target.getParent().revalidate();
+            
         }
 
     }

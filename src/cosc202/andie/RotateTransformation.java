@@ -76,7 +76,7 @@ public class RotateTransformation implements ImageOperation, java.io.Serializabl
         // can't do in memory manipulation, as the size changes so need to make a new output image
         // Therefore need to make new buffered image to output to, scaling heigh and width appropriately and
         // using the current image type.
-        BufferedImage output = new BufferedImage(nWidth, nHeight, input.getType());
+        BufferedImage output = new BufferedImage(nWidth, nHeight, BufferedImage.TYPE_INT_ARGB);
 
         
 

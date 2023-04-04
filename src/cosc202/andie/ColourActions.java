@@ -125,7 +125,6 @@ public class ColourActions {
             }catch(NullPointerException NPEx){
                 Object[] options = { "OK" };
                 JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-
             }
         }
     }

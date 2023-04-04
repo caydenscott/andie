@@ -53,8 +53,8 @@ public class ResizeTransformation implements ImageOperation, java.io.Serializabl
       * @return resulting scaled image
       */
 
-      public BufferedImage apply(BufferedImage input) {
-
+      public BufferedImage apply(BufferedImage input) throws NegativeArraySizeException{
+        try{
         // get scale in double whereby 100%
         float s = (float)scale/100.0f;
 
@@ -64,6 +64,7 @@ public class ResizeTransformation implements ImageOperation, java.io.Serializabl
         BufferedImage output = new BufferedImage((int)(input.getWidth()*s), (int)(input.getHeight()*s), input.getType());
 
         // set affine transform matrix to resize by scale
+        
         AffineTransform transform = new AffineTransform(new float[] {s, 0.0f, 0.0f, s, 0.0f, 0.0f});
 
         
@@ -72,7 +73,11 @@ public class ResizeTransformation implements ImageOperation, java.io.Serializabl
         AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC);
 
         transformOp.filter(input, output);
-
         return output;
+        }catch(NegativeArraySizeException NASEx){
+          throw NASEx;
+        }
+
+        
       }
 }

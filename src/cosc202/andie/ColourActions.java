@@ -37,16 +37,17 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
-<<<<<<< HEAD
-        actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new InvertImageAction("Invert", null, "Invert colours", Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new BrightnessAndContrastAction("Brightness and Contrast",null, "Apply Brightness and Contrast", Integer.valueOf(KeyEvent.VK_B)));
-=======
+
+        //actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
+        //actions.add(new InvertImageAction("Invert", null, "Invert colours", Integer.valueOf(KeyEvent.VK_G)));
+        //actions.add(new BrightnessAndContrastAction("Brightness and Contrast",null, "Apply Brightness and Contrast", Integer.valueOf(KeyEvent.VK_B)));
+
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
         actions.add(new ConvertToGreyAction(bundle.getString("colour_1"), null, bundle.getString("colour_1_desc"), Integer.valueOf(KeyEvent.VK_C)));
         actions.add(new InvertImageAction(bundle.getString("colour_2"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_I)));
->>>>>>> 6be21386acd0c68733d2ff4946bfb6aa7deb906f
+        actions.add(new BrightnessAndContrastAction(bundle.getString("colour_3"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_B)));
+
     }
 
     /**

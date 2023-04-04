@@ -23,6 +23,9 @@ import java.awt.image.*;
  */
 
 public class ResizeTransformation implements ImageOperation, java.io.Serializable{
+    /**
+     * The scale to which the image is resized. 10 will give image of 10%.
+     */
     private int scale;
 
     /**
@@ -32,8 +35,8 @@ public class ResizeTransformation implements ImageOperation, java.io.Serializabl
      * 
      * <p>
      * The scale given defines by what percentage the image size will
-     * be increased, whene >100 will increase size and <100 will decrease
-     * the image size.
+     * be increased, when greater than 100 will increase size, and, when less 
+     * than 100 will decrease the image size.
      * </p>
      * 
      * @param scale by how much the image should be scaled by the newly initiated transformation

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.BoundedRangeModel;
 
 /**
  * <p>
@@ -36,10 +37,17 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
+
+        //actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
+        //actions.add(new InvertImageAction("Invert", null, "Invert colours", Integer.valueOf(KeyEvent.VK_G)));
+        //actions.add(new BrightnessAndContrastAction("Brightness and Contrast",null, "Apply Brightness and Contrast", Integer.valueOf(KeyEvent.VK_B)));
+
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
         actions.add(new ConvertToGreyAction(bundle.getString("colour_1"), null, bundle.getString("colour_1_desc"), Integer.valueOf(KeyEvent.VK_C)));
         actions.add(new InvertImageAction(bundle.getString("colour_2"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_I)));
+        actions.add(new BrightnessAndContrastAction(bundle.getString("colour_3"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_B)));
+
     }
 
     /**
@@ -127,6 +135,59 @@ public class ColourActions {
                 JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
         }
+    }
+
+    public class BrightnessAndContrastAction extends ImageAction{
+
+        BrightnessAndContrastAction(String name, ImageIcon Icon, String desc, Integer mneumonic){
+            super(name, Icon, desc, mneumonic);
+        }
+
+        public void actionPerformed(ActionEvent e){
+            int brightness = 0;
+            int contrast = 0;
+
+            //i need to still add pop up box to ask for two inputs in UI, using fixed values here for testing
+
+            BoundedRangeModel brightnessModel =  new DefaultBoundedRangeModel(0, 0, -100, 100);
+            BoundedRangeModel contrastModel =  new DefaultBoundedRangeModel(0, 0, -100, 100);
+            JSlider brightnessSlider = new JSlider();
+            brightnessSlider.setModel(brightnessModel);
+            JSlider contrastSlider = new JSlider();
+            contrastSlider.setModel(contrastModel);
+
+            brightnessSlider.setMajorTickSpacing(50);
+            brightnessSlider.setMinorTickSpacing(50);
+            brightnessSlider.setPaintTicks(true);
+            brightnessSlider.setPaintLabels(true);
+
+            contrastSlider.setMajorTickSpacing(50);
+            contrastSlider.setMinorTickSpacing(50);
+            contrastSlider.setPaintTicks(true);
+            contrastSlider.setPaintLabels(true);
+
+
+            Object[] message = {
+                ("brightness"), brightnessSlider,
+                ("contrast"), contrastSlider
+            };
+
+            int option = JOptionPane.showOptionDialog(null, message, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else if (option == JOptionPane.OK_OPTION) {
+                brightness = brightnessModel.getValue();
+                contrast = contrastModel.getValue();
+            }
+
+            target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
+            target.repaint();
+            target.getParent().revalidate();
+            
+        }
+
     }
 
 }

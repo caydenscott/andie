@@ -25,7 +25,10 @@ public class RotateTransformation implements ImageOperation, java.io.Serializabl
     public static int ROTATECLOCKWISE = 90;
     public static int ROTATEANTICLOCKWISE = 270;
 
-    private double rotateAngle; // in radians
+    /**
+     * The angle to rotate to, in radians.
+     */
+    private double rotateAngle;
 
     /**
      * <p>

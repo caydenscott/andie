@@ -138,4 +138,11 @@ public class ImagePanel extends JPanel {
             g2.dispose();
         }
     }
+
+    public BrightnessAndContrast getInteger() {
+        return null;
+    }
+
+     
+
 }

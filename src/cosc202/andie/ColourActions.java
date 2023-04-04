@@ -144,6 +144,7 @@ public class ColourActions {
         }
 
         public void actionPerformed(ActionEvent e){
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             int brightness = 0;
             int contrast = 0;
 
@@ -172,7 +173,7 @@ public class ColourActions {
                 ("contrast"), contrastSlider
             };
 
-            int option = JOptionPane.showOptionDialog(null, message, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = JOptionPane.showOptionDialog(null, message, bundle.getString("colour_b_c"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
@@ -182,9 +183,15 @@ public class ColourActions {
                 contrast = contrastModel.getValue();
             }
 
-            target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new BrightnessAndContrast(brightness, contrast));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+    
+            }
             
         }
 

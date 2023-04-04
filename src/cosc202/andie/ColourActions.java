@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.BoundedRangeModel;
@@ -27,6 +28,7 @@ public class ColourActions {
     
     /** A list of actions for the Colour menu. */
     protected ArrayList<Action> actions;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
     /**
      * <p>
@@ -35,9 +37,16 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
+<<<<<<< HEAD
         actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
         actions.add(new InvertImageAction("Invert", null, "Invert colours", Integer.valueOf(KeyEvent.VK_G)));
         actions.add(new BrightnessAndContrastAction("Brightness and Contrast",null, "Apply Brightness and Contrast", Integer.valueOf(KeyEvent.VK_B)));
+=======
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        actions.add(new ConvertToGreyAction(bundle.getString("colour_1"), null, bundle.getString("colour_1_desc"), Integer.valueOf(KeyEvent.VK_C)));
+        actions.add(new InvertImageAction(bundle.getString("colour_2"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_I)));
+>>>>>>> 6be21386acd0c68733d2ff4946bfb6aa7deb906f
     }
 
     /**
@@ -48,13 +57,14 @@ public class ColourActions {
      * @return The colour menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("Colour");
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        JMenu colourMenu = new JMenu(bundle.getString("colour_tt"));
 
         for(Action action: actions) {
-            fileMenu.add(new JMenuItem(action));
+            colourMenu.add(new JMenuItem(action));
         }
 
-        return fileMenu;
+        return colourMenu;
     }
 
     /**
@@ -93,9 +103,16 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            target.getImage().apply(new ConvertToGrey());
-            target.repaint();
-            target.getParent().revalidate();
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new ConvertToGrey());
+                target.repaint();
+                target.getParent().revalidate();
+            } catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+            }
         }
 
     }
@@ -107,9 +124,16 @@ public class ColourActions {
         }
         
         public void actionPerformed(ActionEvent e){
-            target.getImage().apply(new InvertImage());
-            target.repaint();
-            target.getParent().revalidate(); 
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            try{
+                target.getImage().apply(new InvertImage());
+                target.repaint();
+                target.getParent().revalidate(); 
+            }catch(NullPointerException NPEx){
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"), bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+            }
         }
     }
 

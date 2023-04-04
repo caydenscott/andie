@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -27,6 +28,7 @@ public class ViewActions {
      * A list of actions for the View menu.
      */
     protected ArrayList<Action> actions;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
     /**
      * <p>
@@ -34,10 +36,12 @@ public class ViewActions {
      * </p>
      */
     public ViewActions() {
-        actions = new ArrayList<Action>();
-        actions.add(new ZoomInAction("Zoom In", null, "Zoom In", Integer.valueOf(KeyEvent.VK_PLUS)));
-        actions.add(new ZoomOutAction("Zoom Out", null, "Zoom Out", Integer.valueOf(KeyEvent.VK_MINUS)));
-        actions.add(new ZoomFullAction("Zoom Full", null, "Zoom Full", Integer.valueOf(KeyEvent.VK_1)));
+        actions = new ArrayList<Action>(); 
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+        actions.add(new ZoomInAction(bundle.getString("view_1"), null, bundle.getString("view_1_desc"), Integer.valueOf(KeyEvent.VK_PLUS)));
+        actions.add(new ZoomOutAction(bundle.getString("view_2"), null, bundle.getString("view_2_desc"), Integer.valueOf(KeyEvent.VK_MINUS)));
+        actions.add(new ZoomFullAction(bundle.getString("view_3"), null, bundle.getString("view_3_desc"), Integer.valueOf(KeyEvent.VK_1)));
     }
 
     /**
@@ -48,7 +52,8 @@ public class ViewActions {
      * @return The view menu UI element.
      */
     public JMenu createMenu() {
-        JMenu viewMenu = new JMenu("View");
+        ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
+        JMenu viewMenu = new JMenu(bundle.getString("view_tt"));
 
         for (Action action: actions) {
             viewMenu.add(new JMenuItem(action));

@@ -213,6 +213,32 @@ class EditableImage {
         save();
     }
 
+
+    /**
+     * <p>
+     * Export the image to a speficied file.
+     * </p>
+     * 
+     * <p>
+     * Export the image to the file provided as a parameter.
+     * </p>
+     * 
+     * @param imageFilename The file location to save the image to.
+     * @throws Exception If something goes wrong.
+     */
+
+    public void export(String imageFilename) throws Exception {
+        /** 
+         * The commented out code below should determine the image's format and save 
+         * it to the new path, but it seems not work on my computer, so gonna test it 
+         * in somewhere else to check?
+        */
+        //String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
+        //ImageIO.write(current, extension, new File(imageFilename));
+        this.imageFilename = imageFilename;
+        ImageIO.write(current, "png", new File(imageFilename));
+    }
+
     /**
      * <p>
      * Apply an {@link ImageOperation} to this image.
@@ -231,8 +257,32 @@ class EditableImage {
      * </p>
      */
     public void undo() {
+        // check if there is something to undo first
+        if (!isUndoable()) {
+            return;
+        }
+        
         redoOps.push(ops.pop());
+        
         refresh();
+    }
+
+    /**
+     * <p>
+     * Checks if there are any {@link ImageOperation} to undo.
+     * @return if there is something in the stack to undo.
+     */
+    private boolean isUndoable() {
+        return ops.size() > 0;
+    }
+
+    /**
+     * <p>
+     * Checks if there are any {@link ImageOperation} to redo.
+     * @return if there is something in the stack to redo.
+     */
+    private boolean isRedoable() {
+        return redoOps.size() > 0;
     }
 
     /**
@@ -241,6 +291,10 @@ class EditableImage {
      * </p>
      */
     public void redo()  {
+        // only redo the last operation if there is something to redo
+        if (!isRedoable()) {
+            return;
+        }
         apply(redoOps.pop());
     }
 

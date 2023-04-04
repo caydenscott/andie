@@ -151,9 +151,9 @@ public class ColourActions {
 
             BoundedRangeModel brightnessModel =  new DefaultBoundedRangeModel(0, 0, -100, 100);
             BoundedRangeModel contrastModel =  new DefaultBoundedRangeModel(0, 0, -100, 100);
-            JSlider brightnessSlider = new JSlider(0, 200, 200);
+            JSlider brightnessSlider = new JSlider();
             brightnessSlider.setModel(brightnessModel);
-            JSlider contrastSlider = new JSlider(0, 200, 200);
+            JSlider contrastSlider = new JSlider();
             contrastSlider.setModel(contrastModel);
 
             brightnessSlider.setMajorTickSpacing(50);
@@ -172,7 +172,7 @@ public class ColourActions {
                 ("contrast"), contrastSlider
             };
 
-            int option = JOptionPane.showOptionDialog(null, message, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 50);
+            int option = JOptionPane.showOptionDialog(null, message, "Enter Brightness and Contrast Radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {

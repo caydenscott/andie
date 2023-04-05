@@ -46,7 +46,7 @@ public class ColourActions {
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
         actions.add(new ConvertToGreyAction(bundle.getString("colour_1"), null, bundle.getString("colour_1_desc"), Integer.valueOf(KeyEvent.VK_C)));
         actions.add(new InvertImageAction(bundle.getString("colour_2"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_I)));
-        actions.add(new BrightnessAndContrastAction(bundle.getString("colour_3"), null, bundle.getString("colour_2_desc"), Integer.valueOf(KeyEvent.VK_B)));
+        actions.add(new BrightnessAndContrastAction(bundle.getString("colour_3"), null, bundle.getString("colour_3_desc"), Integer.valueOf(KeyEvent.VK_B)));
 
     }
 

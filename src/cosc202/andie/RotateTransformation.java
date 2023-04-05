@@ -88,6 +88,12 @@ public class RotateTransformation implements ImageOperation, java.io.Serializabl
         //float sinThetaf = (float)Math.sin(rotateAngle);
         //AffineTransform transform = new AffineTransform(new float[] {cosThetaf, (-1.0f)*sinThetaf, sinThetaf, cosThetaf, 0.0f, 0.0f});
         //transform.translate(1.0f, 1.0f);
+
+
+        // to standardise the input image converting all to ARGB type, this is because transform op doesnt seem
+        // to work with png which has type 0
+        BufferedImage convertedImg = new BufferedImage(input.getWidth(), input.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        convertedImg.getGraphics().drawImage(input, 0, 0, null);
         
 
 
@@ -98,7 +104,7 @@ public class RotateTransformation implements ImageOperation, java.io.Serializabl
         // create operation to carry out matrix affine transform
         AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
 
-        transformOp.filter(input, output);
+        transformOp.filter(convertedImg, output);
 
         return output;
     }

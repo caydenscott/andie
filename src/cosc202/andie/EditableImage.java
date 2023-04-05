@@ -38,13 +38,14 @@ class EditableImage {
     /** The current image, the result of applying {@link ops} to {@link original}. */
     private BufferedImage current;
     /** The sequence of operations currently applied to the image. */
-    private Stack<ImageOperation> ops;
+    private static Stack<ImageOperation> ops;
     /** A memory of 'undone' operations to support 'redo'. */
-    private Stack<ImageOperation> redoOps;
+    private static Stack<ImageOperation> redoOps;
     /** The file where the original image is stored/ */
     private String imageFilename;
     /** The file where the operation sequence is stored. */
     private String opsFilename;
+    private static boolean changeMade = false;
     
 
     /**
@@ -242,6 +243,7 @@ class EditableImage {
      */
     public void apply(ImageOperation op) {
         current = op.apply(current);
+        changeMade(1);
         ops.add(op);
     }
 
@@ -255,7 +257,7 @@ class EditableImage {
         if (!isUndoable()) {
             return;
         }
-        
+        changeMade(1);
         redoOps.push(ops.pop());
         
         refresh();
@@ -289,6 +291,7 @@ class EditableImage {
         if (!isRedoable()) {
             return;
         }
+        changeMade(1);
         apply(redoOps.pop());
     }
 
@@ -320,6 +323,30 @@ class EditableImage {
         for (ImageOperation op: ops) {
             current = op.apply(current);
         }
+    }
+
+    public static void clearStack(){
+        if(ops == null && redoOps == null){
+            return;
+        }
+        if(ops.size() > 0){
+            ops.clear();
+        }
+        if(redoOps.size() > 0){
+            redoOps.clear();
+        }
+    }
+
+    public static void changeMade(int n){
+        if(n == 0){
+            changeMade = false;
+        }else{
+            changeMade = true;
+        }
+    }
+
+    public static boolean getChanges(){
+        return changeMade;
     }
 
 }

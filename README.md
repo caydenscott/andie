@@ -16,7 +16,8 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
 ## Team Member Contributions
 
 ### Benson
-
+ - **Export** I wrote the export method and added export action, and I got the idea from save and save as method. I tried to determine the image's format as the save method do, but it won't work, so I set it to png when image export, wherever the image's format is.  
+ - **Multilingual support** On this part, I got the idea from Internationalised Hello World. I set the multilingual model and did most of the multilingual work up to that point, so teammates could follow and do multilingual work at the same time when they add the new things in.
 ### Caden
 
 ### Daniel
@@ -29,4 +30,6 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
 
 ## Testing
 Just a bit on what we did to check eachothers features and maybe a couple of examples on bug fixes.
-Annything else anyone did?
+Anything else anyone did?
+### Benson
+ - I checked to see if there's any text mistake or error missed when I was doing own work, and after teammates found errors or done other things. I fixed the hot key values that didn't change when teammates copied and pasted sentences, and found a text mistakes, not many done.

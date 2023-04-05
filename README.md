@@ -18,7 +18,11 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
 ### Benson
  - **Export** I wrote the export method and added export action, and I got the idea from save and save as method. I tried to determine the image's format as the save method do, but it won't work, so I set it to png when image export, wherever the image's format is.  
  - **Multilingual support** On this part, I got the idea from Internationalised Hello World. I set the multilingual model and did most of the multilingual work up to that point, so teammates could follow and do multilingual work at the same time when they add the new things in.
-### Caden
+### Cayden
+ - **Median filter** I originally followed a few online guides and things when making the first version of median filter. Howver, I didn't the feeling of not having done it myself, and that it didn't seem to approach it the way the lab book said. So I re wrote the code following the lab book myself. I looked at the greyscale method to know how to access individual pixels and rewrite their RBG values.
+ - **Gaussian filter** This filter took some time, at first I couldn't work out how to use the equation that was provided at all. After a good amount of trial and error, I eventually landed on the final version.
+ - **Sharpen filter** The sharpen filter was very trivial, just a case of changing the mean filter slightly, and adding the sharpen formula.
+ - **Exception and error handling** Exception and error handling took me by far the most time. I first went through and found where exceptions were already being handling with just System.exit(0), and added popup boxes to account for these. Then I went and found a few less obvious ones. After handling exceptions I decided to handle general errors. One of these was to reset the stack if someone opens a new file. Originally, the stack stayed the same, meaning that the new file - if no .ops file existed, would have that stack applied. I did this by adding a clearStack() method to the EditableImage class, and calling it everytime a file is opened. Another error was to confirm if an image is saved or not when exiting/opening a new file. To do this I created a boolean value in the EditableImage, and 2 methods to check its value, and change it. The values change when a file is saved or a filter is applied. And the exit/open menues check this value, to see if they need to display popup.
 
 ### Daniel
  - **Resize** some more details on how I did this and things I tried
@@ -33,3 +37,7 @@ Just a bit on what we did to check eachothers features and maybe a couple of exa
 Anything else anyone did?
 ### Benson
  - I checked to see if there's any text mistake or error missed when I was doing own work, and after teammates found errors or done other things. I fixed the hot key values that didn't change when teammates copied and pasted sentences, and found a text mistakes, not many done.
+
+ ### Cayden
+ - To test my code, I thoroughly used the program any time a new feature was added. I also had one of my non CS friends use it, seeing as they are more of a typical user, to try and find bugs.
+ - I added some language features that were forgotten, and fixed a bug in the resize, as it was supposed to throw error that it wasn't.

@@ -169,8 +169,8 @@ public class ColourActions {
 
 
             Object[] message = {
-                ("brightness"), brightnessSlider,
-                ("contrast"), contrastSlider
+                (bundle.getString("colour_4")), brightnessSlider,
+                (bundle.getString("colour_5")), contrastSlider
             };
 
             int option = JOptionPane.showOptionDialog(null, message, bundle.getString("colour_b_c"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -179,8 +179,8 @@ public class ColourActions {
             if (option == JOptionPane.CANCEL_OPTION) {
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
-                brightness = brightnessModel.getValue();
                 contrast = contrastModel.getValue();
+                brightness = brightnessModel.getValue();
             }
 
             try{

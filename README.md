@@ -31,7 +31,7 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
  - And anything else I did
 
 ### Timothy
-- **Brightness & Contrast** - I firstly implemented the simple model formula for brightness and contrast in a method for math adjustment. Within this method I had controlling conditions to ensure that r,g,b values wouldn't go outside the range 0,255 to avoid any problems. I had used some guidance but also discussed ideas with fellow teammates on how to effectively set the correct r,g,b values and there ranges. 
+- **Brightness & Contrast** - I firstly implemented the simple model formula for brightness and contrast in a method for math adjustment using bitwise operators. Within this method I had controlling conditions to ensure that r,g,b values wouldn't go outside the range 0,255 to avoid any problems. I had used some guidance but also discussed ideas with fellow teammates on how to effectively set the correct r,g,b values and there ranges. 
 
 
 ## Testing
@@ -45,5 +45,5 @@ Anything else anyone did?
  - I added some language features that were forgotten, and fixed a bug in the resize, as it was supposed to throw error that it wasn't.
 
  ### Timothy
- - To test my code I consistently used and ran the program. This was useful for when I needed to adjust the code to allow negative values on the slider I added. I would rigoursly test the program to also see if the tick spacing would be easy for users. I asked my flatmates to test the program themselves since they weren't use to how it works and try to find bugs.
- - After notified by my teammates, I had to add the language bundles to my messages as I had forgotten.
+ - To test my code I consistently used and ran the program with different input files. This was useful for when I needed to adjust the code to allow negative values on the slider I added. I would rigoursly test the program to also see if the tick spacing would be easy for users. I asked my flatmates to test the program themselves and try to find bugs since they weren't familiar with how it works.
+ - After notified by my teammates, I had to allow multilingual accessibility support to my tool instructions, as I had forgotten.

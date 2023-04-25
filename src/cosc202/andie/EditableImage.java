@@ -188,7 +188,7 @@ class EditableImage {
         // Write operations file
         FileOutputStream fileOut = new FileOutputStream(this.opsFilename);
         ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-        objOut.writeObject(this.ops);
+        objOut.writeObject(EditableImage.ops);
         objOut.close();
         fileOut.close();
     }

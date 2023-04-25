@@ -229,7 +229,12 @@ public class FileActions {
                 JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
                         bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, options, options[0]);
-            } catch (Exception ex) {
+            } catch (IllegalArgumentException IAEx) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }catch (Exception ex) {
                 Object[] options = { "OK" };
                 JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
                         bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION,

@@ -231,7 +231,8 @@ class EditableImage {
 
     public void export(String imageFilename) throws Exception {
         this.imageFilename = imageFilename;
-        ImageIO.write(current, "png", new File(imageFilename));
+        String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
+        ImageIO.write(current, extension, new File(imageFilename));
     }
 
     /**

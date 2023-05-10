@@ -46,6 +46,9 @@ class EditableImage {
     /** The file where the operation sequence is stored. */
     private String opsFilename;
     private static boolean changeMade = false;
+
+    private static Stack<ImageOperation> macroOps;
+    private static boolean macroRecord = false;
     
 
     /**
@@ -64,6 +67,8 @@ class EditableImage {
         redoOps = new Stack<ImageOperation>();
         imageFilename = null;
         opsFilename = null;
+
+        macroOps = new Stack<ImageOperation>();
     }
 
     /**
@@ -223,6 +228,7 @@ class EditableImage {
      * 
      * <p>
      * Export the image to the file provided as a parameter.
+     * Without saves a set of operations from the file with <code>.ops</code>.
      * </p>
      * 
      * @param imageFilename The file location to save the image to.
@@ -237,6 +243,31 @@ class EditableImage {
 
     /**
      * <p>
+     * Create a macro to a speficied file.
+     * </p>
+     * 
+     * <p>
+     * Create a macro to the file provided as a parameter.
+     * Saves it as a set of recorded operations with <code>.ops</code>. 
+     * </p>
+     * 
+     * @param opsFilename The file location to save the macro to.
+     * @throws Exception If something goes wrong.
+     */
+
+    public static void createMacro(String opsFilename) throws Exception {
+        if(getRecord() == false){
+            return;
+        }
+        FileOutputStream fileOut = new FileOutputStream(opsFilename + ".ops");
+        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+        objOut.close();
+        fileOut.close();
+        macroOps.clear();
+    }
+
+    /**
+     * <p>
      * Apply an {@link ImageOperation} to this image.
      * </p>
      * 
@@ -246,6 +277,9 @@ class EditableImage {
         current = op.apply(current);
         changeMade(1);
         ops.add(op);
+        if(getRecord() == true){
+            macroOps.add(op);
+        }
     }
 
     /**
@@ -260,6 +294,9 @@ class EditableImage {
         }
         changeMade(1);
         redoOps.push(ops.pop());
+        if(getRecord() == true){
+            macroOps.pop();
+        }
         
         refresh();
     }
@@ -348,6 +385,24 @@ class EditableImage {
 
     public static boolean getChanges(){
         return changeMade;
+    }
+
+    /**
+     * <p>
+     * Change sign of macros record.
+     * </p>
+     * 
+     */
+    public static void record(int n){
+        if(n == 0){
+            macroRecord = false;
+        }else{
+            macroRecord = true;
+        }
+    }
+
+    public static boolean getRecord(){
+        return macroRecord;
     }
 
 }

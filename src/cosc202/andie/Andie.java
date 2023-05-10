@@ -78,6 +78,10 @@ public class Andie {
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
 
+        // Actions to create or load a macro.
+        MacroActions macroActions = new MacroActions();
+        menuBar.add(macroActions.createMenu());
+
         // View actions control how the image is displayed, but do not alter its actual content
         ViewActions viewActions = new ViewActions();
         menuBar.add(viewActions.createMenu());

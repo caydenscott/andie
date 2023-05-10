@@ -351,6 +351,7 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().export(imageFilepath);
+                    EditableImage.changeMade(0);
                 } catch (IllegalArgumentException iAEx) {
                     Object[] options = { "OK" };
                     JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
@@ -407,25 +408,23 @@ public class FileActions {
             if(!EditableImage.getChanges()){
                 System.exit(0);
             }else{
-
-            Object[] options = { bundle.getString("exit_no_save_option_1"), bundle.getString("exit_no_save_option_2"), bundle.getString("no_save_option_3") }; // Modify options here
-            int choice = JOptionPane.showOptionDialog(null,
+                Object[] options = { bundle.getString("exit_no_save_option_1"), bundle.getString("exit_no_save_option_2"), bundle.getString("no_save_option_3") }; // Modify options here
+                int choice = JOptionPane.showOptionDialog(null,
                     bundle.getString("exit_no_save_1"), bundle.getString("no_save_warning"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-
-            if (choice == 0) { // Save and Exit
-                try {
-                    ImageAction.target.getImage().save();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+                if (choice == 0) { // Save and Exit
+                    try {
+                        ImageAction.target.getImage().save();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    System.exit(0);
+                } else if (choice == 1) { // Exit
+                    System.exit(0);
+                } else { // Cancel
+                    // Do nothing, close the popup
                 }
-                System.exit(0);
-            } else if (choice == 1) { // Exit
-                System.exit(0);
-            } else { // Cancel
-                // Do nothing, close the popup
-            }
-        }   
+            }   
         }
 
     }

@@ -90,8 +90,11 @@ public class LanguageActions {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");      
             prefs.remove("language");
             prefs.remove("country");
+
             //Confirm window and end option
-            int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("language_tt_desc"), bundle.getString("language_tt"), JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("language_notice"), 
+                bundle.getString("language_tt"), JOptionPane.OK_OPTION);
+
             if (userOption == JOptionPane.OK_OPTION) {
                 System.exit(1);
             }
@@ -136,8 +139,11 @@ public class LanguageActions {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");      
             prefs.put("language", "mi");
             prefs.put("country", "NZ");
+
             //Confirm window and end option
-            int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("language_tt_desc"), bundle.getString("language_tt"), JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("language_notice"), 
+                bundle.getString("language_tt"), JOptionPane.OK_OPTION);
+
             if (userOption == JOptionPane.OK_OPTION) {
                 System.exit(1);
             }
@@ -182,8 +188,11 @@ public class LanguageActions {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");      
             prefs.put("language", "it");
             prefs.put("country", "IT");
+
             //Confirm window and end option
-            int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("language_tt_desc"), bundle.getString("language_tt"), JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("language_notice"), 
+                bundle.getString("language_tt"), JOptionPane.OK_OPTION);
+
             if (userOption == JOptionPane.OK_OPTION) {
                 System.exit(1);
             }

@@ -51,6 +51,7 @@ public class ImagePanel extends JPanel {
     public ImagePanel() {
         image = new EditableImage();
         scale = 1.0;
+        this.setLayout(null); 
     }
 
     /**
@@ -143,6 +144,16 @@ public class ImagePanel extends JPanel {
         return null;
     }
 
-     
+    /**
+     * <p>
+     * Convert a point in the ImagePanel to a point in the image. Taking scale into account.
+     * </p>
+     * 
+     * @param p Point relative to the ImagePanel
+     * @return Point relative to the image
+     */
+    public Point relativeToImagePoint(Point p) {
+        return new Point((int) (p.x/scale), (int) (p.y/scale));
+    }
 
 }

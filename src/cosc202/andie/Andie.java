@@ -9,9 +9,6 @@ import javax.imageio.*;
  * Main class for A Non-Destructive Image Editor (ANDIE).
  * </p>
  * 
- * this is a change made by daniel
- * 
- * this is a change made by cayden
  * 
  * <p>
  * This class is the entry point for the program.
@@ -66,6 +63,7 @@ public class Andie {
         ImageAction.setTarget(imagePanel);
         JScrollPane scrollPane = new JScrollPane(imagePanel);
         frame.add(scrollPane, BorderLayout.CENTER);
+
         
         // Add in menus for various types of action the user may perform.
         JMenuBar menuBar = new JMenuBar();
@@ -97,6 +95,10 @@ public class Andie {
         // Actions to change the language 
         LanguageActions languageActions = new LanguageActions();
         menuBar.add(languageActions.createMenu());
+
+        // shapes
+        ShapeActions shapeActions = new ShapeActions();
+        menuBar.add(shapeActions.createMenu());
         
         frame.setJMenuBar(menuBar);
         frame.pack();

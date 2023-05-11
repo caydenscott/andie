@@ -41,13 +41,13 @@ class EditableImage {
     private static Stack<ImageOperation> ops;
     /** A memory of 'undone' operations to support 'redo'. */
     private static Stack<ImageOperation> redoOps;
+    /** A sequence of recorded operations to create mamcro. */
+    private static Stack<ImageOperation> macroOps;
     /** The file where the original image is stored/ */
     private String imageFilename;
     /** The file where the operation sequence is stored. */
     private String opsFilename;
     private static boolean changeMade = false;
-
-    private static Stack<ImageOperation> macroOps;
     private static boolean macroRecord = false;
     
 
@@ -65,10 +65,9 @@ class EditableImage {
         current = null;
         ops = new Stack<ImageOperation>();
         redoOps = new Stack<ImageOperation>();
+        macroOps = new Stack<ImageOperation>();
         imageFilename = null;
         opsFilename = null;
-
-        macroOps = new Stack<ImageOperation>();
     }
 
     /**
@@ -234,7 +233,6 @@ class EditableImage {
      * @param imageFilename The file location to save the image to.
      * @throws Exception If something goes wrong.
      */
-
     public void export(String imageFilename) throws Exception {
         this.imageFilename = imageFilename;
         String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
@@ -254,16 +252,57 @@ class EditableImage {
      * @param opsFilename The file location to save the macro to.
      * @throws Exception If something goes wrong.
      */
-
     public static void createMacro(String opsFilename) throws Exception {
         if(getRecord() == false){
             return;
         }
         FileOutputStream fileOut = new FileOutputStream(opsFilename + ".ops");
         ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+        objOut.writeObject(EditableImage.macroOps);
         objOut.close();
         fileOut.close();
         macroOps.clear();
+    }
+
+    /**
+     * <p>
+     * Load a macro from a file.
+     * </p>
+     * 
+     * <p>
+     * Load a macro from the specified file.
+     * It will tries to load a set of operations from the file with <code>.ops</code>.
+     * So if you open image and load <code>some/path/to/ops.ops</code>, this method will try to
+     * read the operations from this file.
+     * </p>
+     * 
+     * @param opsFilename The file location to save the macro to.
+     * @throws Exception If something goes wrong.
+     */
+    public void load(String filePath) throws Exception {
+        opsFilename = filePath;
+        
+        try {
+            FileInputStream fileIn = new FileInputStream(opsFilename);
+            ObjectInputStream objIn = new ObjectInputStream(fileIn);
+
+            // Silence the Java compiler warning about type casting.
+            // Understanding the cause of the warning is way beyond
+            // the scope of COSC202, but if you're interested, it has
+            // to do with "type erasure" in Java: the compiler cannot
+            // produce code that fails at this point in all cases in
+            // which there is actually a type mismatch for one of the
+            // elements within the Stack, i.e., a non-ImageOperation.
+            @SuppressWarnings("unchecked")
+            Stack<ImageOperation> opsFromFile = (Stack<ImageOperation>) objIn.readObject();
+            ops = opsFromFile;
+            redoOps.clear();
+            objIn.close();
+            fileIn.close();
+        } catch (Exception ex) {
+            // Could be no file or something else. Carry on for now.
+        }
+        this.refresh();
     }
 
     /**
@@ -294,7 +333,7 @@ class EditableImage {
         }
         changeMade(1);
         redoOps.push(ops.pop());
-        if(getRecord() == true){
+        if(getRecord() == true && macroOps.size() > 0){
             macroOps.pop();
         }
         
@@ -403,6 +442,15 @@ class EditableImage {
 
     public static boolean getRecord(){
         return macroRecord;
+    }
+
+    public static void clearMacro(){
+        if(macroOps == null){
+            return;
+        }
+        if(macroOps.size() > 0){
+            macroOps.clear();
+        }
     }
 
 }

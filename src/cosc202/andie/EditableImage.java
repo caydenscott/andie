@@ -4,6 +4,9 @@ import java.util.*;
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
+import java.util.prefs.Preferences;
+import javax.swing.*;
+
 
 /**
  * <p>
@@ -49,6 +52,7 @@ class EditableImage {
     private String opsFilename;
     private static boolean changeMade = false;
     private static boolean macroRecord = false;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
     
 
     /**
@@ -68,6 +72,7 @@ class EditableImage {
         macroOps = new Stack<ImageOperation>();
         imageFilename = null;
         opsFilename = null;
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
     }
 
     /**
@@ -280,7 +285,7 @@ class EditableImage {
      * @throws Exception If something goes wrong.
      */
     public void load(String filePath) throws Exception {
-        opsFilename = filePath;
+        String opsFilename = filePath;
         
         try {
             FileInputStream fileIn = new FileInputStream(opsFilename);
@@ -300,7 +305,11 @@ class EditableImage {
             objIn.close();
             fileIn.close();
         } catch (Exception ex) {
-            // Could be no file or something else. Carry on for now.
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            Object[] options = { "OK" };
+            JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_4"),
+                    bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
         }
         this.refresh();
     }

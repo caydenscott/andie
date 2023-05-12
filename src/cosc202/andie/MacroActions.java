@@ -178,6 +178,11 @@ public class MacroActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     EditableImage.changeMade(0);
                     target.getImage().load(imageFilepath);
+                } catch (NullPointerException nEx) {
+                    Object[] options1 = { "OK" };
+                    JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_3"),
+                        bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
                 } catch (Exception ex) {
                     Object[] options1 = { "OK" };
                     JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,

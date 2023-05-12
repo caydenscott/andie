@@ -118,11 +118,11 @@ public class TransformActions {
                     JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 scale = resizeModel.getNumber().intValue();
             }
+            else return; 
+
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             try {
                 target.getImage().apply(new ResizeTransformation(scale));

@@ -439,7 +439,7 @@ public class FileActions {
                     }
                 }
                 else{
-                    int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("macro_warning_3"), 
+                    int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("macro_warning_2"), 
                     bundle.getString("macro_tt"), JOptionPane.OK_OPTION);
                     if(userOption != JOptionPane.OK_OPTION) return;
                     

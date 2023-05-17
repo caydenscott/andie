@@ -1,10 +1,15 @@
-package cosc202.andie;
+package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.BoundedRangeModel;
+
+import cosc202.andie.Andie;
+import cosc202.andie.ImageOperations.Filters.BrightnessAndContrast;
+import cosc202.andie.ImageOperations.Filters.ConvertToGrey;
+import cosc202.andie.ImageOperations.Filters.InvertImage;
 
 /**
  * <p>

@@ -1,9 +1,15 @@
-package cosc202.andie;
+package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
+
+import cosc202.andie.Andie;
+import cosc202.andie.ImageOperations.Transformations.HorizontalFlipTransformation;
+import cosc202.andie.ImageOperations.Transformations.ResizeTransformation;
+import cosc202.andie.ImageOperations.Transformations.RotateTransformation;
+import cosc202.andie.ImageOperations.Transformations.VerticalFlipTransformation;
 
 /**
  * <p>

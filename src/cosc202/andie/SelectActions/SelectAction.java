@@ -1,6 +1,5 @@
-package cosc202.andie;
+package cosc202.andie.SelectActions;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -8,13 +7,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+
+import cosc202.andie.ImagePanel;
+
 import javax.swing.BorderFactory;
 
-public class SelectAction implements MouseListener {
+public abstract class SelectAction implements MouseListener {
 
     private Point startPoint;
     private Point endPoint;
-    private ImagePanel target;
+    protected ImagePanel target;
+    private JButton confirmButton;
 
     public SelectAction(ImagePanel target) {
         this.target = target;
@@ -57,19 +60,19 @@ public class SelectAction implements MouseListener {
      }
  
      public void mouseReleased(MouseEvent e) {
+        // first check that if for some reason there is no start point (possibly draged from outside window)
         // if there is already a selected area, dont do anything, as user may want to cancel
-        if (endPoint != null) {
+        if (startPoint == null || endPoint != null) {
             return;
         }
 
         // add the end point relative to the image
         endPoint = getPosition(e);
 
-        SelectedArea sa = getSelectedArea();
+        SelectedArea sa = new SelectedArea(startPoint, endPoint);
 
-        if (sa != null) {
-            showPreview(sa);
-        }
+        // show preview - which also allows user to confirm selection - or cancel
+        showPreview(sa);
         
      }
 
@@ -104,49 +107,9 @@ public class SelectAction implements MouseListener {
         //     endPoint = null;
 
         // }
+        clear();
      }
 
-     private SelectedArea getSelectedArea() {
-        // if it isnt selected yet return null
-        if (endPoint == null || startPoint == null) {
-            return null;
-        }
-
-        // cant just return the points gained as startPoint
-        // not necissarily top left of endPoint
-
-        SelectedArea sa = new SelectedArea();
-
-        // set the start and end points
-        if (startPoint.x < endPoint.x) {
-            sa.setStartX(startPoint.x);
-            sa.setEndX(endPoint.x);
-        } else {
-            sa.setStartX(endPoint.x);
-            sa.setEndX(startPoint.x);
-        }
-        if (startPoint.y < endPoint.y) {
-            sa.setStartY(startPoint.y);
-            sa.setEndY(endPoint.y);
-        } else {
-            sa.setStartY(endPoint.y);
-            sa.setEndY(startPoint.y);
-        }
-
-        return sa;
-    }
-
-    private SelectedArea selectedAreaRelImage() {
-
-        SelectedArea sar = new SelectedArea();
-
-        sar.setEndX((int)target.relativeToImagePoint(endPoint).getX());
-        sar.setEndY((int)target.relativeToImagePoint(endPoint).getY());
-        sar.setStartX((int)target.relativeToImagePoint(startPoint).getX());
-        sar.setStartY((int)target.relativeToImagePoint(startPoint).getY());
-
-        return sar;
-    }
     
     private void showPreview(SelectedArea sa) {
         // if there is a selected area then draw it TESTING
@@ -161,13 +124,18 @@ public class SelectAction implements MouseListener {
         g.fillRect(sa.getStart()[0], sa.getStart()[1], sa.getWidth(), sa.getHeight()); // (x, y, width, height) 
         g.dispose();*/
 
-        JButton confirmButton = new JButton("✓");
+        confirmButton = new JButton("✓");
 
         confirmButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // check that the selection hasnt been cancelled
+                if (startPoint == null || endPoint == null) {
+                    return;
+                }
                 // draw the shape, and repaint, note this is checks start and end again
-                target.getImage().apply(new DrawRectangle(selectedAreaRelImage(), Color.BLACK));
+                apply(new SelectedArea(startPoint, endPoint));
+                
                 //target.repaint();
                 //target.getParent().revalidate();
 
@@ -189,7 +157,7 @@ public class SelectAction implements MouseListener {
         confirmButton.setBounds(sa.getStart()[0], sa.getStart()[1], sa.getWidth(), sa.getHeight());
 
 
-        target.add(confirmButton, BorderLayout.CENTER);
+        target.add(confirmButton);
 
         
 
@@ -205,6 +173,24 @@ public class SelectAction implements MouseListener {
         target.setVisible(true);
 
         
+    }
+
+    protected abstract void apply(SelectedArea sa);
+
+    /**
+     * Removes all elements added to the screen in the selection process, does not however
+     * undo any changes to the image. Also resets the selected area.
+     */
+    public void clear() {
+        // reset the selection
+        startPoint = null;
+        endPoint = null;
+
+        if (confirmButton != null) {
+            target.remove(confirmButton);
+            target.repaint();
+            target.getParent().revalidate();
+        }
     }
 
     // was for getting relative to image coords, now doimg that when drawing

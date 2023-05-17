@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.SelectActions;
 
-public class SelectedArea {
+import java.awt.Point;
+
+public class SelectedArea implements java.io.Serializable {
     private int startX;
     private int startY;
     private int endX;
@@ -11,6 +13,25 @@ public class SelectedArea {
         this.startY = startY;
         this.endX  = endX;
         this.endY = endY;
+    }
+
+    public SelectedArea(Point pointA, Point pointB) {
+        // set the start and end points
+        if (pointA.x < pointB.x) {
+            this.startX = pointA.x;
+            this.endX = pointB.x;
+
+        } else {
+            this.startX = pointB.x;
+            this.endX = pointA.x;
+        }
+        if (pointA.y < pointB.y) {
+            this.startY = pointA.y;
+            this.endY = pointB.y;
+        } else {
+            this.startY = pointB.y;
+            this.endY = pointA.y;
+        }
     }
 
     public SelectedArea() {

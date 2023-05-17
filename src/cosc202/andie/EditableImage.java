@@ -5,6 +5,8 @@ import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
 
+import cosc202.andie.ImageOperations.ImageOperation;
+
 /**
  * <p>
  * An image with a set of operations applied to it.
@@ -31,7 +33,7 @@ import javax.imageio.*;
  * @author Steven Mills
  * @version 1.0
  */
-class EditableImage {
+public class EditableImage {
 
     /** The original image. This should never be altered by ANDIE. */
     private BufferedImage original;
@@ -188,7 +190,7 @@ class EditableImage {
         // Write operations file
         FileOutputStream fileOut = new FileOutputStream(this.opsFilename);
         ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-        objOut.writeObject(this.ops);
+        objOut.writeObject(EditableImage.ops);
         objOut.close();
         fileOut.close();
     }

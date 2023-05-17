@@ -1,9 +1,11 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.DrawShapes;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+import cosc202.andie.ImageOperations.ImageOperation;
+import cosc202.andie.SelectActions.SelectedArea;
 
 public abstract class DrawShape implements ImageOperation, java.io.Serializable {
 

@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.image.BufferedImage;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 public class BrightnessAndContrast implements ImageOperation, java.io.Serializable {
 

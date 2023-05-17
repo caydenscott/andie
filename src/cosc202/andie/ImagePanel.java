@@ -3,6 +3,8 @@ package cosc202.andie;
 import java.awt.*;
 import javax.swing.*;
 
+import cosc202.andie.ImageOperations.Filters.BrightnessAndContrast;
+
 /**
  * <p>
  * UI display element for {@link EditableImage}s.

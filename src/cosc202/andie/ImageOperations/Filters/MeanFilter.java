@@ -1,7 +1,9 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.image.*;
 import java.util.*;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 /**
  * <p>
@@ -41,7 +43,7 @@ public class MeanFilter implements ImageOperation, java.io.Serializable {
      * 
      * @param radius The radius of the newly constructed MeanFilter
      */
-    MeanFilter(int radius) {
+    public MeanFilter(int radius) {
         this.radius = radius;    
     }
 

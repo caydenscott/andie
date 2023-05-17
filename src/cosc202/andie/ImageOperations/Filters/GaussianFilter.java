@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.image.*;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 public class GaussianFilter implements ImageOperation, java.io.Serializable {
 
@@ -23,7 +25,7 @@ public class GaussianFilter implements ImageOperation, java.io.Serializable {
      * 
      * @param radius The radius of the newly constructed GaussianFilter
      */
-    GaussianFilter(int radius) {
+    public GaussianFilter(int radius) {
         this.radius = radius;
     }
 

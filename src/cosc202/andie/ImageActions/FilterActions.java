@@ -1,9 +1,16 @@
-package cosc202.andie;
+package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
+
+import cosc202.andie.Andie;
+import cosc202.andie.ImageOperations.Filters.GaussianFilter;
+import cosc202.andie.ImageOperations.Filters.MeanFilter;
+import cosc202.andie.ImageOperations.Filters.MedianFilter;
+import cosc202.andie.ImageOperations.Filters.SharpenImage;
+import cosc202.andie.ImageOperations.Filters.SoftBlur;
 
 /**
  * <p>

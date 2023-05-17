@@ -181,12 +181,11 @@ public class ColourActions {
             int option = JOptionPane.showOptionDialog(null, message, bundle.getString("colour_b_c"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 contrast = contrastModel.getValue();
                 brightness = brightnessModel.getValue();
             }
+            else return;
 
             try{
                 target.getImage().apply(new BrightnessAndContrast(brightness, contrast));

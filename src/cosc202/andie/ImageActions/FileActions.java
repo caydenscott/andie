@@ -131,53 +131,67 @@ public class FileActions {
                                 JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
                     }
                 }else{
-                    Object[] options = { bundle.getString("open_no_save_option_1"), bundle.getString("open_no_save_option_2"), bundle.getString("no_save_option_3") }; // Modify options here
-                    int choice = JOptionPane.showOptionDialog(null,
-                    bundle.getString("open_no_save_1"), bundle.getString("no_save_warning"),
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-                    if(choice == 0){
-                        try {
-                            ImageAction.target.getImage().save(); 
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                        try {
-                            String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                            EditableImage.clearStack();
-                            EditableImage.changeMade(0);
-                            target.getImage().open(imageFilepath);
-                        } catch (NullPointerException nEx) {
-                            Object[] options1 = { "OK" };
-                            JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_2"),
+                    if(!EditableImage.getRecord()){
+                        Object[] options = { bundle.getString("open_no_save_option_1"), bundle.getString("open_no_save_option_2"), bundle.getString("no_save_option_2") }; // Modify options here
+                        int choice = JOptionPane.showOptionDialog(null,
+                        bundle.getString("open_no_save_1"), bundle.getString("no_save_warning"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                        if(choice == 0){
+                            try {
+                                ImageAction.target.getImage().save(); 
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                            try {
+                                String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                                EditableImage.clearStack();
+                                EditableImage.changeMade(0);
+                                target.getImage().open(imageFilepath);
+                            } catch (NullPointerException nEx) {
+                                Object[] options1 = { "OK" };
+                                JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_2"),
                                     bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION,
                                     JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
-                        } catch (Exception ex) {
-                            Object[] options1 = { "OK" };
-                            JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
+                            } catch (Exception ex) {
+                                Object[] options1 = { "OK" };
+                                JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
                                     bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION,
                                     JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
-                        }
-                    }else if(choice == 1){
-                        try {
-                            String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                            EditableImage.clearStack();
-                            EditableImage.changeMade(0);
-                            target.getImage().open(imageFilepath);
-                        } catch (NullPointerException nEx) {
-                            Object[] options1 = { "OK" };
-                            JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_2"),
+                            }
+                        }else if(choice == 1){
+                            try {
+                                String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                                EditableImage.clearStack();
+                                EditableImage.changeMade(0);
+                                target.getImage().open(imageFilepath);
+                            } catch (NullPointerException nEx) {
+                                Object[] options1 = { "OK" };
+                                JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_2"),
                                     bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION,
                                     JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
-                        } catch (Exception ex) {
-                            Object[] options1 = { "OK" };
-                            JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
+                            } catch (Exception ex) {
+                                Object[] options1 = { "OK" };
+                                JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
                                     bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION,
                                     JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
-                        } 
+                            } 
+                        }
                     }else{
-
+                        try {
+                            String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                            target.getImage().open(imageFilepath);
+                        } catch (NullPointerException nEx) {
+                            Object[] options1 = { "OK" };
+                            JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_2"),
+                                bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
+                        } catch (Exception ex) {
+                            Object[] options1 = { "OK" };
+                            JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
+                                bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.WARNING_MESSAGE, null, options1, options1[0]);
+                        }
                     }
-
                 }
             }
 
@@ -232,7 +246,12 @@ public class FileActions {
                 JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
                         bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, options, options[0]);
-            } catch (Exception ex) {
+            } catch (IllegalArgumentException IAEx) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("file_save_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }catch (Exception ex) {
                 Object[] options = { "OK" };
                 JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
                         bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION,
@@ -349,6 +368,7 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().export(imageFilepath);
+                    EditableImage.changeMade(0);
                 } catch (IllegalArgumentException iAEx) {
                     Object[] options = { "OK" };
                     JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
@@ -405,25 +425,43 @@ public class FileActions {
             if(!EditableImage.getChanges()){
                 System.exit(0);
             }else{
-
-            Object[] options = { bundle.getString("exit_no_save_option_1"), bundle.getString("exit_no_save_option_2"), bundle.getString("no_save_option_3") }; // Modify options here
-            int choice = JOptionPane.showOptionDialog(null,
-                    bundle.getString("exit_no_save_1"), bundle.getString("no_save_warning"),
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-
-            if (choice == 0) { // Save and Exit
-                try {
-                    ImageAction.target.getImage().save();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+                if(!EditableImage.getRecord()){
+                    Object[] options = { bundle.getString("exit_no_save_option_1"), bundle.getString("exit_no_save_option_2"), bundle.getString("no_save_option_2") }; // Modify options here
+                    int choice = JOptionPane.showOptionDialog(null,
+                        bundle.getString("exit_no_save_1"), bundle.getString("no_save_warning"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    if (choice == 0) { // Save and Exit
+                        try {
+                            ImageAction.target.getImage().save();
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                        System.exit(0);
+                    } else if (choice == 1) { // Exit
+                        System.exit(0);
+                    }
                 }
-                System.exit(0);
-            } else if (choice == 1) { // Exit
-                System.exit(0);
-            } else { // Cancel
-                // Do nothing, close the popup
+                else{
+                    int userOption = JOptionPane.showConfirmDialog(null, bundle.getString("macro_warning_2"), 
+                    bundle.getString("macro_tt"), JOptionPane.OK_OPTION);
+                    if(userOption != JOptionPane.OK_OPTION) return;
+                    
+                    Object[] options = { bundle.getString("exit_no_save_option_1"), bundle.getString("exit_no_save_option_2"), bundle.getString("no_save_option_2") }; // Modify options here
+                    int choice = JOptionPane.showOptionDialog(null,
+                        bundle.getString("exit_no_save_1"), bundle.getString("no_save_warning"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    if (choice == 0) { // Save and Exit
+                        try {
+                            ImageAction.target.getImage().save();
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                        System.exit(0);
+                    } else if (choice == 1) { // Exit
+                        System.exit(0);
+                    }
+                }
             }
-        }   
         }
 
     }

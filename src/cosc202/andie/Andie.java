@@ -69,7 +69,8 @@ public class Andie {
 
         Image image = ImageIO.read(Andie.class.getClassLoader().getResource("icon.png"));
         frame.setIconImage(image);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Makes sure file won't close automatically, inscase there are changes.
+        frame.addWindowListener(new CustomWindowAdapter()); // Windows listener that sees if close button is pressed, and if so it checks if user wants to save
 
         // The main content area is an ImagePanel
         ImagePanel imagePanel = new ImagePanel();

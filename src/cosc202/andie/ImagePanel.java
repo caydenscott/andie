@@ -174,6 +174,8 @@ public class ImagePanel extends JPanel {
     public void addToolbar(JToolBar toolBar) {
         // remove the current toolbar
         removeToolbar();
+        // handle sizing and bounds on panel
+        toolBar.setBounds(getInsets().top, getInsets().left, (int)toolBar.getPreferredSize().getWidth(), (int)toolBar.getPreferredSize().getHeight());
         // set the new one and add it to screen
         this.toolbar = toolBar;
 

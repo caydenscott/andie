@@ -1,6 +1,5 @@
 package cosc202.andie.ImageOperations.Transformations;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import cosc202.andie.ImageOperations.ImageOperation;

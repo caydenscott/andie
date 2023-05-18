@@ -268,8 +268,6 @@ public class ShapeActions {
 
             toolbar.addSeparator();
             toolbar.add(cancelButton);
-
-            toolbar.setBounds(target.getInsets().top, target.getInsets().left, (int)toolbar.getPreferredSize().getWidth(), (int)toolbar.getPreferredSize().getHeight());
         }
 
         private class ChangeColourAction extends AbstractAction {

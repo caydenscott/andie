@@ -478,8 +478,6 @@ public class TransformActions {
             });
 
             toolbar.add(cancelButton);
-
-            toolbar.setBounds(target.getInsets().top, target.getInsets().left, (int)toolbar.getPreferredSize().getWidth(), (int)toolbar.getPreferredSize().getHeight());
         }
 
     }

@@ -2,6 +2,19 @@ package cosc202.andie.SelectActions;
 
 import java.awt.Point;
 
+/**
+ * <p>
+ * Utility class to store information about a selected area of the image.
+ * </p>
+ * 
+ * <p>
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * </p>
+ * 
+ * @author Daniel Dachs
+ * @version 1.0
+ */
+
 public class SelectedArea implements java.io.Serializable {
     private int startX;
     private int startY;

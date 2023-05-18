@@ -8,6 +8,23 @@ import java.awt.image.BufferedImage;
 import cosc202.andie.ImageOperations.ImageOperation;
 import cosc202.andie.SelectActions.SelectedArea;
 
+/**
+ * <p>
+ * Abstract draw shape class, handles shape outline and colour.
+ * </p>
+ * 
+ * <p>
+ * This class extends {@link DrawShape}.
+ * </p>
+ * 
+ * <p> 
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * </p>
+ * 
+ * @author Daniel Dachs
+ * @version 1.0
+ */
+
 public abstract class DrawShape implements ImageOperation, java.io.Serializable {
 
     private SelectedArea selectedArea;

@@ -189,7 +189,6 @@ public class ImagePanel extends JPanel {
      * <p>
      * Handles removing the currently open toolbar from the screen. Also removes any mouse listeners.
      * </p>
-     * @param toolBar toolbar to add
      */
     public void removeToolbar() {
         if (toolbar == null) {

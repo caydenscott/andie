@@ -7,6 +7,23 @@ import java.awt.geom.Path2D;
 
 import cosc202.andie.SelectActions.SelectedArea;
 
+/**
+ * <p>
+ * Draws triangle shape to image.
+ * </p>
+ * 
+ * <p>
+ * This class extends {@link DrawShape}.
+ * </p>
+ * 
+ * <p> 
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * </p>
+ * 
+ * @author Daniel Dachs
+ * @version 1.0
+ */
+
 public class DrawTriangle extends DrawShape {
     private boolean isFilled;
 

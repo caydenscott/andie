@@ -10,6 +10,10 @@ import cosc202.andie.ImagePanel;
  * </p>
  * 
  * <p>
+ * Extends on {@link SelectAction} which handles when user selecting area of screen.
+ * </p>
+ * 
+ * <p>
  *  Ensures interface with colour, isfilled and outline thickness for all shapes.
  * </p>
  * 

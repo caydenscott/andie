@@ -6,6 +6,24 @@ import java.awt.image.BufferedImage;
 import cosc202.andie.ImageOperations.ImageOperation;
 import cosc202.andie.SelectActions.SelectedArea;
 
+/**
+ * <p>
+ * ImageOperation to crop image.
+ * </p>
+ * 
+ * <p>
+ * The images produced by this operation has width and heigh specified in selectedArea
+ * with coordinates for top left also specified.
+ * </p>
+ * 
+ * <p>
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * </p>
+ * 
+ * @author Daniel Dachs
+ * @version 1.0
+ */
+
 public class CropImage implements ImageOperation, java.io.Serializable {
 
     private SelectedArea selectedArea;

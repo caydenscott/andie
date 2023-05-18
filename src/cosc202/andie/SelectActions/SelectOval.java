@@ -11,6 +11,10 @@ import cosc202.andie.ImageOperations.DrawShapes.DrawOval;
  * </p>
  * 
  * <p>
+ * Extends on {@link SelectShape} which handles when user selecting area of screen.
+ * </p>
+ * 
+ * <p>
  * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA
  * 4.0</a>
  * </p>

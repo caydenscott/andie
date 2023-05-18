@@ -5,6 +5,23 @@ import java.awt.Color;
 
 import cosc202.andie.SelectActions.SelectedArea;
 
+/**
+ * <p>
+ * Draws rectangle shape to image.
+ * </p>
+ * 
+ * <p>
+ * This class extends {@link DrawShape}.
+ * </p>
+ * 
+ * <p> 
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * </p>
+ * 
+ * @author Daniel Dachs
+ * @version 1.0
+ */
+
 public class DrawRectangle extends DrawShape {
 
     private boolean isFilled;

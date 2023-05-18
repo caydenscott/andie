@@ -12,6 +12,23 @@ import cosc202.andie.ImagePanel;
 
 import javax.swing.BorderFactory;
 
+/**
+ * <p>
+ * Listener to get when user selects an area of the image.
+ * </p>
+ * 
+ * <p>
+ * Extends on {@link MouseListener} which handles when user clicks screen.
+ * </p>
+ * 
+ * <p>
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * </p>
+ * 
+ * @author Daniel Dachs
+ * @version 1.0
+ */
+
 public abstract class SelectAction implements MouseListener {
 
     private Point startPoint;

@@ -283,7 +283,7 @@ public class EditableImage {
      * read the operations from this file.
      * </p>
      * 
-     * @param opsFilename The file location to save the macro to.
+     * @param filePath The file location to save the macro to.
      * @throws Exception If something goes wrong.
      */
     public void load(String filePath) throws Exception {
@@ -441,7 +441,7 @@ public class EditableImage {
      * <p>
      * Change sign of macros record.
      * </p>
-     * 
+     * @param n
      */
     public static void record(int n){
         if(n == 0){

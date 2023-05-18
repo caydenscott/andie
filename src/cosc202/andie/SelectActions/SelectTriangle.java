@@ -9,6 +9,9 @@ import cosc202.andie.ImageOperations.DrawShapes.DrawTriangle;
  * <p>
  * Select triangle class handles user selecting area and adding triangle to image
  * </p>
+ * <p>
+ * Extends on {@link SelectShape} which handles when user selecting area of screen.
+ * </p>
  * 
  * <p>
  * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA

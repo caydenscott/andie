@@ -1,7 +1,11 @@
 package cosc202.andie;
 
 import java.awt.*;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
+import javax.swing.plaf.ToolBarUI;
+import javax.swing.plaf.basic.BasicToolBarUI;
 
 import cosc202.andie.ImageOperations.Filters.BrightnessAndContrast;
 
@@ -40,6 +44,9 @@ public class ImagePanel extends JPanel {
      * </p>
      */
     private double scale;
+
+    /** current opened toolbar on the panel */
+    private JToolBar toolbar;
 
     /**
      * <p>
@@ -156,6 +163,61 @@ public class ImagePanel extends JPanel {
      */
     public Point relativeToImagePoint(Point p) {
         return new Point((int) (p.x/scale), (int) (p.y/scale));
+    }
+
+    /**
+     * <p>
+     * Handles adding a toolbar to the panel, only opens one at a time.
+     * </p>
+     * @param toolBar toolbar to add
+     */
+    public void addToolbar(JToolBar toolBar) {
+        // remove the current toolbar
+        removeToolbar();
+        // set the new one and add it to screen
+        this.toolbar = toolBar;
+
+        // add new toolbar
+        add(toolBar);
+
+        repaint();
+        getParent().revalidate();
+        setVisible(true);
+    }
+
+    /**
+     * <p>
+     * Handles removing the currently open toolbar from the screen. Also removes any mouse listeners.
+     * </p>
+     * @param toolBar toolbar to add
+     */
+    public void removeToolbar() {
+        if (toolbar == null) {
+            return;
+        }
+        // if the toolbar is currently floating add it back to image panel so we can remove it
+        // solution from stackoverflow question sited below
+        if (isFloating(toolbar)) {
+            BasicToolBarUI basicToolbarUI = (BasicToolBarUI) toolbar.getUI();
+            basicToolbarUI.setFloating(false, null);
+        }
+        
+        remove(toolbar);
+        repaint();
+        getParent().revalidate();
+
+        toolbar = null;
+
+        // remove all mouse listeners
+        for (MouseListener ms : getMouseListeners()) {
+            removeMouseListener(ms);
+        }
+    }
+
+    // method/solution sourced from stackoverflow question: Remove floating JToolbar answered Feb 19, 2021 at 19:48 Aldo Canepa
+    private boolean isFloating(JToolBar toolbar) {
+        ToolBarUI ui = toolbar.getUI();
+        return ui instanceof BasicToolBarUI && ( (BasicToolBarUI) ui).isFloating();
     }
 
 }

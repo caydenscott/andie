@@ -9,6 +9,7 @@ import cosc202.andie.ImageActions.FileActions;
 import cosc202.andie.ImageActions.FilterActions;
 import cosc202.andie.ImageActions.ImageAction;
 import cosc202.andie.ImageActions.LanguageActions;
+import cosc202.andie.ImageActions.MacroActions;
 import cosc202.andie.ImageActions.ShapeActions;
 import cosc202.andie.ImageActions.TransformActions;
 import cosc202.andie.ImageActions.ViewActions;

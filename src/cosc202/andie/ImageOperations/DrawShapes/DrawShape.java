@@ -1,5 +1,6 @@
 package cosc202.andie.ImageOperations.DrawShapes;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -11,6 +12,7 @@ public abstract class DrawShape implements ImageOperation, java.io.Serializable 
 
     private SelectedArea selectedArea;
     private Color FillColour;
+    private int outlineThickness;
 
     /**
      * <p>
@@ -25,18 +27,18 @@ public abstract class DrawShape implements ImageOperation, java.io.Serializable 
      * 
      * @param selectedArea the area to draw the shape in
      */
-    public DrawShape(SelectedArea selectedArea, Color FillColour) {
+    public DrawShape(SelectedArea selectedArea, Color FillColour, int outlineThickness) {
 
         this.selectedArea = selectedArea;
         this.FillColour = FillColour;
+        this.outlineThickness = outlineThickness;
     }
 
     // 
 
     /**
-    * Rotate the image.
+    * Draw on the image.
     *
-    * Works through affine transformation manipulation.
     *
     * @param input the image to be converted
     * @return resulting rotated image
@@ -47,6 +49,8 @@ public abstract class DrawShape implements ImageOperation, java.io.Serializable 
         g2d.setColor(FillColour);
         /*g2d.fillRect(selectedArea.getStart()[0], selectedArea.getStart()[1], selectedArea.getWidth(), selectedArea.getHeight()); // (x, y, width, height) 
         g2d.dispose();*/
+
+        g2d.setStroke(new BasicStroke(outlineThickness));
 
         draw(g2d, selectedArea);
         

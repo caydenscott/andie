@@ -3,11 +3,11 @@ package cosc202.andie.SelectActions;
 import java.awt.Color;
 
 import cosc202.andie.ImagePanel;
-import cosc202.andie.ImageOperations.DrawShapes.DrawRectangle;
+import cosc202.andie.ImageOperations.DrawShapes.DrawTriangle;
 
 /**
  * <p>
- * Select rectangle class handles user selecting area and adding rectangle to image
+ * Select triangle class handles user selecting area and adding triangle to image
  * </p>
  * 
  * <p>
@@ -19,7 +19,7 @@ import cosc202.andie.ImageOperations.DrawShapes.DrawRectangle;
  * @version 1.0
  */
 
-public class SelectRectangle extends SelectShape {
+public class SelectTriangle extends SelectShape {
     /**
      * Constructor for select rectange.
      * @param target
@@ -27,13 +27,13 @@ public class SelectRectangle extends SelectShape {
      * @param filled
      * @param outlineThickness
      */
-    public SelectRectangle(ImagePanel target, Color colour, boolean filled, int outlineThickness) {
+    public SelectTriangle(ImagePanel target, Color colour, boolean filled, int outlineThickness) {
         super(target, colour, filled, outlineThickness);
     }
 
     @Override
     protected void apply(SelectedArea sa) {
-        target.getImage().apply(new DrawRectangle(sa, colour, filled, outlineThickness));
+        target.getImage().apply(new DrawTriangle(sa, colour, filled, outlineThickness));
     }
     
 }

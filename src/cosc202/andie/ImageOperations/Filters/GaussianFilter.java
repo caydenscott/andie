@@ -39,7 +39,7 @@ public class GaussianFilter implements ImageOperation, java.io.Serializable {
      * By default, a gaussian filter has radius 1.
      * </p>
      * 
-     * @see MeanFilter(int)
+     * @see GaussianFilter(int)
      */
     GaussianFilter() {
         this(1);

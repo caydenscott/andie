@@ -2,6 +2,7 @@ package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -11,6 +12,8 @@ import cosc202.andie.ImageOperations.Filters.MeanFilter;
 import cosc202.andie.ImageOperations.Filters.MedianFilter;
 import cosc202.andie.ImageOperations.Filters.SharpenImage;
 import cosc202.andie.ImageOperations.Filters.SoftBlur;
+import cosc202.andie.ImageOperations.Filters.EmbossFilter;
+import cosc202.andie.ImageOperations.Filters.SobelFilter;
 
 /**
  * <p>
@@ -56,7 +59,12 @@ public class FilterActions {
         actions.add(new GaussianFilterAction(bundle.getString("filter_4"), null, bundle.getString("filter_4_desc"),
                 Integer.valueOf(KeyEvent.VK_G)));
         actions.add(new MedianFilterAction(bundle.getString("filter_5"), null, bundle.getString("filter_5_desc"),
+                Integer.valueOf(KeyEvent.VK_H)));
+        actions.add(new EmbossFilterAction(bundle.getString("filter_6"), null, bundle.getString("filter_6_desc"),
+                Integer.valueOf(KeyEvent.VK_J)));
+        actions.add(new SobelFilterAction(bundle.getString("filter_7"), null, bundle.getString("filter_7_desc"),
                 Integer.valueOf(KeyEvent.VK_F)));
+
     }
 
     /**
@@ -127,8 +135,8 @@ public class FilterActions {
             // Check the return value from the dialog box.
             if (option == JOptionPane.OK_OPTION) {
                 radius = radiusModel.getNumber().intValue();
-            }
-            else return;
+            } else
+                return;
 
             // Create and apply the filter
             try {
@@ -219,8 +227,8 @@ public class FilterActions {
             // Check the return value from the dialog box.
             if (option == JOptionPane.OK_OPTION) {
                 radius = radiusModel.getNumber().intValue();
-            }
-            else return;
+            } else
+                return;
 
             // Create and apply the filter
             try {
@@ -287,12 +295,156 @@ public class FilterActions {
             // Check the return value from the dialog box.
             if (option == JOptionPane.OK_OPTION) {
                 radius = radiusModel.getNumber().intValue();
-            }
-            else return;
+            } else
+                return;
 
             // Create and apply the filter
             try {
                 target.getImage().apply(new MedianFilter(radius));
+                target.repaint();
+                target.getParent().revalidate();
+            } catch (NullPointerException NPEx) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
+
+        }
+
+    }
+
+    public class EmbossFilterAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a new median-filter action.
+         * </p>
+         * 
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        EmbossFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        /**
+         * <p>
+         * Callback for when the convert-to-grey action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the MedianFilterAction is triggered.
+         * It prompts the user for a filter radius, then applys an appropriately sized
+         * {@link MeanFilter}.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            // Determine the radius - ask the user.
+            int selection = 1;
+
+
+            String[] numbers = { "1", "2", "3", "4", "5", "6", "7", "8" };
+            String message = bundle.getString("filter_emboss");
+
+            // Create a panel to hold the components
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
+            panel.add(new JLabel(message));
+            JComboBox<String> comboBox = new JComboBox<>(numbers);
+            panel.add(comboBox);
+
+            int optionType = JOptionPane.DEFAULT_OPTION;
+            int messageType = JOptionPane.INFORMATION_MESSAGE;
+
+            int choice = JOptionPane.showOptionDialog(null, panel, "Title", optionType, messageType, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (choice == JOptionPane.OK_OPTION) {
+                selection = Integer.parseInt((String) comboBox.getSelectedItem());
+            } else {
+                return;
+            }
+            // Create and apply the filter
+            try {
+                target.getImage().apply(new EmbossFilter(selection));
+                target.repaint();
+                target.getParent().revalidate();
+            } catch (NullPointerException NPEx) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
+
+        }
+
+    }
+
+    public class SobelFilterAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a new median-filter action.
+         * </p>
+         * 
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        SobelFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        /**
+         * <p>
+         * Callback for when the convert-to-grey action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the MedianFilterAction is triggered.
+         * It prompts the user for a filter radius, then applys an appropriately sized
+         * {@link MeanFilter}.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            // Determine the radius - ask the user.
+            String selection = bundle.getString("filter_vertical");
+
+
+            String[] numbers = { bundle.getString("filter_vertical"), bundle.getString("filter_horizontal")};
+            String message = bundle.getString("filter_sobel");
+
+            // Create a panel to hold the components
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
+            panel.add(new JLabel(message));
+            JComboBox<String> comboBox = new JComboBox<>(numbers);
+            panel.add(comboBox);
+
+            int optionType = JOptionPane.DEFAULT_OPTION;
+            int messageType = JOptionPane.INFORMATION_MESSAGE;
+
+            int choice = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"), optionType, messageType, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (choice == JOptionPane.OK_OPTION) {
+                selection = (String) comboBox.getSelectedItem();
+            } else {
+                return;
+            }
+            // Create and apply the filter
+            try {
+                target.getImage().apply(new SobelFilter(selection));
                 target.repaint();
                 target.getParent().revalidate();
             } catch (NullPointerException NPEx) {

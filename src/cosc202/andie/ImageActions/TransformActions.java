@@ -1,9 +1,19 @@
-package cosc202.andie;
+package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
+import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.*;
+
+
+import cosc202.andie.Andie;
+import cosc202.andie.ImageOperations.Transformations.HorizontalFlipTransformation;
+import cosc202.andie.ImageOperations.Transformations.ResizeTransformation;
+import cosc202.andie.ImageOperations.Transformations.RotateTransformation;
+import cosc202.andie.ImageOperations.Transformations.VerticalFlipTransformation;
+import cosc202.andie.SelectActions.SelectCrop;
+
 
 /**
  * <p>
@@ -50,6 +60,8 @@ public class TransformActions {
                 bundle.getString("transform_4_desc"), Integer.valueOf(KeyEvent.VK_H)));
         actions.add(new VerticalFlipTransformationAction(bundle.getString("transform_5"), null,
                 bundle.getString("transform_5_desc"), Integer.valueOf(KeyEvent.VK_V)));
+        actions.add(new CropAction(bundle.getString("transform_6"), null,
+            bundle.getString("transform_6_desc"), Integer.valueOf(KeyEvent.VK_V)));
     }
 
     /**
@@ -108,22 +120,22 @@ public class TransformActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             // Determine the radius - ask the user.
             int scale = 1;
 
             // Pop-up dialog box for asking user how much to scale
             SpinnerNumberModel resizeModel = new SpinnerNumberModel(100, 1, 1000, 1);
             JSpinner resizeSpinner = new JSpinner(resizeModel);
-            int option = JOptionPane.showOptionDialog(null, resizeSpinner, "Enter scale:", JOptionPane.OK_CANCEL_OPTION,
+            int option = JOptionPane.showOptionDialog(null, resizeSpinner, bundle.getString("transform_scale_title"), JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 scale = resizeModel.getNumber().intValue();
             }
-            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            else return; 
+            
             try {
                 target.getImage().apply(new ResizeTransformation(scale));
                 target.repaint();
@@ -352,6 +364,120 @@ public class TransformActions {
                         bundle.getString("transform_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, options, options[0]);
             }
+        }
+
+    }
+
+    /**
+     * <p>
+     * Action to crop images.
+     * </p>
+     * 
+     * @see Crop
+     */
+    public class CropAction extends ImageAction {
+
+        private JToolBar toolbar;
+        private SelectCrop cropSelection;
+
+        /**
+         * <p>
+         * Create a new crop action.
+         * </p>
+         * 
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        CropAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        /**
+         * <p>
+         * Callback for when the crop action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the CropAction is
+         * triggered.
+         * It crops the image
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            // load up multiligual text
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+
+            // check if the image is loaded up first
+            if (!target.getImage().hasImage()) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("select_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+                return;
+            }
+
+            // if there is already a toolbar open dont open a new one
+            //if (toolbar != null) {
+            //    return;
+            //}
+
+            makeToolBar(bundle);
+            
+            // add the toolbar which adds all options to make shapes
+            target.addToolbar(toolbar);
+
+            addSelectAction(new SelectCrop(target));
+
+
+        }
+
+        // cleans up when closing the add shape toolbar, stops shape selection and removes toolbar ui
+        private void close() {
+            if (cropSelection != null) {
+                // remove the selector
+                target.removeMouseListener(cropSelection);
+            }
+
+            // remove toolbar
+            target.removeToolbar();
+
+            toolbar = null;
+        }
+
+        private void addSelectAction(SelectCrop sa) {
+            // kinda all unnecissary atm but if other crop options were available
+            if (sa == null) {
+                return;
+            }
+            // remove the previous one
+            target.removeMouseListener(cropSelection);
+            target.addMouseListener(sa);
+
+            // set new select action
+            cropSelection = sa;
+        }
+
+        private void makeToolBar(ResourceBundle bundle) {
+
+            toolbar = new JToolBar();
+            toolbar.setLayout(new FlowLayout());
+
+            
+            // Cancel Button --------------------------
+            JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
+
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    close();
+                }
+            });
+
+            toolbar.add(cancelButton);
         }
 
     }

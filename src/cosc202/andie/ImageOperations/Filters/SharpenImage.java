@@ -1,11 +1,13 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.Graphics2D;
 import java.awt.image.*;
 
-public class SoftBlur implements ImageOperation, java.io.Serializable {
+import cosc202.andie.ImageOperations.ImageOperation;
 
-    SoftBlur() {}
+public class SharpenImage implements ImageOperation, java.io.Serializable {
+
+    public SharpenImage() {}
     
     public BufferedImage apply(BufferedImage input) {
         int height = input.getHeight();
@@ -29,10 +31,9 @@ public class SoftBlur implements ImageOperation, java.io.Serializable {
         g.drawImage(input, 0, height + padAmount, padAmount, height + padAmount * 2, 0, height - padAmount, padAmount, height, null);
         g.drawImage(input, width + padAmount, height + padAmount, width + padAmount * 2, height + padAmount * 2, width - padAmount, height - padAmount, width, height, null);
         g.dispose();
-    
         BufferedImage output = new BufferedImage(width, height, input.getType());
         // The values for the kernel as a 9-element array
-        float [] array = { 0 , 1/8.0f, 0 , 1/8.0f, 1/2.0f, 1/8.0f, 0 , 1/8.0f, 0 };
+        float [] array = { 0 , -1/2.0f, 0, -1/2.0f, 3, -1/2.0f, 0, -1/2.0f, 0 };
         Kernel kernel = new Kernel(3, 3, array);
         ConvolveOp convOp = new ConvolveOp(kernel);
         BufferedImage filteredImage = convOp.filter(paddedInput, null);

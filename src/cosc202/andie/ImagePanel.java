@@ -1,7 +1,13 @@
 package cosc202.andie;
 
 import java.awt.*;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
+import javax.swing.plaf.ToolBarUI;
+import javax.swing.plaf.basic.BasicToolBarUI;
+
+import cosc202.andie.ImageOperations.Filters.BrightnessAndContrast;
 
 /**
  * <p>
@@ -39,6 +45,9 @@ public class ImagePanel extends JPanel {
      */
     private double scale;
 
+    /** current opened toolbar on the panel */
+    private JToolBar toolbar;
+
     /**
      * <p>
      * Create a new ImagePanel.
@@ -51,6 +60,7 @@ public class ImagePanel extends JPanel {
     public ImagePanel() {
         image = new EditableImage();
         scale = 1.0;
+        this.setLayout(null); 
     }
 
     /**
@@ -143,6 +153,72 @@ public class ImagePanel extends JPanel {
         return null;
     }
 
-     
+    /**
+     * <p>
+     * Convert a point in the ImagePanel to a point in the image. Taking scale into account.
+     * </p>
+     * 
+     * @param p Point relative to the ImagePanel
+     * @return Point relative to the image
+     */
+    public Point relativeToImagePoint(Point p) {
+        return new Point((int) (p.x/scale), (int) (p.y/scale));
+    }
+
+    /**
+     * <p>
+     * Handles adding a toolbar to the panel, only opens one at a time.
+     * </p>
+     * @param toolBar toolbar to add
+     */
+    public void addToolbar(JToolBar toolBar) {
+        // remove the current toolbar
+        removeToolbar();
+        // handle sizing and bounds on panel
+        toolBar.setBounds(getInsets().top, getInsets().left, (int)toolBar.getPreferredSize().getWidth(), (int)toolBar.getPreferredSize().getHeight());
+        // set the new one and add it to screen
+        this.toolbar = toolBar;
+
+        // add new toolbar
+        add(toolBar);
+
+        repaint();
+        getParent().revalidate();
+        setVisible(true);
+    }
+
+    /**
+     * <p>
+     * Handles removing the currently open toolbar from the screen. Also removes any mouse listeners.
+     * </p>
+     */
+    public void removeToolbar() {
+        if (toolbar == null) {
+            return;
+        }
+        // if the toolbar is currently floating add it back to image panel so we can remove it
+        // solution from stackoverflow question sited below
+        if (isFloating(toolbar)) {
+            BasicToolBarUI basicToolbarUI = (BasicToolBarUI) toolbar.getUI();
+            basicToolbarUI.setFloating(false, null);
+        }
+        
+        remove(toolbar);
+        repaint();
+        getParent().revalidate();
+
+        toolbar = null;
+
+        // remove all mouse listeners
+        for (MouseListener ms : getMouseListeners()) {
+            removeMouseListener(ms);
+        }
+    }
+
+    // method/solution sourced from stackoverflow question: Remove floating JToolbar answered Feb 19, 2021 at 19:48 Aldo Canepa
+    private boolean isFloating(JToolBar toolbar) {
+        ToolBarUI ui = toolbar.getUI();
+        return ui instanceof BasicToolBarUI && ( (BasicToolBarUI) ui).isFloating();
+    }
 
 }

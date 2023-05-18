@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations;
 
 import java.awt.image.BufferedImage;
+
+import cosc202.andie.ImageActions.ImageAction;
 
 /**
  * <p>

@@ -2,6 +2,19 @@ package cosc202.andie;
 
 import java.awt.*;
 import javax.swing.*;
+
+import cosc202.andie.ImageActions.ColourActions;
+import cosc202.andie.ImageActions.EditActions;
+import cosc202.andie.ImageActions.FileActions;
+import cosc202.andie.ImageActions.FilterActions;
+import cosc202.andie.ImageActions.ImageAction;
+import cosc202.andie.ImageActions.LanguageActions;
+import cosc202.andie.ImageActions.MacroActions;
+import cosc202.andie.ImageActions.ShapeActions;
+import cosc202.andie.ImageActions.TransformActions;
+import cosc202.andie.ImageActions.ViewActions;
+import cosc202.andie.ImageOperations.ImageOperation;
+
 import javax.imageio.*;
 
 /**
@@ -9,9 +22,6 @@ import javax.imageio.*;
  * Main class for A Non-Destructive Image Editor (ANDIE).
  * </p>
  * 
- * this is a change made by daniel
- * 
- * this is a change made by cayden
  * 
  * <p>
  * This class is the entry point for the program.
@@ -66,6 +76,7 @@ public class Andie {
         ImageAction.setTarget(imagePanel);
         JScrollPane scrollPane = new JScrollPane(imagePanel);
         frame.add(scrollPane, BorderLayout.CENTER);
+
         
         // Add in menus for various types of action the user may perform.
         JMenuBar menuBar = new JMenuBar();
@@ -77,6 +88,10 @@ public class Andie {
         // Likewise Edit menus are very common, so should be clear what might go here.
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
+
+        // Actions to create or load a macro.
+        MacroActions macroActions = new MacroActions();
+        menuBar.add(macroActions.createMenu());
 
         // View actions control how the image is displayed, but do not alter its actual content
         ViewActions viewActions = new ViewActions();
@@ -97,6 +112,10 @@ public class Andie {
         // Actions to change the language 
         LanguageActions languageActions = new LanguageActions();
         menuBar.add(languageActions.createMenu());
+
+        // shapes
+        ShapeActions shapeActions = new ShapeActions();
+        menuBar.add(shapeActions.createMenu());
         
         frame.setJMenuBar(menuBar);
         frame.pack();

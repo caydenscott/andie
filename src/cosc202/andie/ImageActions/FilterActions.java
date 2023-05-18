@@ -1,9 +1,16 @@
-package cosc202.andie;
+package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
+
+import cosc202.andie.Andie;
+import cosc202.andie.ImageOperations.Filters.GaussianFilter;
+import cosc202.andie.ImageOperations.Filters.MeanFilter;
+import cosc202.andie.ImageOperations.Filters.MedianFilter;
+import cosc202.andie.ImageOperations.Filters.SharpenImage;
+import cosc202.andie.ImageOperations.Filters.SoftBlur;
 
 /**
  * <p>
@@ -118,11 +125,10 @@ public class FilterActions {
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 radius = radiusModel.getNumber().intValue();
             }
+            else return;
 
             // Create and apply the filter
             try {
@@ -211,11 +217,10 @@ public class FilterActions {
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 radius = radiusModel.getNumber().intValue();
             }
+            else return;
 
             // Create and apply the filter
             try {
@@ -280,11 +285,10 @@ public class FilterActions {
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 radius = radiusModel.getNumber().intValue();
             }
+            else return;
 
             // Create and apply the filter
             try {

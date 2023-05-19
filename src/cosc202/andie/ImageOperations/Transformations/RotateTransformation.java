@@ -107,7 +107,9 @@ public class RotateTransformation implements ImageOperation, java.io.Serializabl
         AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
 
         transformOp.filter(convertedImg, output);
+        BufferedImage convertedOutput = new BufferedImage(output.getWidth(), output.getHeight(), input.getType());
+        convertedOutput.getGraphics().drawImage(output, 0, 0, null);
 
-        return output;
+        return convertedOutput;
     }
 }

@@ -1,6 +1,9 @@
-package cosc202.andie;
+package cosc202.andie.ImageActions;
 
 import javax.swing.*;
+
+import cosc202.andie.ImagePanel;
+import cosc202.andie.ImageOperations.ImageOperation;
 
 /**
  * <p>

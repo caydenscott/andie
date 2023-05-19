@@ -1,7 +1,9 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.image.*;
 import java.util.*;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 /**
  * @see java.awt.image.ConvolveOp
@@ -23,7 +25,7 @@ public class MedianFilter implements ImageOperation, java.io.Serializable {
      * 
      * @param radius The radius of the newly constructed MedianFilter
      */
-    MedianFilter(int radius) {
+    public MedianFilter(int radius) {
         this.radius = radius;
     }
 

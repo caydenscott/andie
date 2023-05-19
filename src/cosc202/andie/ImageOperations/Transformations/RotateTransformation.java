@@ -1,7 +1,9 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Transformations;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.*;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 /**
  * <p>

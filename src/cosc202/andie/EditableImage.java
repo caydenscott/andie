@@ -4,6 +4,11 @@ import java.util.*;
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
+import java.util.prefs.Preferences;
+import javax.swing.*;
+
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 /**
  * <p>
@@ -31,7 +36,7 @@ import javax.imageio.*;
  * @author Steven Mills
  * @version 1.0
  */
-class EditableImage {
+public class EditableImage {
 
     /** The original image. This should never be altered by ANDIE. */
     private BufferedImage original;
@@ -41,11 +46,15 @@ class EditableImage {
     private static Stack<ImageOperation> ops;
     /** A memory of 'undone' operations to support 'redo'. */
     private static Stack<ImageOperation> redoOps;
+    /** A sequence of recorded operations to create mamcro. */
+    private static Stack<ImageOperation> macroOps;
     /** The file where the original image is stored/ */
     private String imageFilename;
     /** The file where the operation sequence is stored. */
     private String opsFilename;
     private static boolean changeMade = false;
+    private static boolean macroRecord = false;
+    protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
     
 
     /**
@@ -62,8 +71,10 @@ class EditableImage {
         current = null;
         ops = new Stack<ImageOperation>();
         redoOps = new Stack<ImageOperation>();
+        macroOps = new Stack<ImageOperation>();
         imageFilename = null;
         opsFilename = null;
+        Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
     }
 
     /**
@@ -188,7 +199,7 @@ class EditableImage {
         // Write operations file
         FileOutputStream fileOut = new FileOutputStream(this.opsFilename);
         ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-        objOut.writeObject(this.ops);
+        objOut.writeObject(EditableImage.ops);
         objOut.close();
         fileOut.close();
     }
@@ -223,15 +234,86 @@ class EditableImage {
      * 
      * <p>
      * Export the image to the file provided as a parameter.
+     * Without saves a set of operations from the file with <code>.ops</code>.
      * </p>
      * 
      * @param imageFilename The file location to save the image to.
      * @throws Exception If something goes wrong.
      */
-
     public void export(String imageFilename) throws Exception {
         this.imageFilename = imageFilename;
-        ImageIO.write(current, "png", new File(imageFilename));
+        String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase();
+        ImageIO.write(current, extension, new File(imageFilename));
+    }
+
+    /**
+     * <p>
+     * Create a macro to a speficied file.
+     * </p>
+     * 
+     * <p>
+     * Create a macro to the file provided as a parameter.
+     * Saves it as a set of recorded operations with <code>.ops</code>. 
+     * </p>
+     * 
+     * @param opsFilename The file location to save the macro to.
+     * @throws Exception If something goes wrong.
+     */
+    public static void createMacro(String opsFilename) throws Exception {
+        if(getRecord() == false){
+            return;
+        }
+        FileOutputStream fileOut = new FileOutputStream(opsFilename + ".ops");
+        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+        objOut.writeObject(EditableImage.macroOps);
+        objOut.close();
+        fileOut.close();
+        macroOps.clear();
+    }
+
+    /**
+     * <p>
+     * Load a macro from a file.
+     * </p>
+     * 
+     * <p>
+     * Load a macro from the specified file.
+     * It will tries to load a set of operations from the file with <code>.ops</code>.
+     * So if you open image and load <code>some/path/to/ops.ops</code>, this method will try to
+     * read the operations from this file.
+     * </p>
+     * 
+     * @param filePath The file location to save the macro to.
+     * @throws Exception If something goes wrong.
+     */
+    public void load(String filePath) throws Exception {
+        String opsFilename = filePath;
+        
+        try {
+            FileInputStream fileIn = new FileInputStream(opsFilename);
+            ObjectInputStream objIn = new ObjectInputStream(fileIn);
+
+            // Silence the Java compiler warning about type casting.
+            // Understanding the cause of the warning is way beyond
+            // the scope of COSC202, but if you're interested, it has
+            // to do with "type erasure" in Java: the compiler cannot
+            // produce code that fails at this point in all cases in
+            // which there is actually a type mismatch for one of the
+            // elements within the Stack, i.e., a non-ImageOperation.
+            @SuppressWarnings("unchecked")
+            Stack<ImageOperation> opsFromFile = (Stack<ImageOperation>) objIn.readObject();
+            ops.addAll(opsFromFile);
+            redoOps.clear();
+            objIn.close();
+            fileIn.close();
+        } catch (Exception ex) {
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            Object[] options = { "OK" };
+            JOptionPane.showOptionDialog(null, bundle.getString("file_open_error_4"),
+                    bundle.getString("file_open_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+        }
+        this.refresh();
     }
 
     /**
@@ -245,6 +327,9 @@ class EditableImage {
         current = op.apply(current);
         changeMade(1);
         ops.add(op);
+        if(getRecord() == true){
+            macroOps.add(op);
+        }
     }
 
     /**
@@ -259,6 +344,9 @@ class EditableImage {
         }
         changeMade(1);
         redoOps.push(ops.pop());
+        if(getRecord() == true && macroOps.size() > 0){
+            macroOps.pop();
+        }
         
         refresh();
     }
@@ -347,6 +435,33 @@ class EditableImage {
 
     public static boolean getChanges(){
         return changeMade;
+    }
+
+    /**
+     * <p>
+     * Change sign of macros record.
+     * </p>
+     * @param n
+     */
+    public static void record(int n){
+        if(n == 0){
+            macroRecord = false;
+        }else{
+            macroRecord = true;
+        }
+    }
+
+    public static boolean getRecord(){
+        return macroRecord;
+    }
+
+    public static void clearMacro(){
+        if(macroOps == null){
+            return;
+        }
+        if(macroOps.size() > 0){
+            macroOps.clear();
+        }
     }
 
 }

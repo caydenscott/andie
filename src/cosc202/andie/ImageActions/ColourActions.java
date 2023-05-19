@@ -1,10 +1,15 @@
-package cosc202.andie;
+package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.BoundedRangeModel;
+
+import cosc202.andie.Andie;
+import cosc202.andie.ImageOperations.Filters.BrightnessAndContrast;
+import cosc202.andie.ImageOperations.Filters.ConvertToGrey;
+import cosc202.andie.ImageOperations.Filters.InvertImage;
 
 /**
  * <p>
@@ -176,12 +181,11 @@ public class ColourActions {
             int option = JOptionPane.showOptionDialog(null, message, bundle.getString("colour_b_c"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 contrast = contrastModel.getValue();
                 brightness = brightnessModel.getValue();
             }
+            else return;
 
             try{
                 target.getImage().apply(new BrightnessAndContrast(brightness, contrast));

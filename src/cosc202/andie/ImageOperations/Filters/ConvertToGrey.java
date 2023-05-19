@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.image.*;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 /**
  * <p>
@@ -27,7 +29,7 @@ public class ConvertToGrey implements ImageOperation, java.io.Serializable {
      * Create a new CovertToGrey operation.
      * </p>
      */
-    ConvertToGrey() {
+    public ConvertToGrey() {
 
     }
 

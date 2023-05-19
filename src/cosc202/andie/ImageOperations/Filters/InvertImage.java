@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.image.*;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 public class InvertImage implements ImageOperation, java.io.Serializable{
 
@@ -8,7 +10,7 @@ public class InvertImage implements ImageOperation, java.io.Serializable{
      * Create a new InvertImage operation
      */
 
-     InvertImage(){
+     public InvertImage(){
 
      }
 

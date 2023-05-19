@@ -2,7 +2,7 @@
 Unchanged from code provided. Still runs the same where Andie class is start point.
 
 ## Documentation
-Documentation available at https://cosc202-team_n.cspages.otago.ac.nz/andie/doc
+Documentation available at https://cosc202-team_n.cspages.otago.ac.nz/andie/doc \n
 Generated from Javadoc comments, in code comments exist as well within the source code.
 
 ## User Guide

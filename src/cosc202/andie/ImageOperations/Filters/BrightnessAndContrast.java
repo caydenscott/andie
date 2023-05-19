@@ -1,6 +1,8 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Filters;
 
 import java.awt.image.BufferedImage;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 public class BrightnessAndContrast implements ImageOperation, java.io.Serializable {
 
@@ -14,7 +16,6 @@ public class BrightnessAndContrast implements ImageOperation, java.io.Serializab
 
     @Override
     public BufferedImage apply(BufferedImage input) {
-        // // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'apply'");
         for(int i = 0; i < input.getHeight(); ++i){
             for(int j = 0; j < input.getWidth(); ++j){

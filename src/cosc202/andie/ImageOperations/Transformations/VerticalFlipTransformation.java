@@ -1,6 +1,9 @@
-package cosc202.andie;
+package cosc202.andie.ImageOperations.Transformations;
+
 
 import java.awt.image.*;
+
+import cosc202.andie.ImageOperations.ImageOperation;
 
 /**
  * <p>
@@ -9,7 +12,7 @@ import java.awt.image.*;
  * 
  * <p>
  * The images produced by this operation have the pixels moved to different positions
- * to flip the image across y axis, ie ony x coordinates change.
+ * to flip the image across x axis, ie ony y coordinates change.
  * </p>
  * 
  * <p>
@@ -20,20 +23,18 @@ import java.awt.image.*;
  * @version 1.0
  */
 
-public class HorizontalFlipTransformation implements ImageOperation, java.io.Serializable {
+public class VerticalFlipTransformation implements ImageOperation, java.io.Serializable {
 
 
     /**
      * <p>
-     * Construct a Flip transformation whuch will flip across y-axis 
+     * Construct a Flip transformation whuch will flip across x-axis 
      * </p>
      * 
      */
-    public HorizontalFlipTransformation() {
+    public VerticalFlipTransformation() {
         
     }
-
-    // 
 
     /**
     * FLip the image.
@@ -64,12 +65,12 @@ public class HorizontalFlipTransformation implements ImageOperation, java.io.Ser
         //return output;
         return output;*/
 
-        for (int y = 0; y < input.getHeight(); ++y) {
-            for (int x = 0; x < input.getWidth()/2; ++x) {
+        for (int y = 0; y < input.getHeight()/2; ++y) {
+            for (int x = 0; x < input.getWidth(); ++x) {
                 int pixel = input.getRGB(x, y);
-                int oppositePixel = input.getRGB(input.getWidth() - x - 1, y);
-                // set pixel to oposite x value, swap them
-                input.setRGB(input.getWidth() - x - 1, y, pixel);
+                int oppositePixel = input.getRGB(x, input.getHeight() - y - 1);
+                // set pixel to oposite y value, swap them
+                input.setRGB(x, input.getHeight() - y - 1, pixel);
                 input.setRGB(x, y, oppositePixel);
             }
         }

@@ -47,7 +47,8 @@ public class FilterActions {
      * </p>
      */
 
-    // Integer.valueOf(KeyEvent.VK_M), KeyEvent.getKeyStroke(KeyEvent.VK_M, CTRL_DOWN_MASK)));
+    // Integer.valueOf(KeyEvent.VK_M), KeyEvent.getKeyStroke(KeyEvent.VK_M,
+    // CTRL_DOWN_MASK)));
 
     public FilterActions() {
         actions = new ArrayList<Action>();
@@ -129,18 +130,29 @@ public class FilterActions {
             // Determine the radius - ask the user.
             int radius = 1;
 
-            // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, bundle.getString("filter_radius"),
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
+
+            JSlider radiusSlider = new JSlider(1, 10, 1);
+            radiusSlider.setMajorTickSpacing(1);
+            radiusSlider.setPaintTicks(true);
+            radiusSlider.setPaintLabels(true);
+            Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+            labelTable.put(1, new JLabel("1"));
+            labelTable.put(5, new JLabel("5"));
+            labelTable.put(10, new JLabel("10"));
+            radiusSlider.setLabelTable(labelTable);
+            panel.add(radiusSlider);
+
+            int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
-            } else
+                radius = radiusSlider.getValue();
+            } else {
                 return;
-
+            }
             // Create and apply the filter
             try {
                 target.getImage().apply(new MeanFilter(radius));
@@ -221,18 +233,29 @@ public class FilterActions {
             // Determine the radius - ask the user.
             int radius = 1;
 
-            // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 50, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, bundle.getString("filter_radius"),
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
+
+            JSlider radiusSlider = new JSlider(1, 10, 1);
+            radiusSlider.setMajorTickSpacing(1);
+            radiusSlider.setPaintTicks(true);
+            radiusSlider.setPaintLabels(true);
+            Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+            labelTable.put(1, new JLabel("1"));
+            labelTable.put(5, new JLabel("5"));
+            labelTable.put(10, new JLabel("10"));
+            radiusSlider.setLabelTable(labelTable);
+            panel.add(radiusSlider);
+
+            int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
-            } else
+                radius = radiusSlider.getValue();
+            } else {
                 return;
-
+            }
             // Create and apply the filter
             try {
                 target.getImage().apply(new GaussianFilter(radius));
@@ -273,13 +296,9 @@ public class FilterActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
-         * </p>
-         * 
-         * <p>
          * This method is called whenever the MedianFilterAction is triggered.
          * It prompts the user for a filter radius, then applys an appropriately sized
-         * {@link MeanFilter}.
+         * {@link MedianFilter}.
          * </p>
          * 
          * @param e The event triggering this callback.
@@ -289,18 +308,29 @@ public class FilterActions {
             // Determine the radius - ask the user.
             int radius = 1;
 
-            // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, bundle.getString("filter_radius"),
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
+
+            JSlider radiusSlider = new JSlider(1, 10, 1);
+            radiusSlider.setMajorTickSpacing(1);
+            radiusSlider.setPaintTicks(true);
+            radiusSlider.setPaintLabels(true);
+            Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+            labelTable.put(1, new JLabel("1"));
+            labelTable.put(5, new JLabel("5"));
+            labelTable.put(10, new JLabel("10"));
+            radiusSlider.setLabelTable(labelTable);
+            panel.add(radiusSlider);
+
+            int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
-            } else
+                radius = radiusSlider.getValue();
+            } else {
                 return;
-
+            }
             // Create and apply the filter
             try {
                 target.getImage().apply(new MedianFilter(radius));
@@ -335,13 +365,9 @@ public class FilterActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
-         * </p>
-         * 
-         * <p>
-         * This method is called whenever the MedianFilterAction is triggered.
+         * This method is called whenever the EmbossFilterAction is triggered.
          * It prompts the user for a filter radius, then applys an appropriately sized
-         * {@link MeanFilter}.
+         * {@link EmbossFilter}.
          * </p>
          * 
          * @param e The event triggering this callback.
@@ -350,8 +376,6 @@ public class FilterActions {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             // Determine the radius - ask the user.
             int selection = 1;
-
-
             String[] numbers = { "1", "2", "3", "4", "5", "6", "7", "8" };
             String message = bundle.getString("filter_emboss");
 
@@ -365,7 +389,8 @@ public class FilterActions {
             int optionType = JOptionPane.DEFAULT_OPTION;
             int messageType = JOptionPane.INFORMATION_MESSAGE;
 
-            int choice = JOptionPane.showOptionDialog(null, panel, "Title", optionType, messageType, null, null, null);
+            int choice = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"), optionType,
+                    messageType, null, null, null);
 
             // Check the return value from the dialog box.
             if (choice == JOptionPane.OK_OPTION) {
@@ -423,8 +448,7 @@ public class FilterActions {
             // Determine the radius - ask the user.
             String selection = bundle.getString("filter_vertical");
 
-
-            String[] numbers = { bundle.getString("filter_vertical"), bundle.getString("filter_horizontal")};
+            String[] numbers = { bundle.getString("filter_vertical"), bundle.getString("filter_horizontal") };
             String message = bundle.getString("filter_sobel");
 
             // Create a panel to hold the components
@@ -437,7 +461,8 @@ public class FilterActions {
             int optionType = JOptionPane.DEFAULT_OPTION;
             int messageType = JOptionPane.INFORMATION_MESSAGE;
 
-            int choice = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"), optionType, messageType, null, null, null);
+            int choice = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"), optionType,
+                    messageType, null, null, null);
 
             // Check the return value from the dialog box.
             if (choice == JOptionPane.OK_OPTION) {

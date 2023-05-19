@@ -121,6 +121,10 @@ public class Andie {
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
+
+        KeyboardShortcuts shortcuts = new KeyboardShortcuts();
+        
+        frame.addKeyListener(shortcuts.getKeyAdapter());
     }
 
     /**

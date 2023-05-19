@@ -103,43 +103,12 @@ public abstract class SelectAction implements MouseListener {
      }
  
      public void mouseClicked(MouseEvent e) {
-        // SelectedArea sa = getSelectedArea();
-
-        // if (sa == null) {
-        //     return;
-        // }
-        
-        // // if the user double clicks cancel or confirm the selection, depending on if they are inside the selection
-        // if (e.getClickCount() == 2) {
-        //     // if inside the selection, they confirm
-        //     if (sa.contains(getPosition(e).x, getPosition(e).y)) {
-        //         // draw the shape, and repaint TESTING
-        //         target.getImage().apply(new DrawRectangle(sa, Color.BLACK));
-        //         target.repaint();
-        //         target.getParent().revalidate();
-        //     }
-
-        //     // reset the selection either way
-        //     startPoint = null;
-        //     endPoint = null;
-
-        // }
+        // cancel the selection if user selects outside area
         clear();
      }
 
     
     private void showPreview(SelectedArea sa) {
-        // if there is a selected area then draw it TESTING
-        //target.getImage().apply(new DrawRectangle(sa, Color.PINK));
-
-        /*Graphics2D g = (Graphics2D)target.getGraphics().create();
-
-        g.setColor(Color.PINK);
-        Rectangle rect = new Rectangle(sa.getStart()[0], sa.getStart()[1], sa.getWidth(), sa.getHeight());
-
-        g.draw(rect);
-        g.fillRect(sa.getStart()[0], sa.getStart()[1], sa.getWidth(), sa.getHeight()); // (x, y, width, height) 
-        g.dispose();*/
 
         confirmButton = new JButton("✓");
 
@@ -153,8 +122,6 @@ public abstract class SelectAction implements MouseListener {
                 // draw the shape, and repaint, note this is checks start and end again
                 apply(new SelectedArea(startPoint, endPoint));
                 
-                //target.repaint();
-                //target.getParent().revalidate();
 
                 // reset the selection
                 startPoint = null;

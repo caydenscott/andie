@@ -36,11 +36,6 @@ public abstract class DrawShape implements ImageOperation, java.io.Serializable 
      * Construct a draw shape action.
      * </p>
      * 
-     * <p>
-     * The rotate angle is defined in degrees and is how much the
-     * image will be rotated by. So far only for integer multiples
-     * of 90. (ie 90, 180, 270)
-     * </p>
      * 
      * @param selectedArea the area to draw the shape in
      */

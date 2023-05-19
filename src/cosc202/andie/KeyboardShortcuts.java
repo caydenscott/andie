@@ -3,10 +3,15 @@ package cosc202.andie;
 import javax.swing.JOptionPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import cosc202.andie.FileActions.*;
-import cosc202.andie.FileActions;
-import cosc202.andie.EditActions;
-import cosc202.andie.EditActions.*;
+
+import cosc202.andie.ImageActions.EditActions;
+import cosc202.andie.ImageActions.FileActions;
+import cosc202.andie.ImageActions.EditActions.RedoAction;
+import cosc202.andie.ImageActions.EditActions.UndoAction;
+import cosc202.andie.ImageActions.FileActions.FileOpenAction;
+import cosc202.andie.ImageActions.FileActions.FileSaveAction;
+import cosc202.andie.ImageActions.FileActions.FileSaveAsAction;
+import cosc202.andie.ImageOperations.*;
 
 public class KeyboardShortcuts {
     private KeyAdapter keyAdapter;

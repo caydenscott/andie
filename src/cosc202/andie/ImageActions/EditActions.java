@@ -83,7 +83,7 @@ public class EditActions {
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
          */
-        UndoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+        public UndoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
         }
 
@@ -125,7 +125,7 @@ public class EditActions {
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
          */
-        RedoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+        public RedoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
         }
 

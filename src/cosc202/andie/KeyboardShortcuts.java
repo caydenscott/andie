@@ -22,10 +22,10 @@ public class KeyboardShortcuts {
     public KeyboardShortcuts(){
         //Assign keyAdapter field to new KeyAdapter
         keyAdapter = new KeyAdapter() {
-            
         
-            //@Override
-            public void keyBinds(KeyEvent k){
+        
+            @Override
+            public void keyPressed(KeyEvent k){
                 //* Action instances for Edit Menu */
                 EditActions editActions = new EditActions();
                 UndoAction undoAction = editActions.new UndoAction(null, null, null, null);

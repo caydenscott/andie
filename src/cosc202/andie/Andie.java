@@ -71,14 +71,14 @@ public class Andie {
         frame.setIconImage(image);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Makes sure file won't close automatically, inscase there are changes.
         frame.addWindowListener(new CustomWindowAdapter()); // Windows listener that sees if close button is pressed, and if so it checks if user wants to save
-
+        
         // The main content area is an ImagePanel
         ImagePanel imagePanel = new ImagePanel();
         ImageAction.setTarget(imagePanel);
         JScrollPane scrollPane = new JScrollPane(imagePanel);
         frame.add(scrollPane, BorderLayout.CENTER);
-
-        
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setVisible(true);
         // Add in menus for various types of action the user may perform.
         JMenuBar menuBar = new JMenuBar();
 

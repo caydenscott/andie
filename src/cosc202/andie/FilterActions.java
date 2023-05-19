@@ -36,6 +36,9 @@ public class FilterActions {
      * Create a set of Filter menu actions.
      * </p>
      */
+
+    // Integer.valueOf(KeyEvent.VK_M), KeyEvent.getKeyStroke(KeyEvent.VK_M, CTRL_DOWN_MASK)));
+
     public FilterActions() {
         actions = new ArrayList<Action>();
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));

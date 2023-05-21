@@ -2,11 +2,19 @@ package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
+import java.awt.BorderLayout;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import cosc202.andie.Andie;
+import cosc202.andie.EditableImage;
 import cosc202.andie.ImageOperations.Filters.GaussianFilter;
 import cosc202.andie.ImageOperations.Filters.MeanFilter;
 import cosc202.andie.ImageOperations.Filters.MedianFilter;
@@ -142,7 +150,51 @@ public class FilterActions {
             labelTable.put(5, new JLabel("5"));
             labelTable.put(10, new JLabel("10"));
             radiusSlider.setLabelTable(labelTable);
+
+            int desiredWidth = 500; // Specify the desired width of the resized image
+            int desiredHeight = 281; // Specify the desired height of the resized image
+            Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
+                    Image.SCALE_SMOOTH);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = resizedImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+
+            JLabel imageLabel = new JLabel(new ImageIcon(resizedImage));
+
+            panel.add(imageLabel);
             panel.add(radiusSlider);
+
+            radiusSlider.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent e) {
+                    JSlider source = (JSlider) e.getSource();
+                    if (!source.getValueIsAdjusting()) {
+                        int value = source.getValue();
+                        BufferedImage resizedImageCopy = new BufferedImage(resizedImage.getWidth(),
+                                resizedImage.getHeight(), resizedImage.getType());
+                        Graphics2D copyGraphics = resizedImageCopy.createGraphics();
+                        copyGraphics.drawImage(resizedImage, 0, 0, null);
+                        copyGraphics.dispose();
+
+                        // Reset the image to the original resized image
+                        BufferedImage originalImage = new BufferedImage(resizedImage.getWidth(),
+                                resizedImage.getHeight(), resizedImage.getType());
+                        Graphics2D originalGraphics = originalImage.createGraphics();
+                        originalGraphics.drawImage(resizedImage, 0, 0, null);
+                        originalGraphics.dispose();
+
+                        // Apply the filter to the resized image copy
+                        EditableImage eI = new EditableImage();
+                        eI.setNewImage(resizedImageCopy);
+                        eI.apply(new MeanFilter(value));
+                        BufferedImage filteredImage = eI.getCurrentImage();
+
+                        // Update the image label with the filtered image
+                        ImageIcon newIcon = new ImageIcon(filteredImage);
+                        imageLabel.setIcon(newIcon);
+                    }
+                }
+            });
 
             int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -162,7 +214,7 @@ public class FilterActions {
                 Object[] options = { "OK" };
                 JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
                         bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
+                        null, options, null);
             }
         }
 
@@ -176,16 +228,41 @@ public class FilterActions {
 
         public void actionPerformed(ActionEvent e) {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
-            // Create and apply the filter
-            try {
-                target.getImage().apply(new SoftBlur());
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
+
+            JPanel panel = new JPanel();
+            int desiredWidth = 500; // Specify the desired width of the resized image
+            int desiredHeight = 281; // Specify the desired height of the resized image
+            Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
+                    Image.SCALE_SMOOTH);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = resizedImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+            EditableImage eI = new EditableImage();
+            eI.setNewImage(resizedImage);
+            eI.apply(new SoftBlur());
+            BufferedImage filteredImage = eI.getCurrentImage();
+
+            JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
+
+            panel.add(imageLabel);
+            int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.OK_OPTION) {
+
+                // Create and apply the filter
+                try {
+                    target.getImage().apply(new SoftBlur());
+                    target.repaint();
+                    target.getParent().revalidate();
+                } catch (NullPointerException NPEx) {
+                    Object[] options = { "OK" };
+                    JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                            bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                            null, options, options[0]);
+                }
             }
         }
     }
@@ -198,6 +275,30 @@ public class FilterActions {
 
         public void actionPerformed(ActionEvent e) {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+
+            JPanel panel = new JPanel();
+            int desiredWidth = 500; // Specify the desired width of the resized image
+            int desiredHeight = 281; // Specify the desired height of the resized image
+            Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
+                    Image.SCALE_SMOOTH);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = resizedImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+            EditableImage eI = new EditableImage();
+            eI.setNewImage(resizedImage);
+            eI.apply(new SharpenImage());
+            BufferedImage filteredImage = eI.getCurrentImage();
+
+            JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
+
+            panel.add(imageLabel);
+            int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            // Check the return value from the dialog box.
+            if (option == JOptionPane.OK_OPTION) {
+
             // Create and apply the filter
             try {
                 target.getImage().apply(new SharpenImage());
@@ -209,6 +310,7 @@ public class FilterActions {
                         bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, options, options[0]);
             }
+        }
         }
     }
 
@@ -245,7 +347,51 @@ public class FilterActions {
             labelTable.put(5, new JLabel("5"));
             labelTable.put(10, new JLabel("10"));
             radiusSlider.setLabelTable(labelTable);
+
+            int desiredWidth = 500; // Specify the desired width of the resized image
+            int desiredHeight = 281; // Specify the desired height of the resized image
+            Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
+                    Image.SCALE_SMOOTH);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = resizedImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+
+            JLabel imageLabel = new JLabel(new ImageIcon(resizedImage));
+
+            panel.add(imageLabel);
             panel.add(radiusSlider);
+
+            radiusSlider.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent e) {
+                    JSlider source = (JSlider) e.getSource();
+                    if (!source.getValueIsAdjusting()) {
+                        int value = source.getValue();
+                        BufferedImage resizedImageCopy = new BufferedImage(resizedImage.getWidth(),
+                                resizedImage.getHeight(), resizedImage.getType());
+                        Graphics2D copyGraphics = resizedImageCopy.createGraphics();
+                        copyGraphics.drawImage(resizedImage, 0, 0, null);
+                        copyGraphics.dispose();
+
+                        // Reset the image to the original resized image
+                        BufferedImage originalImage = new BufferedImage(resizedImage.getWidth(),
+                                resizedImage.getHeight(), resizedImage.getType());
+                        Graphics2D originalGraphics = originalImage.createGraphics();
+                        originalGraphics.drawImage(resizedImage, 0, 0, null);
+                        originalGraphics.dispose();
+
+                        // Apply the filter to the resized image copy
+                        EditableImage eI = new EditableImage();
+                        eI.setNewImage(resizedImageCopy);
+                        eI.apply(new GaussianFilter(value));
+                        BufferedImage filteredImage = eI.getCurrentImage();
+
+                        // Update the image label with the filtered image
+                        ImageIcon newIcon = new ImageIcon(filteredImage);
+                        imageLabel.setIcon(newIcon);
+                    }
+                }
+            });
 
             int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -320,7 +466,51 @@ public class FilterActions {
             labelTable.put(5, new JLabel("5"));
             labelTable.put(10, new JLabel("10"));
             radiusSlider.setLabelTable(labelTable);
+
+            int desiredWidth = 500; // Specify the desired width of the resized image
+            int desiredHeight = 281; // Specify the desired height of the resized image
+            Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
+                    Image.SCALE_SMOOTH);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = resizedImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+
+            JLabel imageLabel = new JLabel(new ImageIcon(resizedImage));
+
+            panel.add(imageLabel);
             panel.add(radiusSlider);
+
+            radiusSlider.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent e) {
+                    JSlider source = (JSlider) e.getSource();
+                    if (!source.getValueIsAdjusting()) {
+                        int value = source.getValue();
+                        BufferedImage resizedImageCopy = new BufferedImage(resizedImage.getWidth(),
+                                resizedImage.getHeight(), resizedImage.getType());
+                        Graphics2D copyGraphics = resizedImageCopy.createGraphics();
+                        copyGraphics.drawImage(resizedImage, 0, 0, null);
+                        copyGraphics.dispose();
+
+                        // Reset the image to the original resized image
+                        BufferedImage originalImage = new BufferedImage(resizedImage.getWidth(),
+                                resizedImage.getHeight(), resizedImage.getType());
+                        Graphics2D originalGraphics = originalImage.createGraphics();
+                        originalGraphics.drawImage(resizedImage, 0, 0, null);
+                        originalGraphics.dispose();
+
+                        // Apply the filter to the resized image copy
+                        EditableImage eI = new EditableImage();
+                        eI.setNewImage(resizedImageCopy);
+                        eI.apply(new GaussianFilter(value));
+                        BufferedImage filteredImage = eI.getCurrentImage();
+
+                        // Update the image label with the filtered image
+                        ImageIcon newIcon = new ImageIcon(filteredImage);
+                        imageLabel.setIcon(newIcon);
+                    }
+                }
+            });
 
             int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_radius"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -381,19 +571,69 @@ public class FilterActions {
 
             // Create a panel to hold the components
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
-            panel.add(new JLabel(message));
+            panel.setLayout(new BorderLayout()); // Change the layout to BorderLayout
+
+            JPanel innerJPanel = new JPanel();
+            innerJPanel.setLayout(new GridLayout(2, 1, 0, 1)); // Adjust the layout as needed
+
             JComboBox<String> comboBox = new JComboBox<>(numbers);
-            panel.add(comboBox);
+            int desiredWidth = 500; // Specify the desired width of the resized image
+            int desiredHeight = 281; // Specify the desired height of the resized image
+            Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
+                    Image.SCALE_SMOOTH);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = resizedImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+            EditableImage eI = new EditableImage();
+            eI.setNewImage(resizedImage);
+            eI.apply(new EmbossFilter(1));
+            BufferedImage filteredImage = eI.getCurrentImage();
 
-            int optionType = JOptionPane.DEFAULT_OPTION;
-            int messageType = JOptionPane.INFORMATION_MESSAGE;
+            JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
-            int choice = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"), optionType,
-                    messageType, null, null, null);
+            panel.add(imageLabel, BorderLayout.NORTH); // Add the imageLabel to the top of the panel
+            innerJPanel.add(new JLabel(message));
+            innerJPanel.add(comboBox);
+            panel.add(innerJPanel, BorderLayout.CENTER); // Add the innerJPanel to the center of the panel
+
+            comboBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    @SuppressWarnings("unchecked")
+                    JComboBox<String> source = (JComboBox<String>) e.getSource();
+                    int value = Integer.parseInt((String) source.getSelectedItem());
+
+                    BufferedImage resizedImageCopy = new BufferedImage(resizedImage.getWidth(),
+                            resizedImage.getHeight(), resizedImage.getType());
+                    Graphics2D copyGraphics = resizedImageCopy.createGraphics();
+                    copyGraphics.drawImage(resizedImage, 0, 0, null);
+                    copyGraphics.dispose();
+
+                    // Reset the image to the original resized image
+                    BufferedImage originalImage = new BufferedImage(resizedImage.getWidth(),
+                            resizedImage.getHeight(), resizedImage.getType());
+                    Graphics2D originalGraphics = originalImage.createGraphics();
+                    originalGraphics.drawImage(resizedImage, 0, 0, null);
+                    originalGraphics.dispose();
+
+                    // Apply the filter to the resized image copy
+                    EditableImage eI = new EditableImage();
+                    eI.setNewImage(resizedImageCopy);
+                    eI.apply(new EmbossFilter(value));
+                    BufferedImage filteredImage = eI.getCurrentImage();
+
+                    // Update the image label with the filtered image
+                    ImageIcon newIcon = new ImageIcon(filteredImage);
+                    imageLabel.setIcon(newIcon);
+                }
+            });
+
+            int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"),
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (choice == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 selection = Integer.parseInt((String) comboBox.getSelectedItem());
             } else {
                 return;
@@ -453,19 +693,69 @@ public class FilterActions {
 
             // Create a panel to hold the components
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
-            panel.add(new JLabel(message));
+            panel.setLayout(new BorderLayout()); // Change the layout to BorderLayout
+
+            JPanel innerJPanel = new JPanel();
+            innerJPanel.setLayout(new GridLayout(2, 1, 0, 1)); // Adjust the layout as needed
+
             JComboBox<String> comboBox = new JComboBox<>(numbers);
-            panel.add(comboBox);
+            int desiredWidth = 500; // Specify the desired width of the resized image
+            int desiredHeight = 281; // Specify the desired height of the resized image
+            Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
+                    Image.SCALE_SMOOTH);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = resizedImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+            EditableImage eI = new EditableImage();
+            eI.setNewImage(resizedImage);
+            eI.apply(new SobelFilter(bundle.getString("filter_vertical")));
+            BufferedImage filteredImage = eI.getCurrentImage();
 
-            int optionType = JOptionPane.DEFAULT_OPTION;
-            int messageType = JOptionPane.INFORMATION_MESSAGE;
+            JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
-            int choice = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"), optionType,
-                    messageType, null, null, null);
+            panel.add(imageLabel, BorderLayout.NORTH); // Add the imageLabel to the top of the panel
+            innerJPanel.add(new JLabel(message));
+            innerJPanel.add(comboBox);
+            panel.add(innerJPanel, BorderLayout.CENTER); // Add the innerJPanel to the center of the panel
+
+            comboBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    @SuppressWarnings("unchecked")
+                    JComboBox<String> source = (JComboBox<String>) e.getSource();
+                    String value = (String) source.getSelectedItem();
+
+                    BufferedImage resizedImageCopy = new BufferedImage(resizedImage.getWidth(),
+                            resizedImage.getHeight(), resizedImage.getType());
+                    Graphics2D copyGraphics = resizedImageCopy.createGraphics();
+                    copyGraphics.drawImage(resizedImage, 0, 0, null);
+                    copyGraphics.dispose();
+
+                    // Reset the image to the original resized image
+                    BufferedImage originalImage = new BufferedImage(resizedImage.getWidth(),
+                            resizedImage.getHeight(), resizedImage.getType());
+                    Graphics2D originalGraphics = originalImage.createGraphics();
+                    originalGraphics.drawImage(resizedImage, 0, 0, null);
+                    originalGraphics.dispose();
+
+                    // Apply the filter to the resized image copy
+                    EditableImage eI = new EditableImage();
+                    eI.setNewImage(resizedImageCopy);
+                    eI.apply(new SobelFilter(value));
+                    BufferedImage filteredImage = eI.getCurrentImage();
+
+                    // Update the image label with the filtered image
+                    ImageIcon newIcon = new ImageIcon(filteredImage);
+                    imageLabel.setIcon(newIcon);
+                }
+            });
+
+            int option = JOptionPane.showOptionDialog(null, panel, bundle.getString("filter_emboss_title"),
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
-            if (choice == JOptionPane.OK_OPTION) {
+            if (option == JOptionPane.OK_OPTION) {
                 selection = (String) comboBox.getSelectedItem();
             } else {
                 return;

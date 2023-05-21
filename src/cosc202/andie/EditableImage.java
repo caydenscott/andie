@@ -464,4 +464,10 @@ public class EditableImage {
         }
     }
 
+    public void setNewImage(BufferedImage image){
+        this.current = image;
+        this.original = image;
+
+    }
+
 }

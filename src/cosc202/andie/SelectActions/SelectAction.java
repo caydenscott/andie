@@ -5,6 +5,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
@@ -29,7 +31,7 @@ import javax.swing.BorderFactory;
  * @version 1.0
  */
 
-public abstract class SelectAction implements MouseListener {
+public abstract class SelectAction implements MouseListener, MouseMotionListener {
 
     private Point startPoint;
     private Point endPoint;
@@ -107,8 +109,26 @@ public abstract class SelectAction implements MouseListener {
         clear();
      }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if (startPoint == null) {
+            return;
+        }
+        showPreview(new SelectedArea(startPoint, e.getPoint()));
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        
+    }
+
     
     private void showPreview(SelectedArea sa) {
+
+        // remove any previous instances
+        if (confirmButton != null) {
+            target.remove(confirmButton);
+        }
 
         confirmButton = new JButton("✓");
 

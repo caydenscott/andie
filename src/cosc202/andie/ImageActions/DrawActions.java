@@ -21,6 +21,7 @@ import cosc202.andie.SelectActions.SelectTriangle;
 import cosc202.andie.SelectActions.SelectShape;
 
 
+
 /**
  * <p>
  * Actions provided by the Shape menu.
@@ -40,7 +41,7 @@ import cosc202.andie.SelectActions.SelectShape;
  * @version 1.0
  */
 
-public class ShapeActions {
+public class DrawActions {
     /** A list of actions for the Shape menu. */
     protected ArrayList<Action> actions;
     protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
@@ -50,7 +51,7 @@ public class ShapeActions {
 
      * </p>
      */
-    public ShapeActions() {
+    public DrawActions() {
         actions = new ArrayList<Action>();
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         // for multilingual support
@@ -162,6 +163,9 @@ public class ShapeActions {
             // remove the previous one
             target.removeMouseListener(shapeSelection);
             target.addMouseListener(sa);
+
+            target.removeMouseMotionListener(shapeSelection);
+            target.addMouseMotionListener(sa);
 
             // set new select action
             shapeSelection = sa;

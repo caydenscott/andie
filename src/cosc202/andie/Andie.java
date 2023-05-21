@@ -10,7 +10,7 @@ import cosc202.andie.ImageActions.FilterActions;
 import cosc202.andie.ImageActions.ImageAction;
 import cosc202.andie.ImageActions.LanguageActions;
 import cosc202.andie.ImageActions.MacroActions;
-import cosc202.andie.ImageActions.ShapeActions;
+import cosc202.andie.ImageActions.DrawActions;
 import cosc202.andie.ImageActions.TransformActions;
 import cosc202.andie.ImageActions.ViewActions;
 import cosc202.andie.ImageOperations.ImageOperation;
@@ -115,7 +115,7 @@ public class Andie {
         menuBar.add(languageActions.createMenu());
 
         // shapes
-        ShapeActions shapeActions = new ShapeActions();
+        DrawActions shapeActions = new DrawActions();
         menuBar.add(shapeActions.createMenu());
         
         frame.setJMenuBar(menuBar);

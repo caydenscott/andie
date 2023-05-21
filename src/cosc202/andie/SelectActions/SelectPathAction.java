@@ -83,7 +83,7 @@ public abstract class SelectPathAction implements MouseMotionListener, MouseList
         
      }
 
-     @Override
+    @Override
     public void mouseDragged(MouseEvent e) {
         path.lineTo(e.getX(), e.getY());
         showPreview();

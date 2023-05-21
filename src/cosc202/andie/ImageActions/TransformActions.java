@@ -427,7 +427,7 @@ public class TransformActions {
 
             makeToolBar(bundle);
             
-            // add the toolbar which adds all options to make shapes
+            // add the toolbar which adds all options to make shapes, also removes previous toolbars and listeners
             target.addToolbar(toolbar);
 
             addSelectAction(new SelectCrop(target));
@@ -456,6 +456,9 @@ public class TransformActions {
             // remove the previous one
             target.removeMouseListener(cropSelection);
             target.addMouseListener(sa);
+
+            target.removeMouseMotionListener(cropSelection);
+            target.addMouseMotionListener(sa);
 
             // set new select action
             cropSelection = sa;

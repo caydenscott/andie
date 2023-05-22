@@ -14,10 +14,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import cosc202.andie.Andie;
+import cosc202.andie.SelectActions.SelectLine;
 import cosc202.andie.SelectActions.SelectOval;
 import cosc202.andie.SelectActions.SelectRectangle;
 import cosc202.andie.SelectActions.SelectTriangle;
 import cosc202.andie.SelectActions.SelectShape;
+
 
 
 /**
@@ -39,7 +41,7 @@ import cosc202.andie.SelectActions.SelectShape;
  * @version 1.0
  */
 
-public class ShapeActions {
+public class DrawActions {
     /** A list of actions for the Shape menu. */
     protected ArrayList<Action> actions;
     protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
@@ -49,7 +51,7 @@ public class ShapeActions {
 
      * </p>
      */
-    public ShapeActions() {
+    public DrawActions() {
         actions = new ArrayList<Action>();
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         // for multilingual support
@@ -60,6 +62,8 @@ public class ShapeActions {
 
         actions.add(new DrawShapeAction(bundle.getString("draw_1"), null,
             bundle.getString("draw_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
+        actions.add(new DrawFreeAction(bundle.getString("draw_2"), null,
+            bundle.getString("draw_2_desc"), Integer.valueOf(KeyEvent.VK_R)));
         
     }
 
@@ -142,10 +146,10 @@ public class ShapeActions {
 
         // cleans up when closing the add shape toolbar, stops shape selection and removes toolbar ui
         private void close() {
-            if (shapeSelection != null) {
-                // remove the selector
-                target.removeMouseListener(shapeSelection);
-            }
+            // if (shapeSelection != null) {
+            //     // remove the selector
+            //     target.removeMouseListener(shapeSelection);
+            // }
 
             target.removeToolbar();
 
@@ -159,6 +163,9 @@ public class ShapeActions {
             // remove the previous one
             target.removeMouseListener(shapeSelection);
             target.addMouseListener(sa);
+
+            target.removeMouseMotionListener(shapeSelection);
+            target.addMouseMotionListener(sa);
 
             // set new select action
             shapeSelection = sa;
@@ -338,7 +345,168 @@ public class ShapeActions {
 
     }
 
+    public class DrawFreeAction extends ImageAction {
+
+        private SelectLine lineSelection; // current shape select type
+        private JToolBar toolbar;
+
+        /** variables for when adding the shape */
+        private Color lineColour;
+        private int outlineThickness;
+
+
+        /**
+         * <p>
+         * Create a new draw rectangle action.
+         * </p>
+         * 
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        DrawFreeAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+
+            // set default shape variables
+            lineColour = Color.BLACK;
+            outlineThickness = 2;
+        }
+
+
+        public void actionPerformed(ActionEvent e) {
+            // load up multiligual text
+            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+
+            // check if the image is loaded up first
+            if (!target.getImage().hasImage()) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("select_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+                return;
+            }
+
+            makeToolBar(bundle);
+            
+            // add the toolbar which adds all options to draw
+            target.addToolbar(toolbar);
+
+            lineSelection = new SelectLine(target, lineColour, outlineThickness);
+
+
+            addSelectAction(lineSelection);
+
+        }
+
+        // cleans up when closing the draw line toolbar, stops line selection and removes toolbar ui
+        private void close() {
+
+            target.removeToolbar();
+
+            toolbar = null;
+        }
+
+        private void addSelectAction(SelectLine sa) {
+            if (sa == null) {
+                return;
+            }
+            // remove the previous listeners add new ones
+            target.removeMouseListener(lineSelection);
+            target.addMouseListener(sa);
+
+            target.removeMouseMotionListener(lineSelection);
+            target.addMouseMotionListener(sa);
+
+            // set new select action
+            lineSelection = sa;
+        }
+
+        private void makeToolBar(ResourceBundle bundle) {
+
+            toolbar = new JToolBar();
+            toolbar.setLayout(new FlowLayout());
+
+            // Color Selector Button ------------------
+            JButton colourSelectButton = new JButton("🖊");
+            
+            colourSelectButton.setBackground(lineColour);
+
+            colourSelectButton.setBorder(BorderFactory.createLineBorder(lineColour, 5));
+
+            colourSelectButton.addActionListener(new ChangeColourAction());
+
+            toolbar.add(colourSelectButton);
+
+            // Thickness Dropdown Selector ------------
+            SpinnerNumberModel lineThicknessModel = new SpinnerNumberModel(outlineThickness, 1, 20, 1);
+            JSpinner thicknessSpinner = new JSpinner(lineThicknessModel);
+            lineThicknessModel.addChangeListener(new ChangeLineThicknessAction());
+
+            JPanel thicknessPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            thicknessPanel.add(new JLabel("│┃"));
+            thicknessPanel.add(thicknessSpinner);
+
+            toolbar.addSeparator();
+            toolbar.add(thicknessPanel);
+
+
+            // Cancel Button --------------------------
+            JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
+
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    close();
+                }
+            });
+
+            toolbar.addSeparator();
+            toolbar.add(cancelButton);
+        }
+
+        private class ChangeColourAction extends AbstractAction {
+            ChangeColourAction() {
+                super();
+            }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+                JButton colourSelectButton= (JButton) e.getSource();
+                lineColour = JColorChooser.showDialog(
+                    colourSelectButton,
+                    bundle.getString("draw_colourpicker_title"),
+                    lineColour);
+                colourSelectButton.setBackground(lineColour);
+                colourSelectButton.setBorder(BorderFactory.createLineBorder(lineColour, 5));
+                
+                colourSelectButton.repaint();
+                colourSelectButton.getParent().revalidate();
+
+                // update shape to be drawn
+                if (lineSelection != null) {
+                    // update the shape we're adding
+                    lineSelection.setColour(lineColour);
+                }
+
+            }
+        }
     
+    
+        private class ChangeLineThicknessAction implements ChangeListener {
+            public void stateChanged(ChangeEvent e) {
+                SpinnerNumberModel source = (SpinnerNumberModel)e.getSource();
+                
+                outlineThickness = source.getNumber().intValue();
+
+                if (lineSelection != null) {
+                    // update the shape we're adding
+                    lineSelection.setOutlineThickness(outlineThickness);
+                }
+            }
+        }
+
+    }
 
 
 }

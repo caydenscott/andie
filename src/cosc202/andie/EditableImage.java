@@ -464,4 +464,43 @@ public class EditableImage {
         }
     }
 
+    public void setNewImage(BufferedImage image){
+        this.current = image;
+        this.original = image;
+
+    }
+
+    public int[] previewSizeCalculator(){
+        int[] dimensions = new int[2];
+        if(current.getWidth() > current.getHeight()){
+            if(current.getWidth() < 500){
+                dimensions[0] = current.getWidth();
+                dimensions[1] = current.getHeight();
+                return dimensions;
+            }
+            int newHeight = (current.getHeight() * 500) / current.getWidth();
+            dimensions[0] = 500;
+            dimensions[1] = newHeight;
+        }else if(current.getHeight() > current.getWidth()){
+            if(current.getHeight() < 500){
+                dimensions[0] = current.getWidth();
+                dimensions[1] = current.getHeight();
+                return dimensions;
+            }
+            int newWidth = (current.getWidth() * 500) / current.getHeight();
+            dimensions[0] = newWidth;
+            dimensions[1] = 500;
+        }else{
+            if(current.getWidth() < 500){
+                dimensions[0] = current.getWidth();
+                dimensions[1] = current.getHeight();
+                return dimensions;
+            }
+            dimensions[0] = 500;
+            dimensions[1] = 500;
+        }
+        
+        return dimensions;
+    }
+
 }

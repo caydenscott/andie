@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.awt.*;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 import javax.swing.plaf.ToolBarUI;
@@ -212,6 +213,9 @@ public class ImagePanel extends JPanel {
         // remove all mouse listeners
         for (MouseListener ms : getMouseListeners()) {
             removeMouseListener(ms);
+        }
+        for (MouseMotionListener mml : getMouseMotionListeners()) {
+            removeMouseMotionListener(mml);
         }
     }
 

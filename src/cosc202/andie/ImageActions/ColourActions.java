@@ -147,10 +147,9 @@ public class ColourActions {
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
-            EditableImage eI = new EditableImage();
-            eI.setNewImage(resizedImage);
-            eI.previewApply(new ConvertToGrey());
-            BufferedImage filteredImage = eI.getCurrentImage();
+            // Apply the filter to the resized copy
+            ConvertToGrey cTG = new ConvertToGrey();
+            BufferedImage filteredImage = cTG.apply(resizedImage);
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
@@ -196,10 +195,9 @@ public class ColourActions {
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
-            EditableImage eI = new EditableImage();
-            eI.setNewImage(resizedImage);
-            eI.previewApply(new InvertImage());
-            BufferedImage filteredImage = eI.getCurrentImage();
+            // Apply the filter to the resized copy
+            InvertImage iI = new InvertImage();
+            BufferedImage filteredImage = iI.apply(resizedImage);
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
@@ -276,8 +274,6 @@ public class ColourActions {
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
-            EditableImage eI = new EditableImage();
-            eI.setNewImage(resizedImage);
         
             JLabel imageLabel = new JLabel(new ImageIcon(resizedImage));
             JPanel imagePanel = new JPanel();
@@ -310,10 +306,8 @@ public class ColourActions {
                     originalGraphics.dispose();
 
                     // Apply the filter to the resized image copy
-                    EditableImage eI = new EditableImage();
-                    eI.setNewImage(resizedImageCopy);
-                    eI.previewApply(new BrightnessAndContrast(brightness, contrast));
-                    BufferedImage filteredImage = eI.getCurrentImage();
+                    BrightnessAndContrast bAC = new BrightnessAndContrast(brightness, contrast);
+                    BufferedImage filteredImage = bAC.apply(resizedImage);
 
                     // Update the image label with the filtered image
                     ImageIcon newIcon = new ImageIcon(filteredImage);

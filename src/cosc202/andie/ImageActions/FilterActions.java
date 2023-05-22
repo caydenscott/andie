@@ -14,7 +14,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import cosc202.andie.Andie;
-import cosc202.andie.EditableImage;
 import cosc202.andie.ImageOperations.Filters.GaussianFilter;
 import cosc202.andie.ImageOperations.Filters.MeanFilter;
 import cosc202.andie.ImageOperations.Filters.MedianFilter;
@@ -194,10 +193,8 @@ public class FilterActions {
                         originalGraphics.dispose();
 
                         // Apply the filter to the resized image copy
-                        EditableImage eI = new EditableImage();
-                        eI.setNewImage(resizedImageCopy);
-                        eI.previewApply(new MeanFilter(value));
-                        BufferedImage filteredImage = eI.getCurrentImage();
+                        MeanFilter mF = new MeanFilter(value);
+                        BufferedImage filteredImage = mF.apply(resizedImage);
 
                         // Update the image label with the filtered image
                         ImageIcon newIcon = new ImageIcon(filteredImage);
@@ -248,10 +245,11 @@ public class FilterActions {
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
-            EditableImage eI = new EditableImage();
-            eI.setNewImage(resizedImage);
-            eI.apply(new SoftBlur());
-            BufferedImage filteredImage = eI.getCurrentImage();
+            
+            // Apply the filter to the original resized image
+            SoftBlur sF = new SoftBlur();
+            BufferedImage filteredImage = sF.apply(resizedImage);
+            
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
@@ -299,10 +297,9 @@ public class FilterActions {
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
-            EditableImage eI = new EditableImage();
-            eI.setNewImage(resizedImage);
-            eI.previewApply(new SharpenImage());
-            BufferedImage filteredImage = eI.getCurrentImage();
+            // Apply the filter to the resized copy
+            SharpenImage sI = new SharpenImage();
+            BufferedImage filteredImage = sI.apply(resizedImage);
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
@@ -398,10 +395,8 @@ public class FilterActions {
                         originalGraphics.dispose();
 
                         // Apply the filter to the resized image copy
-                        EditableImage eI = new EditableImage();
-                        eI.setNewImage(resizedImageCopy);
-                        eI.previewApply(new GaussianFilter(value));
-                        BufferedImage filteredImage = eI.getCurrentImage();
+                        GaussianFilter gF = new GaussianFilter(value);
+                        BufferedImage filteredImage = gF.apply(resizedImage);
 
                         // Update the image label with the filtered image
                         ImageIcon newIcon = new ImageIcon(filteredImage);
@@ -429,7 +424,7 @@ public class FilterActions {
 
     /**
      * <p>
-     * Action to blur an image with a median filter.
+     * Action to blur an image with a 4132w filter.
      * </p>
      * 
      * @see MedianFilter
@@ -518,11 +513,8 @@ public class FilterActions {
                         originalGraphics.drawImage(resizedImage, 0, 0, null);
                         originalGraphics.dispose();
 
-                        // Apply the filter to the resized image copy
-                        EditableImage eI = new EditableImage();
-                        eI.setNewImage(resizedImageCopy);
-                        eI.previewApply(new GaussianFilter(value));
-                        BufferedImage filteredImage = eI.getCurrentImage();
+                        MedianFilter mF = new MedianFilter(value);
+                        BufferedImage filteredImage = mF.apply(resizedImage);
 
                         // Update the image label with the filtered image
                         ImageIcon newIcon = new ImageIcon(filteredImage);
@@ -606,10 +598,8 @@ public class FilterActions {
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
-            EditableImage eI = new EditableImage();
-            eI.setNewImage(resizedImage);
-            eI.previewApply(new EmbossFilter(1));
-            BufferedImage filteredImage = eI.getCurrentImage();
+            EmbossFilter eF = new EmbossFilter(1);
+            BufferedImage filteredImage = eF.apply(resizedImage);
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
@@ -638,10 +628,8 @@ public class FilterActions {
                     originalGraphics.dispose();
 
                     // Apply the filter to the resized image copy
-                    EditableImage eI = new EditableImage();
-                    eI.setNewImage(resizedImageCopy);
-                    eI.previewApply(new EmbossFilter(value));
-                    BufferedImage filteredImage = eI.getCurrentImage();
+                    EmbossFilter eF = new EmbossFilter(value);
+                    BufferedImage filteredImage = eF.apply(resizedImage);
 
                     // Update the image label with the filtered image
                     ImageIcon newIcon = new ImageIcon(filteredImage);
@@ -727,10 +715,8 @@ public class FilterActions {
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
-            EditableImage eI = new EditableImage();
-            eI.setNewImage(resizedImage);
-            eI.previewApply(new SobelFilter(bundle.getString("filter_vertical")));
-            BufferedImage filteredImage = eI.getCurrentImage();
+            SobelFilter sF = new SobelFilter(bundle.getString("filter_vertical"));
+            BufferedImage filteredImage = sF.apply(resizedImage);
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
 
@@ -759,10 +745,8 @@ public class FilterActions {
                     originalGraphics.dispose();
 
                     // Apply the filter to the resized image copy
-                    EditableImage eI = new EditableImage();
-                    eI.setNewImage(resizedImageCopy);
-                    eI.previewApply(new SobelFilter(value));
-                    BufferedImage filteredImage = eI.getCurrentImage();
+                    SobelFilter sI = new SobelFilter(value);
+                    BufferedImage filteredImage = sI.apply(resizedImage);
 
                     // Update the image label with the filtered image
                     ImageIcon newIcon = new ImageIcon(filteredImage);

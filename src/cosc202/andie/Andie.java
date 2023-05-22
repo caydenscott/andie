@@ -11,9 +11,11 @@ import cosc202.andie.ImageActions.ImageAction;
 import cosc202.andie.ImageActions.LanguageActions;
 import cosc202.andie.ImageActions.MacroActions;
 import cosc202.andie.ImageActions.ShapeActions;
+import cosc202.andie.ImageActions.ToolBarActions;
 import cosc202.andie.ImageActions.TransformActions;
 import cosc202.andie.ImageActions.ViewActions;
 import cosc202.andie.ImageOperations.ImageOperation;
+
 
 import javax.imageio.*;
 
@@ -125,6 +127,15 @@ public class Andie {
         KeyboardShortcuts shortcuts = new KeyboardShortcuts();
         
         frame.addKeyListener(shortcuts.getKeyAdapter());
+
+        // //toolbar
+        // ToolBarActions ToolBarActions = new ToolBarActions();
+        // menuBar.add(ToolBarActions.createMenu());
+        
+        // frame.setJMenuBar(menuBar);
+        // frame.pack();
+        // frame.setVisible(true);
+        
     }
 
     /**

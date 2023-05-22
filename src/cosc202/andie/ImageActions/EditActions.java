@@ -226,7 +226,9 @@ public class EditActions {
 
             // Shape Radio Buttons ---------------------
             JButton undoButton = new JButton("←");
+            JButton redoButton = new JButton("→");
             JButton embossButton = new JButton(bundle.getString("filter_6"));
+            
 
             // undoButton.addActionListener(new ActionListener() {
             //     @Override
@@ -240,55 +242,68 @@ public class EditActions {
 
             undoButton.addActionListener(new UndoAction(bundle.getString("edit_1"), null, bundle.getString("edit_1_desc"),
             Integer.valueOf(KeyEvent.VK_U)));
+            redoButton.addActionListener(new RedoAction(bundle.getString("edit_2"), null, bundle.getString("edit_2_desc"),
+                Integer.valueOf(KeyEvent.VK_R)));
 
 
-            embossButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
-            // Determine the radius - ask the user.
-            int selection = 1;
+            // embossButton.addActionListener(new ActionListener() {
+            //     @Override
+            //     public void actionPerformed(ActionEvent e) {
+            //         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+            // // Determine the radius - ask the user.
+            // int selection = 1;
 
 
-            String[] numbers = { "1", "2", "3", "4", "5", "6", "7", "8" };
-            String message = bundle.getString("filter_emboss");
+            // String[] numbers = { "1", "2", "3", "4", "5", "6", "7", "8" };
+            // String message = bundle.getString("filter_emboss");
 
-            // Create a panel to hold the components
-            JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
-            panel.add(new JLabel(message));
-            JComboBox<String> comboBox = new JComboBox<>(numbers);
-            panel.add(comboBox);
+            // // Create a panel to hold the components
+            // JPanel panel = new JPanel();
+            // panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
+            // panel.add(new JLabel(message));
+            // JComboBox<String> comboBox = new JComboBox<>(numbers);
+            // panel.add(comboBox);
 
-            int optionType = JOptionPane.DEFAULT_OPTION;
-            int messageType = JOptionPane.INFORMATION_MESSAGE;
+            // int optionType = JOptionPane.DEFAULT_OPTION;
+            // int messageType = JOptionPane.INFORMATION_MESSAGE;
 
-            int choice = JOptionPane.showOptionDialog(null, panel, "Title", optionType, messageType, null, null, null);
+            // int choice = JOptionPane.showOptionDialog(null, panel, "Title", optionType, messageType, null, null, null);
 
-            // Check the return value from the dialog box.
-            if (choice == JOptionPane.OK_OPTION) {
-                selection = Integer.parseInt((String) comboBox.getSelectedItem());
-            } else {
-                return;
-            }
-            // Create and apply the filter
-            try {
-                target.getImage().apply(new EmbossFilter(selection));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
-            }
+            // // Check the return value from the dialog box.
+            // if (choice == JOptionPane.OK_OPTION) {
+            //     selection = Integer.parseInt((String) comboBox.getSelectedItem());
+            // } else {
+            //     return;
+            // }
+            // // Create and apply the filter
+            // try {
+            //     target.getImage().apply(new EmbossFilter(selection));
+            //     target.repaint();
+            //     target.getParent().revalidate();
+            // } catch (NullPointerException NPEx) {
+            //     Object[] options = { "OK" };
+            //     JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+            //             bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+            //             null, options, options[0]);
+            // }
 
         
-                    target.repaint();
-                    target.getParent().revalidate();
+            //         target.repaint();
+            //         target.getParent().revalidate();
 
-                }
-            });
+            //     }
+            // });
+
+            FilterActions filterActions = new FilterActions();
+
+            ImageAction embossAction = filterActions.new EmbossFilterAction(bundle.getString("filter_6"), null, null, null);
+
+            
+
+            //ImageAction.setTarget(target);
+            
+
+            embossButton.addActionListener(embossAction);
 
 
 
@@ -298,6 +313,7 @@ public class EditActions {
             // shapePanel.add(new JLabel("Select Shape: "));
             editPanel.add(undoButton);
             editPanel.add(embossButton);
+            editPanel.add(redoButton);
 
             toolbar.addSeparator();
             toolbar.add(editPanel);

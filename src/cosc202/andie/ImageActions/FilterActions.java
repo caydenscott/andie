@@ -136,6 +136,14 @@ public class FilterActions {
         public void actionPerformed(ActionEvent e) {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
             // Determine the radius - ask the user.
+
+            if (target.getImage().getCurrentImage() == null) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, null);
+            }
+
             int radius = 1;
 
             JPanel panel = new JPanel();
@@ -151,8 +159,10 @@ public class FilterActions {
             labelTable.put(10, new JLabel("10"));
             radiusSlider.setLabelTable(labelTable);
 
-            int desiredWidth = 500; // Specify the desired width of the resized image
-            int desiredHeight = 281; // Specify the desired height of the resized image
+            int[] dimensions = target.getImage().previewSizeCalculator(); // Get new dimensions which maintain image aspect ratio
+            int desiredWidth = dimensions [0]; 
+            int desiredHeight = dimensions [1];
+
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
             BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
@@ -186,7 +196,7 @@ public class FilterActions {
                         // Apply the filter to the resized image copy
                         EditableImage eI = new EditableImage();
                         eI.setNewImage(resizedImageCopy);
-                        eI.apply(new MeanFilter(value));
+                        eI.previewApply(new MeanFilter(value));
                         BufferedImage filteredImage = eI.getCurrentImage();
 
                         // Update the image label with the filtered image
@@ -206,16 +216,9 @@ public class FilterActions {
                 return;
             }
             // Create and apply the filter
-            try {
-                target.getImage().apply(new MeanFilter(radius));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, null);
-            }
+            target.getImage().apply(new MeanFilter(radius));
+            target.repaint();
+            target.getParent().revalidate();
         }
 
     }
@@ -228,10 +231,17 @@ public class FilterActions {
 
         public void actionPerformed(ActionEvent e) {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
-
+            if (target.getImage().getCurrentImage() == null) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
             JPanel panel = new JPanel();
-            int desiredWidth = 500; // Specify the desired width of the resized image
-            int desiredHeight = 281; // Specify the desired height of the resized image
+            int[] dimensions = target.getImage().previewSizeCalculator(); // Get new dimensions which maintain image aspect ratio
+            int desiredWidth = dimensions [0]; 
+            int desiredHeight = dimensions [1];
+
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
             BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
@@ -253,16 +263,10 @@ public class FilterActions {
             if (option == JOptionPane.OK_OPTION) {
 
                 // Create and apply the filter
-                try {
-                    target.getImage().apply(new SoftBlur());
-                    target.repaint();
-                    target.getParent().revalidate();
-                } catch (NullPointerException NPEx) {
-                    Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                            bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                            null, options, options[0]);
-                }
+                target.getImage().apply(new SoftBlur());
+                target.repaint();
+                target.getParent().revalidate();
+
             }
         }
     }
@@ -276,9 +280,19 @@ public class FilterActions {
         public void actionPerformed(ActionEvent e) {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
 
+            if (target.getImage().getCurrentImage() == null) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
+
             JPanel panel = new JPanel();
-            int desiredWidth = 500; // Specify the desired width of the resized image
-            int desiredHeight = 281; // Specify the desired height of the resized image
+            
+            int[] dimensions = target.getImage().previewSizeCalculator(); // Get new dimensions which maintain image aspect ratio
+            int desiredWidth = dimensions [0]; 
+            int desiredHeight = dimensions [1];
+
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
             BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
@@ -287,7 +301,7 @@ public class FilterActions {
             graphics.dispose();
             EditableImage eI = new EditableImage();
             eI.setNewImage(resizedImage);
-            eI.apply(new SharpenImage());
+            eI.previewApply(new SharpenImage());
             BufferedImage filteredImage = eI.getCurrentImage();
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
@@ -299,18 +313,11 @@ public class FilterActions {
             // Check the return value from the dialog box.
             if (option == JOptionPane.OK_OPTION) {
 
-            // Create and apply the filter
-            try {
+                // Create and apply the filter
                 target.getImage().apply(new SharpenImage());
                 target.repaint();
                 target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
             }
-        }
         }
     }
 
@@ -335,6 +342,13 @@ public class FilterActions {
             // Determine the radius - ask the user.
             int radius = 1;
 
+            if (target.getImage().getCurrentImage() == null) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
+
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
 
@@ -348,8 +362,11 @@ public class FilterActions {
             labelTable.put(10, new JLabel("10"));
             radiusSlider.setLabelTable(labelTable);
 
-            int desiredWidth = 500; // Specify the desired width of the resized image
-            int desiredHeight = 281; // Specify the desired height of the resized image
+            
+            int[] dimensions = target.getImage().previewSizeCalculator(); // Get new dimensions which maintain image aspect ratio
+            int desiredWidth = dimensions [0]; 
+            int desiredHeight = dimensions [1];
+
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
             BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
@@ -383,7 +400,7 @@ public class FilterActions {
                         // Apply the filter to the resized image copy
                         EditableImage eI = new EditableImage();
                         eI.setNewImage(resizedImageCopy);
-                        eI.apply(new GaussianFilter(value));
+                        eI.previewApply(new GaussianFilter(value));
                         BufferedImage filteredImage = eI.getCurrentImage();
 
                         // Update the image label with the filtered image
@@ -403,16 +420,9 @@ public class FilterActions {
                 return;
             }
             // Create and apply the filter
-            try {
-                target.getImage().apply(new GaussianFilter(radius));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
-            }
+            target.getImage().apply(new GaussianFilter(radius));
+            target.repaint();
+            target.getParent().revalidate();
         }
 
     }
@@ -422,7 +432,7 @@ public class FilterActions {
      * Action to blur an image with a median filter.
      * </p>
      * 
-     * @see MeanFilter
+     * @see MedianFilter
      */
     public class MedianFilterAction extends ImageAction {
 
@@ -454,6 +464,13 @@ public class FilterActions {
             // Determine the radius - ask the user.
             int radius = 1;
 
+            if (target.getImage().getCurrentImage() == null) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
+
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(2, 1)); // Adjust the layout as needed
 
@@ -466,9 +483,11 @@ public class FilterActions {
             labelTable.put(5, new JLabel("5"));
             labelTable.put(10, new JLabel("10"));
             radiusSlider.setLabelTable(labelTable);
+            
+            int[] dimensions = target.getImage().previewSizeCalculator(); // Get new dimensions which maintain image aspect ratio
+            int desiredWidth = dimensions [0]; 
+            int desiredHeight = dimensions [1];
 
-            int desiredWidth = 500; // Specify the desired width of the resized image
-            int desiredHeight = 281; // Specify the desired height of the resized image
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
             BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
@@ -502,7 +521,7 @@ public class FilterActions {
                         // Apply the filter to the resized image copy
                         EditableImage eI = new EditableImage();
                         eI.setNewImage(resizedImageCopy);
-                        eI.apply(new GaussianFilter(value));
+                        eI.previewApply(new GaussianFilter(value));
                         BufferedImage filteredImage = eI.getCurrentImage();
 
                         // Update the image label with the filtered image
@@ -521,17 +540,10 @@ public class FilterActions {
             } else {
                 return;
             }
-            // Create and apply the filter
-            try {
-                target.getImage().apply(new MedianFilter(radius));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
-            }
+            // Create and apply the filterÒ
+            target.getImage().apply(new MedianFilter(radius));
+            target.repaint();
+            target.getParent().revalidate();
 
         }
 
@@ -564,6 +576,14 @@ public class FilterActions {
          */
         public void actionPerformed(ActionEvent e) {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+
+            if (target.getImage().getCurrentImage() == null) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
+
             // Determine the radius - ask the user.
             int selection = 1;
             String[] numbers = { "1", "2", "3", "4", "5", "6", "7", "8" };
@@ -577,8 +597,9 @@ public class FilterActions {
             innerJPanel.setLayout(new GridLayout(2, 1, 0, 1)); // Adjust the layout as needed
 
             JComboBox<String> comboBox = new JComboBox<>(numbers);
-            int desiredWidth = 500; // Specify the desired width of the resized image
-            int desiredHeight = 281; // Specify the desired height of the resized image
+            int[] dimensions = target.getImage().previewSizeCalculator(); // Get new dimensions which maintain image aspect ratio
+            int desiredWidth = dimensions [0]; 
+            int desiredHeight = dimensions [1];
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
             BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
@@ -587,7 +608,7 @@ public class FilterActions {
             graphics.dispose();
             EditableImage eI = new EditableImage();
             eI.setNewImage(resizedImage);
-            eI.apply(new EmbossFilter(1));
+            eI.previewApply(new EmbossFilter(1));
             BufferedImage filteredImage = eI.getCurrentImage();
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
@@ -639,16 +660,9 @@ public class FilterActions {
                 return;
             }
             // Create and apply the filter
-            try {
-                target.getImage().apply(new EmbossFilter(selection));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
-            }
+            target.getImage().apply(new EmbossFilter(selection));
+            target.repaint();
+            target.getParent().revalidate();
 
         }
 
@@ -672,19 +686,24 @@ public class FilterActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
-         * </p>
-         * 
-         * <p>
-         * This method is called whenever the MedianFilterAction is triggered.
-         * It prompts the user for a filter radius, then applys an appropriately sized
-         * {@link MeanFilter}.
+         * This method is called whenever the SobelFilterAction is triggered.
+         * It prompts the user to scelect a sobel time, then applys an appropriate
+         * kernel
+         * {@link Sobel}.
          * </p>
          * 
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
             ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+
+            if (target.getImage().getCurrentImage() == null) {
+                Object[] options = { "OK" };
+                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
+                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+            }
+
             // Determine the radius - ask the user.
             String selection = bundle.getString("filter_vertical");
 
@@ -699,8 +718,9 @@ public class FilterActions {
             innerJPanel.setLayout(new GridLayout(2, 1, 0, 1)); // Adjust the layout as needed
 
             JComboBox<String> comboBox = new JComboBox<>(numbers);
-            int desiredWidth = 500; // Specify the desired width of the resized image
-            int desiredHeight = 281; // Specify the desired height of the resized image
+            int[] dimensions = target.getImage().previewSizeCalculator(); // Get new dimensions which maintain image aspect ratio
+            int desiredWidth = dimensions [0]; 
+            int desiredHeight = dimensions [1];
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
             BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
@@ -709,7 +729,7 @@ public class FilterActions {
             graphics.dispose();
             EditableImage eI = new EditableImage();
             eI.setNewImage(resizedImage);
-            eI.apply(new SobelFilter(bundle.getString("filter_vertical")));
+            eI.previewApply(new SobelFilter(bundle.getString("filter_vertical")));
             BufferedImage filteredImage = eI.getCurrentImage();
 
             JLabel imageLabel = new JLabel(new ImageIcon(filteredImage));
@@ -761,18 +781,13 @@ public class FilterActions {
                 return;
             }
             // Create and apply the filter
-            try {
-                target.getImage().apply(new SobelFilter(selection));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException NPEx) {
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("no_file_error"),
-                        bundle.getString("filter_error_1"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, options, options[0]);
-            }
+            target.getImage().apply(new SobelFilter(selection));
+            target.repaint();
+            target.getParent().revalidate();
 
         }
 
     }
+
+
 }

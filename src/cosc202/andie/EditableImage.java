@@ -334,7 +334,6 @@ public class EditableImage {
 
     public void previewApply(ImageOperation op) {
         current = op.apply(current);
-        changeMade(1);
     }
 
     /**
@@ -485,6 +484,7 @@ public class EditableImage {
             if(current.getWidth() < 500){
                 dimensions[0] = current.getWidth();
                 dimensions[1] = current.getHeight();
+                return dimensions;
             }
             int newHeight = (current.getHeight() * 500) / current.getWidth();
             dimensions[0] = 500;
@@ -493,6 +493,7 @@ public class EditableImage {
             if(current.getHeight() < 500){
                 dimensions[0] = current.getWidth();
                 dimensions[1] = current.getHeight();
+                return dimensions;
             }
             int newWidth = (current.getWidth() * 500) / current.getHeight();
             dimensions[0] = newWidth;
@@ -501,6 +502,7 @@ public class EditableImage {
             if(current.getWidth() < 500){
                 dimensions[0] = current.getWidth();
                 dimensions[1] = current.getHeight();
+                return dimensions;
             }
             dimensions[0] = 500;
             dimensions[1] = 500;

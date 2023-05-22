@@ -640,7 +640,7 @@ public class FilterActions {
                     // Apply the filter to the resized image copy
                     EditableImage eI = new EditableImage();
                     eI.setNewImage(resizedImageCopy);
-                    eI.apply(new EmbossFilter(value));
+                    eI.previewApply(new EmbossFilter(value));
                     BufferedImage filteredImage = eI.getCurrentImage();
 
                     // Update the image label with the filtered image
@@ -761,7 +761,7 @@ public class FilterActions {
                     // Apply the filter to the resized image copy
                     EditableImage eI = new EditableImage();
                     eI.setNewImage(resizedImageCopy);
-                    eI.apply(new SobelFilter(value));
+                    eI.previewApply(new SobelFilter(value));
                     BufferedImage filteredImage = eI.getCurrentImage();
 
                     // Update the image label with the filtered image

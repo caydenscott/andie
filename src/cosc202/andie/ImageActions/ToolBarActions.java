@@ -35,7 +35,7 @@ import cosc202.andie.SelectActions.SelectShape;
  * 4.0</a>
  * </p>
  * 
- * @author Daniel Dachs
+ * @author 
  * @version 1.0
  */
 
@@ -43,6 +43,7 @@ public class ToolBarActions {
     /** A list of actions for the Shape menu. */
     protected ArrayList<Action> actions;
     protected Preferences prefs = Preferences.userNodeForPackage(Andie.class);
+    
 
     /**
      * <p>
@@ -58,8 +59,8 @@ public class ToolBarActions {
         //actions.add(new ResizeTransformationAction(bundle.getString("transform_1"), null,
         //        bundle.getString("transform_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
 
-        actions.add(new DrawShapeAction(bundle.getString("draw_1"), null,
-            bundle.getString("draw_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
+        actions.add(new DrawShapeAction(bundle.getString("toolbar_1"), null,
+            bundle.getString("toolbar_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
         
     }
 
@@ -72,7 +73,7 @@ public class ToolBarActions {
      */
     public JMenu createMenu() {
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
-        JMenu shapeMenu = new JMenu(bundle.getString("draw_tt"));
+        JMenu shapeMenu = new JMenu(bundle.getString("toolbar_tt"));
 
         for (Action action : actions) {
             shapeMenu.add(new JMenuItem(action));
@@ -85,13 +86,10 @@ public class ToolBarActions {
 
     public class DrawShapeAction extends ImageAction {
 
-        private SelectShape shapeSelection; // current shape select type
         private JToolBar toolbar;
 
         /** variables for when adding the shape */
-        private Color shapeColour;
-        private Boolean filled;
-        private int outlineThickness;
+        
 
 
         /**
@@ -152,22 +150,12 @@ public class ToolBarActions {
             toolbar = null;
         }
 
-        private void addSelectAction(SelectShape sa) {
-            if (sa == null) {
-                return;
-            }
-            // remove the previous one
-            target.removeMouseListener(shapeSelection);
-            target.addMouseListener(sa);
-
-            // set new select action
-            shapeSelection = sa;
-        }
 
         private void makeToolBar(ResourceBundle bundle) {
 
             toolbar = new JToolBar();
             toolbar.setLayout(new FlowLayout());
+
 
             // Color Selector Button ------------------
             JButton colourSelectButton = new JButton("🖊");
@@ -184,6 +172,7 @@ public class ToolBarActions {
             JToggleButton squareButton = new JToggleButton("▢");
             JToggleButton triangleButton = new JToggleButton("△");
             JToggleButton circleButton = new JToggleButton("◯");
+            JToggleButton cropButton
 
             // add action listeners to set select area listeners
             squareButton.addActionListener(new ActionListener() {
@@ -270,71 +259,8 @@ public class ToolBarActions {
             toolbar.add(cancelButton);
         }
 
-        private class ChangeColourAction extends AbstractAction {
-            ChangeColourAction() {
-                super();
-            }
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
-                JButton colourSelectButton= (JButton) e.getSource();
-                shapeColour = JColorChooser.showDialog(
-                    colourSelectButton,
-                    bundle.getString("draw_colourpicker_title"),
-                    shapeColour);
-                colourSelectButton.setBackground(shapeColour);
-                colourSelectButton.setBorder(BorderFactory.createLineBorder(shapeColour, 5));
-                
-                colourSelectButton.repaint();
-                colourSelectButton.getParent().revalidate();
-
-                // update shape to be drawn
-                if (shapeSelection != null) {
-                    // update the shape we're adding
-                    shapeSelection.setColour(shapeColour);
-                }
-
-            }
-        }
     
-    
-        private class ChangeLineThicknessAction implements ChangeListener {
-            public void stateChanged(ChangeEvent e) {
-                SpinnerNumberModel source = (SpinnerNumberModel)e.getSource();
-                
-                outlineThickness = source.getNumber().intValue();
-
-                if (shapeSelection != null) {
-                    // update the shape we're adding
-                    shapeSelection.setOutlineThickness(outlineThickness);
-                }
-            }
-        }
-    
-        private class ChangeIsFilledAction extends AbstractAction {
-            ChangeIsFilledAction() {
-                super();
-            }
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JButton filledButton= (JButton) e.getSource();
-    
-                // if currently filled, then make it not filled
-                if (filled) {
-                    filledButton.setText("□");
-                    filled = false;
-                }
-                else {
-                    filledButton.setText("■");
-                    filled = true;
-                }
-
-                if (shapeSelection != null) {
-                    // update the shape we're adding
-                    shapeSelection.setFilled(filled);
-                }
-            }
-        }
+       
 
     }
 

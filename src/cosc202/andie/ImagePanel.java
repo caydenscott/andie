@@ -1,6 +1,8 @@
 package cosc202.andie;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
@@ -48,6 +50,8 @@ public class ImagePanel extends JPanel {
 
     /** current opened toolbar on the panel */
     private JToolBar toolbar;
+
+    private KeyListener keyListener;
 
     /**
      * <p>
@@ -183,6 +187,8 @@ public class ImagePanel extends JPanel {
         // add new toolbar
         add(toolBar);
 
+        this.requestFocus();
+
         repaint();
         getParent().revalidate();
         setVisible(true);
@@ -212,11 +218,26 @@ public class ImagePanel extends JPanel {
 
         // remove all mouse listeners
         for (MouseListener ms : getMouseListeners()) {
-            removeMouseListener(ms);
+            if (ms != keyListener) {
+                removeMouseListener(ms);
+            }
         }
         for (MouseMotionListener mml : getMouseMotionListeners()) {
-            removeMouseMotionListener(mml);
+            if (mml != keyListener) {
+                removeMouseMotionListener(mml);
+            }
         }
+
+        this.requestFocus();
+    }
+
+    /**
+     * <p
+     * @param keylistener key listener to add to panel
+     */
+    public void addKeyShortcutListener(KeyAdapter keyListener) {
+        this.keyListener = keyListener;
+        this.addKeyListener(this.keyListener);
     }
 
     // method/solution sourced from stackoverflow question: Remove floating JToolbar answered Feb 19, 2021 at 19:48 Aldo Canepa

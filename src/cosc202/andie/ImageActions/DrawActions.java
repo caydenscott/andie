@@ -167,6 +167,8 @@ public class DrawActions {
             target.removeMouseMotionListener(shapeSelection);
             target.addMouseMotionListener(sa);
 
+            target.requestFocus();
+
             // set new select action
             shapeSelection = sa;
         }

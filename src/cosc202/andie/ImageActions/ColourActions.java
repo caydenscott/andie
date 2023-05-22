@@ -14,7 +14,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import cosc202.andie.Andie;
-import cosc202.andie.EditableImage;
 import cosc202.andie.ImageOperations.Filters.BrightnessAndContrast;
 import cosc202.andie.ImageOperations.Filters.ConvertToGrey;
 import cosc202.andie.ImageOperations.Filters.InvertImage;

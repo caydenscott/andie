@@ -332,10 +332,6 @@ public class EditableImage {
         }
     }
 
-    public void previewApply(ImageOperation op) {
-        current = op.apply(current);
-    }
-
     /**
      * <p>
      * Undo the last {@link ImageOperation} applied to the image.
@@ -472,10 +468,6 @@ public class EditableImage {
         this.current = image;
         this.original = image;
 
-    }
-
-    public Stack<ImageOperation> getStack(){
-        return ops;
     }
 
     public int[] previewSizeCalculator(){

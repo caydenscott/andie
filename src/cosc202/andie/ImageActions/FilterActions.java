@@ -164,7 +164,7 @@ public class FilterActions {
 
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
@@ -241,7 +241,7 @@ public class FilterActions {
 
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
@@ -293,7 +293,7 @@ public class FilterActions {
 
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
@@ -366,7 +366,7 @@ public class FilterActions {
 
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
@@ -485,7 +485,7 @@ public class FilterActions {
 
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
@@ -594,7 +594,7 @@ public class FilterActions {
             int desiredHeight = dimensions [1];
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();
@@ -711,7 +711,7 @@ public class FilterActions {
             int desiredHeight = dimensions [1];
             Image scaledImage = target.getImage().getCurrentImage().getScaledInstance(desiredWidth, desiredHeight,
                     Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            BufferedImage resizedImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = resizedImage.createGraphics();
             graphics.drawImage(scaledImage, 0, 0, null);
             graphics.dispose();

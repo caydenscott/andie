@@ -116,7 +116,7 @@ public abstract class SelectAction implements MouseListener, MouseMotionListener
                     return;
                 }
                 // draw the shape, and repaint, note this is checks start and end again
-                apply(new SelectedArea(startPoint, endPoint));
+                apply(new SelectedArea(target.relativeToImagePoint(startPoint), target.relativeToImagePoint(endPoint)));
                 
 
                 // reset the selection

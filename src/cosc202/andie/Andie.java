@@ -1,7 +1,6 @@
 package cosc202.andie;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 
 import javax.swing.*;
 

@@ -373,7 +373,6 @@ public class TransformActions {
      * Action to crop images.
      * </p>
      * 
-     * @see Crop
      */
     public class CropAction extends ImageAction {
 

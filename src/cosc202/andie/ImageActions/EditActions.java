@@ -9,6 +9,8 @@ import javax.swing.*;
 
 import cosc202.andie.Andie;
 import cosc202.andie.EditableImage;
+import cosc202.andie.ImageActions.ViewActions.ZoomInAction;
+import cosc202.andie.ImageActions.ViewActions.ZoomOutAction;
 import cosc202.andie.ImageOperations.ImageOperation;
 import cosc202.andie.ImageOperations.Filters.EmbossFilter;
 
@@ -227,7 +229,14 @@ public class EditActions {
             // Shape Radio Buttons ---------------------
             JButton undoButton = new JButton("←");
             JButton redoButton = new JButton("→");
+            JButton zoomInButton = new JButton("🔭");
+            JButton zoomOutButton = new JButton("🛰️");
+            JButton sharpenButton = new JButton(bundle.getString("filter_3"));
+            JButton gaussianButton = new JButton(bundle.getString("filter_4"));
+            JButton medianButton = new JButton(bundle.getString("filter_5"));
             JButton embossButton = new JButton(bundle.getString("filter_6"));
+            JButton sobelButton = new JButton(bundle.getString("filter_7"));
+            
             
 
             // undoButton.addActionListener(new ActionListener() {
@@ -297,13 +306,29 @@ public class EditActions {
             FilterActions filterActions = new FilterActions();
 
             ImageAction embossAction = filterActions.new EmbossFilterAction(bundle.getString("filter_6"), null, null, null);
-
+            ImageAction sharpenAction = filterActions.new SharpenImageAction(bundle.getString("filter_3"), null, null, null);
+            ImageAction gaussianAction = filterActions.new GaussianFilterAction(bundle.getString("filter_4"), null, null, null);
+            ImageAction medianAction = filterActions.new MedianFilterAction(bundle.getString("filter_5"), null, null, null);
+            ImageAction sobelAction = filterActions.new SobelFilterAction(bundle.getString("filter_7"), null, null, null);
             
-
-            //ImageAction.setTarget(target);
-            
-
             embossButton.addActionListener(embossAction);
+            sharpenButton.addActionListener(sharpenAction);
+            gaussianButton.addActionListener(gaussianAction);
+            medianButton.addActionListener(medianAction);
+            sobelButton.addActionListener(sobelAction);
+            
+            ViewActions viewActions = new ViewActions();
+
+            ZoomInAction zoomInAction = viewActions.new ZoomInAction(bundle.getString("view_1"), null, null, null);
+            ZoomOutAction zoomOutAction = viewActions.new ZoomOutAction(bundle.getString("view_2"), null, null, null);
+            
+            zoomInButton.addActionListener(zoomInAction);
+            zoomOutButton.addActionListener(zoomOutAction);
+            
+            
+
+            
+
 
 
 
@@ -312,8 +337,17 @@ public class EditActions {
             JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             // shapePanel.add(new JLabel("Select Shape: "));
             editPanel.add(undoButton);
-            editPanel.add(embossButton);
             editPanel.add(redoButton);
+            editPanel.add(zoomInButton);
+            editPanel.add(zoomOutButton);
+            editPanel.add(gaussianButton);
+            editPanel.add(sharpenButton);
+            editPanel.add(medianButton);
+            editPanel.add(embossButton);
+            //editPanel.add(sobelAction);
+            
+            
+            
 
             toolbar.addSeparator();
             toolbar.add(editPanel);
@@ -330,6 +364,9 @@ public class EditActions {
 
             toolbar.addSeparator();
             toolbar.add(cancelButton);
+        }
+
+        private void addActionListener(UndoAction undoAction) {
         }
 
     }

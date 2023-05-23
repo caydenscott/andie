@@ -43,31 +43,6 @@ public abstract class SelectAction implements MouseListener, MouseMotionListener
     }
 
 
-    /**
-     * <p>
-     * Constructor for ImageActions.
-     * </p>
-     * 
-     * <p>
-     * To construct an ImageAction you provide the information needed to integrate it with the interface.
-     * Note that the target is not specified per-action, but via the static member {@link target}
-     * via {@link setTarget}.
-     * </p>
-     * 
-     * @param name The name of the action (ignored if null).
-     * @param icon An icon to use to represent the action (ignored if null).
-     * @param desc A brief description of the action  (ignored if null).
-     * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
-     *
-    SelectAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-        super(name, icon);
-        if (desc != null) {
-           putValue(SHORT_DESCRIPTION, desc);
-        }
-        if (mnemonic != null) {
-            putValue(MNEMONIC_KEY, mnemonic);
-        }
-    }*/
 
     public void mousePressed(MouseEvent e) {
         // if there is already a selected area, dont do anything, as user may want to cancel

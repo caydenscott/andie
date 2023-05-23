@@ -665,7 +665,6 @@ public class FilterActions {
          * This method is called whenever the SobelFilterAction is triggered.
          * It prompts the user to scelect a sobel time, then applys an appropriate
          * kernel
-         * {@link Sobel}.
          * </p>
          * 
          * @param e The event triggering this callback.

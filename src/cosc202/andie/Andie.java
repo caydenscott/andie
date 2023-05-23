@@ -1,6 +1,8 @@
 package cosc202.andie;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+
 import javax.swing.*;
 
 import cosc202.andie.ImageActions.ColourActions;
@@ -111,30 +113,23 @@ public class Andie {
         TransformActions translateActions = new TransformActions();
         menuBar.add(translateActions.createMenu());
 
+        // shapes
+        DrawActions shapeActions = new DrawActions();
+        menuBar.add(shapeActions.createMenu());
+
         // Actions to change the language 
         LanguageActions languageActions = new LanguageActions();
         menuBar.add(languageActions.createMenu());
 
-        // shapes
-        DrawActions shapeActions = new DrawActions();
-        menuBar.add(shapeActions.createMenu());
+        KeyboardShortcuts shortcuts = new KeyboardShortcuts();
+        
+        imagePanel.addKeyShortcutListener(shortcuts.getKeyAdapter());
+        //frame.addKeyListener(shortcuts.getKeyAdapter());
+        imagePanel.requestFocusInWindow();
         
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
-
-        KeyboardShortcuts shortcuts = new KeyboardShortcuts();
-        
-        frame.addKeyListener(shortcuts.getKeyAdapter());
-
-        // //toolbar
-        // ToolBarActions ToolBarActions = new ToolBarActions();
-        // menuBar.add(ToolBarActions.createMenu());
-        
-        // frame.setJMenuBar(menuBar);
-        // frame.pack();
-        // frame.setVisible(true);
-        
     }
 
     /**

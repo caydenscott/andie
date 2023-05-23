@@ -115,6 +115,7 @@ public abstract class SelectAction implements MouseListener, MouseMotionListener
             return;
         }
         showPreview(new SelectedArea(startPoint, e.getPoint()));
+        endPoint = e.getPoint();
     }
 
     @Override

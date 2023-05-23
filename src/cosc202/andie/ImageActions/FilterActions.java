@@ -179,18 +179,6 @@ public class FilterActions {
                     JSlider source = (JSlider) e.getSource();
                     if (!source.getValueIsAdjusting()) {
                         int value = source.getValue();
-                        BufferedImage resizedImageCopy = new BufferedImage(resizedImage.getWidth(),
-                                resizedImage.getHeight(), resizedImage.getType());
-                        Graphics2D copyGraphics = resizedImageCopy.createGraphics();
-                        copyGraphics.drawImage(resizedImage, 0, 0, null);
-                        copyGraphics.dispose();
-
-                        // Reset the image to the original resized image
-                        BufferedImage originalImage = new BufferedImage(resizedImage.getWidth(),
-                                resizedImage.getHeight(), resizedImage.getType());
-                        Graphics2D originalGraphics = originalImage.createGraphics();
-                        originalGraphics.drawImage(resizedImage, 0, 0, null);
-                        originalGraphics.dispose();
 
                         // Apply the filter to the resized image copy
                         MeanFilter mF = new MeanFilter(value);

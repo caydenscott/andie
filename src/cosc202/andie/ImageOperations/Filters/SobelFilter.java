@@ -8,10 +8,9 @@ import cosc202.andie.ImageOperations.ImageOperation;
 
 public class SobelFilter implements ImageOperation, java.io.Serializable {
 
-
     private String sobelType;
 
-     /**
+    /**
      * <p>
      * Construct a Sobel filter with the given type.
      * </p>
@@ -26,7 +25,7 @@ public class SobelFilter implements ImageOperation, java.io.Serializable {
         this.sobelType = sobelType;
     }
 
-     /**
+    /**
      * <p>
      * Apply a Sobel filter to an image.
      * </p>
@@ -81,7 +80,7 @@ public class SobelFilter implements ImageOperation, java.io.Serializable {
                     { 0, 0, 0 },
                     { +0.5, +1, +0.5 }
             };
-        } else if(sobelType.equals(horizontal)) {
+        } else if (sobelType.equals(horizontal)) {
             embossKernel = new double[][] {
                     { -0.5, 0, +0.5 },
                     { -1, 0, +1 },
@@ -121,6 +120,7 @@ public class SobelFilter implements ImageOperation, java.io.Serializable {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int pixelValue = filteredImage.getRGB(x + padAmount, y + padAmount);
+                int alpha = (pixelValue >> 24) & 0xFF; // Extract alpha channel
                 int red = (pixelValue >> 16) & 0xFF;
                 int green = (pixelValue >> 8) & 0xFF;
                 int blue = pixelValue & 0xFF;
@@ -129,8 +129,9 @@ public class SobelFilter implements ImageOperation, java.io.Serializable {
                 int normalizedIntensity = (int) (255.0 * intensity / maxPixelValue);
                 // Clamp the normalized intensity value to the range 0-255
                 int clampedIntensity = Math.max(0, Math.min(normalizedIntensity, 255));
-                // Set the clamped pixel value in the output image
-                int clampedPixelValue = (clampedIntensity << 16) | (clampedIntensity << 8) | clampedIntensity;
+                // Set the clamped pixel value with preserved alpha channel in the output image
+                int clampedPixelValue = (alpha << 24) | (clampedIntensity << 16) | (clampedIntensity << 8)
+                        | clampedIntensity;
                 output.setRGB(x, y, clampedPixelValue);
             }
         }

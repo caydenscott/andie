@@ -179,6 +179,7 @@ public class EmbossFilter implements ImageOperation, java.io.Serializable {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int pixelValue = filteredImage.getRGB(x + padAmount, y + padAmount);
+                int alpha = (pixelValue >> 24) & 0xFF; // Extract alpha channel
                 int red = (pixelValue >> 16) & 0xFF;
                 int green = (pixelValue >> 8) & 0xFF;
                 int blue = pixelValue & 0xFF;
@@ -187,8 +188,9 @@ public class EmbossFilter implements ImageOperation, java.io.Serializable {
                 int normalizedIntensity = (int) (255.0 * intensity / maxPixelValue);
                 // Clamp the normalized intensity value to the range 0-255
                 int clampedIntensity = Math.max(0, Math.min(normalizedIntensity, 255));
-                // Set the clamped pixel value in the output image
-                int clampedPixelValue = (clampedIntensity << 16) | (clampedIntensity << 8) | clampedIntensity;
+                // Set the clamped pixel value with preserved alpha channel in the output image
+                int clampedPixelValue = (alpha << 24) | (clampedIntensity << 16) | (clampedIntensity << 8)
+                        | clampedIntensity;
                 output.setRGB(x, y, clampedPixelValue);
             }
         }

@@ -337,15 +337,15 @@ public class EditActions {
 
             JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             // shapePanel.add(new JLabel("Select Shape: "));
-            editPanel.setPreferredSize(new Dimension(400,100));
+            //editPanel.setPreferredSize(new Dimension(400,100));
             editPanel.add(undoButton);
             editPanel.add(redoButton);
             editPanel.add(zoomInButton);
             editPanel.add(zoomOutButton);
-            editPanel.add(gaussianButton);
-            editPanel.add(sharpenButton);
-            editPanel.add(medianButton);
-            editPanel.add(embossButton);
+            // editPanel.add(gaussianButton);
+            // editPanel.add(sharpenButton);
+            // editPanel.add(medianButton);
+            // editPanel.add(embossButton);
             //editPanel.add(sobelAction);
             
             // // Cancel Button --------------------------
@@ -364,6 +364,17 @@ public class EditActions {
 
             toolbar.addSeparator();
             toolbar.add(editPanel);
+
+
+            JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+            filterPanel.add(gaussianButton);
+            filterPanel.add(sharpenButton);
+            filterPanel.add(medianButton);
+            filterPanel.add(embossButton);
+
+            toolbar.addSeparator();
+            toolbar.add(filterPanel);
 
             // Cancel Button --------------------------
             JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));

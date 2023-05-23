@@ -1,6 +1,7 @@
 # ignore generated artefacts
 bin
 doc
+.DS_Store
 
 # Ignore VSCode settings
 .vscode/settings.json

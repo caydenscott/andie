@@ -78,19 +78,19 @@ public class MacroActions {
             if(EditableImage.getRecord()){
                 ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
                 //Warning window
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("macro_warning"),
+                Object[] options = { bundle.getString("ok_option")};
+                JOptionPane.showOptionDialog(null, bundle.getString("macro_warning_1"),
                     bundle.getString("macro_tt"), JOptionPane.DEFAULT_OPTION,
                     JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
             else {
                 ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
                 //Notice window
-                Object[] options = { "OK" };
-                JOptionPane.showOptionDialog(null, bundle.getString("macro_notice"),
+                Object[] options = { bundle.getString("ok_option"), bundle.getString("no_save_option_2")};
+                int choice = JOptionPane.showOptionDialog(null, bundle.getString("macro_notice"),
                     bundle.getString("macro_tt"), JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-                EditableImage.record(1); 
+                if(choice == 0) EditableImage.record(1); 
             }
         }
     }
@@ -123,21 +123,23 @@ public class MacroActions {
          * 
          * @param e The event triggering this callback.
          */
-        public void actionPerformed(ActionEvent e) {     
-            ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
-            JFileChooser fileChooser = new JFileChooser();
-            int result = fileChooser.showSaveDialog(target);
+        public void actionPerformed(ActionEvent e) {
+            if(EditableImage.getRecord()){   
+                ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showSaveDialog(target);
 
-            if (result == JFileChooser.APPROVE_OPTION) {
-                try {
-                    String opsFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                    EditableImage.createMacro(opsFilepath);
-                    EditableImage.record(0);
-                } catch (Exception ex) {
-                    Object[] options = { "OK" };
-                    JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
-                        bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        String opsFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                        EditableImage.createMacro(opsFilepath);
+                        EditableImage.record(0);
+                    } catch (Exception ex) {
+                        Object[] options = { "OK" };
+                        JOptionPane.showOptionDialog(null, bundle.getString("file_error_unknown_2") + ":  " + ex,
+                            bundle.getString("file_error_unknown_1"), JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    }
                 }
             }
         }

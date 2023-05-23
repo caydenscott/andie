@@ -172,7 +172,7 @@ public class EditActions {
 
         /**
          * <p>
-         * Create a new draw rectangle action.
+         * ..
          * </p>
          * 
          * @param name     The name of the action (ignored if null).
@@ -334,7 +334,7 @@ public class EditActions {
 
 
 
-            JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             // shapePanel.add(new JLabel("Select Shape: "));
             editPanel.add(undoButton);
             editPanel.add(redoButton);
@@ -346,12 +346,6 @@ public class EditActions {
             editPanel.add(embossButton);
             //editPanel.add(sobelAction);
             
-            
-            
-
-            toolbar.addSeparator();
-            toolbar.add(editPanel);
-
             // Cancel Button --------------------------
             JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
 
@@ -364,6 +358,23 @@ public class EditActions {
 
             toolbar.addSeparator();
             toolbar.add(cancelButton);
+            
+
+            toolbar.addSeparator();
+            toolbar.add(editPanel);
+
+            // // Cancel Button --------------------------
+            // JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
+
+            // cancelButton.addActionListener(new ActionListener() {
+            //     @Override
+            //     public void actionPerformed(ActionEvent e) {
+            //         close();
+            //     }
+            // });
+
+            // toolbar.addSeparator();
+            // toolbar.add(cancelButton);
         }
 
         private void addActionListener(UndoAction undoAction) {

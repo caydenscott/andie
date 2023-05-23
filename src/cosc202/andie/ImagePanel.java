@@ -232,8 +232,8 @@ public class ImagePanel extends JPanel {
     }
 
     /**
-     * <p
-     * @param keylistener key listener to add to panel
+     * 
+     * @param keyListener key listener to add to panel
      */
     public void addKeyShortcutListener(KeyAdapter keyListener) {
         this.keyListener = keyListener;

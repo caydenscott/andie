@@ -2,6 +2,7 @@ package cosc202.andie.ImageActions;
 
 import java.util.*;
 import java.util.prefs.Preferences;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
@@ -334,8 +335,9 @@ public class EditActions {
 
 
 
-            JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             // shapePanel.add(new JLabel("Select Shape: "));
+            editPanel.setPreferredSize(new Dimension(400,100));
             editPanel.add(undoButton);
             editPanel.add(redoButton);
             editPanel.add(zoomInButton);
@@ -346,23 +348,6 @@ public class EditActions {
             editPanel.add(embossButton);
             //editPanel.add(sobelAction);
             
-            // Cancel Button --------------------------
-            JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
-
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    close();
-                }
-            });
-
-            toolbar.addSeparator();
-            toolbar.add(cancelButton);
-            
-
-            toolbar.addSeparator();
-            toolbar.add(editPanel);
-
             // // Cancel Button --------------------------
             // JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
 
@@ -375,6 +360,23 @@ public class EditActions {
 
             // toolbar.addSeparator();
             // toolbar.add(cancelButton);
+            
+
+            toolbar.addSeparator();
+            toolbar.add(editPanel);
+
+            // Cancel Button --------------------------
+            JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
+
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    close();
+                }
+            });
+
+            toolbar.addSeparator();
+            toolbar.add(cancelButton);
         }
 
         private void addActionListener(UndoAction undoAction) {

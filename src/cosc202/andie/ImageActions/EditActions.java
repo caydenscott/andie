@@ -335,19 +335,58 @@ public class EditActions {
 
 
 
+            // JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            // // shapePanel.add(new JLabel("Select Shape: "));
+            // editPanel.setPreferredSize(new Dimension(200,50));
+            // editPanel.add(undoButton);
+            // editPanel.add(redoButton);
+            // editPanel.add(zoomInButton);
+            // editPanel.add(zoomOutButton);
+            // editPanel.add(cancelButton);
+            // editPanel.add(gaussianButton);
+            // editPanel.add(sharpenButton);
+            // editPanel.add(medianButton);
+            // editPanel.add(embossButton);
+            //editPanel.add(sobelAction);
+            
+            // Cancel Button --------------------------
+            JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
+
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    close();
+                }
+            });
+
+            // toolbar.addSeparator();
+            // toolbar.add(cancelButton);
+            
             JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             // shapePanel.add(new JLabel("Select Shape: "));
-            editPanel.setPreferredSize(new Dimension(400,100));
+            editPanel.setPreferredSize(new Dimension(270,35));
+            editPanel.add(cancelButton);
+            toolbar.addSeparator();
             editPanel.add(undoButton);
             editPanel.add(redoButton);
             editPanel.add(zoomInButton);
             editPanel.add(zoomOutButton);
-            editPanel.add(gaussianButton);
-            editPanel.add(sharpenButton);
-            editPanel.add(medianButton);
-            editPanel.add(embossButton);
-            //editPanel.add(sobelAction);
             
+
+            toolbar.addSeparator();
+            toolbar.add(editPanel);
+
+
+            JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            filterPanel.setPreferredSize(new Dimension(475,35));
+            filterPanel.add(gaussianButton);
+            filterPanel.add(sharpenButton);
+            filterPanel.add(medianButton);
+            filterPanel.add(embossButton);
+
+            toolbar.addSeparator();
+            toolbar.add(filterPanel);
+
             // // Cancel Button --------------------------
             // JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
 
@@ -360,23 +399,6 @@ public class EditActions {
 
             // toolbar.addSeparator();
             // toolbar.add(cancelButton);
-            
-
-            toolbar.addSeparator();
-            toolbar.add(editPanel);
-
-            // Cancel Button --------------------------
-            JButton cancelButton = new JButton(UIManager.getDefaults().getIcon("InternalFrame.closeIcon"));
-
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    close();
-                }
-            });
-
-            toolbar.addSeparator();
-            toolbar.add(cancelButton);
         }
 
         private void addActionListener(UndoAction undoAction) {

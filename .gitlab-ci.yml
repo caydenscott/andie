@@ -5,7 +5,8 @@ before_script:
   - ":"
 pages:
   script:
-    - javadoc -d docs src/cosc202/andie/*.java
+
+    - javadoc -d public/doc -sourcepath src cosc202.andie cosc202.andie.ImageActions cosc202.andie.ImageOperations cosc202.andie.SelectActions
   artifacts:
     paths:
       # The folder that contains the files to be exposed at the Page URL

@@ -16,8 +16,14 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
 ## Team Member Contributions
 
 ### Benson
+**First Deliverable:**
  - **Export** I wrote the export method and added export action, and I got the idea from save and save as method. I tried to determine the image's format as the save method do, but it won't work, so I set it to png when image export, wherever the image's format is.  
  - **Multilingual support** On this part, I got the idea from Internationalised Hello World. I set the multilingual model and did most of the multilingual work up to that point, so teammates could follow and do multilingual work at the same time when they add the new things in.
+
+**Second Deliverable:**
+ - **Macros – Record and Replay** In the second part, I did the macro works, which is similar to export, but the operation's version. To finish this part, I went back to export-save as and find out the reason cause save as not working normally which make me misunderstanding and decide to export all image to png format. All because I didn't add format when I typing the new path of file and figured this out, the idea is coming up.
+ I add the format after the path so whatever people type, it will save the right format. Also, considering "someone might order fried rice at a bar", some weird situations could be happen, so I solve in the code to make sure macro could work in most cases.
+
 ### Cayden
  - **Median filter** I originally followed a few online guides and things when making the first version of median filter. Howver, I didn't the feeling of not having done it myself, and that it didn't seem to approach it the way the lab book said. So I re wrote the code following the lab book myself. I looked at the greyscale method to know how to access individual pixels and rewrite their RBG values.
  - **Gaussian filter** This filter took some time, at first I couldn't work out how to use the equation that was provided at all. After a good amount of trial and error, I eventually landed on the final version.
@@ -30,13 +36,13 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
  - **Rotate** Using matrix transformations of the image, rotating the image was a similar process to resizing it, with more complex maths involved in transform and creation of the correctly sized output image. The method created to rotate images in theory can handle rotating images to any degree, however this was not tested and is not implemented through the UI.
  - **Flip** Although flipping the image is possible through matrix transformations it is simpler and more efficient to directly swap the pixels across the x and y axis, for horizontal and vertical flipping respectively. This requires only running through n/2 swapping operations. In comparison doing these operations by matrix transforms would require translating the midpoint to the origin before flipping and moving back.
  - Added an isUndoable and isRedoable method to the EditableImage which checks if there are actions to undo or redo in their respective stacks. The undo and redo methods then first check if they are undoable or redoable before applying the change. This stops the exceptions which would otherwise arise.
-Added YAML script which runs Javadoc to provide documentation of code, using the output to host a Gitlab pages.
+ - Added YAML script which runs Javadoc to provide documentation of code, using the output to host a Gitlab pages.
 
 **Second Deliverable:**
  - **Selecting an Area** Initally used a mouselisener on the image panel and investigated drawing the preview area on the image, howev, due to the structure of the imagePanel and the stack of operations this approach would have required additional image copying or manipulating the stack which could have lead to many issues. It therefore made more sense to add a JButton to show the selected area, and to allow the user confirm their selected area. Had issues with painting the button to the screen however adding a border with the border factory fixed these issues. To allow for a better user experience while selecting the area the select area action also implements MouseMotionListener so the button can be updated with mouse drag events.
  - **Drawing Shapes** Extending the SelectAreaAction to allow for drawing rectangles, triangles and ovals involved creating new ImageOperations to draw shapes onto the image using Graphics2D, after translating the points gained from the selection to corresponding points on the image. The main job was creating a toolbar for all the options to draw shapes, using the ColourSelector and dealing with all the events in a way that the draw action was static. Implemented toolbar and mouse listener handling to the image panel so that it can handle opening and closing toolbars and ensuring the listeners are closed when a new action is started (so users don't find themselves drawing squares when they expected to crop).
  - **Crop** As with the shape drawing cropping involved extending upon select area to allow for making a smaller image of a specified area. This also used a toolbar - but far simpler - with only an exit button (in possible future updates this could have other crop options, e.g. crop to shape).
-  - **FreeDraw** To implement a free drawing feature a SelectPathAction, analogous to the SelectArea class, was created to alow users to select a path through mouse drags. A SelectLine class extending this SelectPathAction then handled drawing onto the image. Again a toolbar with options for the user was used.
+ - **FreeDraw** To implement a free drawing feature a SelectPathAction, analogous to the SelectArea class, was created to alow users to select a path through mouse drags. A SelectLine class extending this SelectPathAction then handled drawing onto the image. Again a toolbar with options for the user was used.
 
 ### Timothy
 - **Brightness & Contrast** - I firstly implemented the simple model formula for brightness and contrast in a method for math adjustment using bitwise operators. Within this method I had controlling conditions to ensure that r,g,b values wouldn't go outside the range 0,255 to avoid any problems. I had used some guidance but also discussed ideas with fellow teammates on how to effectively set the correct r,g,b values and there ranges. 
@@ -46,7 +52,13 @@ Added YAML script which runs Javadoc to provide documentation of code, using the
 Just a bit on what we did to check eachothers features and maybe a couple of examples on bug fixes.
 Anything else anyone did?
 ### Benson
- - I checked to see if there's any text mistake or error missed when I was doing own work, and after teammates found errors or done other things. I fixed the hot key values that didn't change when teammates copied and pasted sentences, and found a text mistakes, not many done.
+**First Deliverable**
+ - I checked to see if there's any text mistake or error missed when I was doing own work, and after teammates found errors or done other things. I fixed the hot key values that didn't change when teammates copied and pasted sentences, and found text mistakes, not many done.
+
+**Second Deliverable**
+ - After doing the macro, I thought about some questions about the macro and most importantly how it should look, I got the answer in the meeting and changed it. Also, some bugs were fixed while testing, such as the key not being found for the warning text causing an error when trying to start again after starting recording operation.
+ - Found and fixed a bug in little window which Filters and Resize opened. When close it by click cross, those operations still apply to image. Resize will cause another interesting error base on it because the value will only be passed when OK is clicked. Also report some bugs to teammates.
+ 
 
  ### Cayden
  - To test my code, I thoroughly used the program any time a new feature was added. I also had one of my non CS friends use it, seeing as they are more of a typical user, to try and find bugs.
@@ -59,7 +71,7 @@ Anything else anyone did?
 
 **Second Deliverable**
  - Had a flatmate test that the app, especially that the draw features were easy to use and understand - which highlighted the need to add an updating selected area to show the highlighted area as they dragged the mouse.
-  - Found some bugs in the filter previews which were changing the target image and clearing the stack through editing the static image stored there. Solved an issue of the keyboard shortcuts not running when focus was shifted to another element.
+ - Found some bugs in the filter previews which were changing the target image and clearing the stack through editing the static image stored there. Solved an issue of the keyboard shortcuts not running when focus was shifted to another element.
 
  ### Timothy
  - To test my code I consistently used and ran the program with different input files. This was useful for when I needed to adjust the code to allow negative values on the slider I added. I would rigoursly test the program to also see if the tick spacing would be easy for users. I asked my flatmates to test the program themselves and try to find bugs since they weren't familiar with how it works.

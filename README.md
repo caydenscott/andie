@@ -55,7 +55,13 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
  Note:  A few of my commits were done under my personal git username dan-432 rather than dacda462.
 
 ### Timothy
+**First Deliverable:**
 - **Brightness & Contrast** - I firstly implemented the simple model formula for brightness and contrast in a method for math adjustment using bitwise operators. Within this method I had controlling conditions to ensure that r,g,b values wouldn't go outside the range 0,255 to avoid any problems. I had used some guidance but also discussed ideas with fellow teammates on how to effectively set the correct r,g,b values and there ranges. 
+
+**Second Deliverable:**
+- **Toolbar** - I had completed the toolbar within the EditActions class. Implemented toolbar to the image panel. I had created new instances of JButton for the corresponding actions, created new actions for the toolbar then used an action listener to assign the buttons too. I discussed with a teammate and used the same sort've idea for making and cancel button for closing the toolbar. The toolbar allows users to various actions without selecting the drop menu, or keyboard shortcuts
+
+- **Keyboard Shortcuts** - I had implemented a KeyEvent class, which is an event which indicates that a keystroke occured in a component. For every action class constructor, I had added a KeyStroke accelerator parameter. I had also added certain KeyEvents to be associated every action being added. Doing the shortcuts this way allowed the users to see what the keyboard shortcuts were when trying to select an action.
 
 
 ## Testing
@@ -90,5 +96,10 @@ Anything else anyone did?
  - Found some bugs in the filter previews which were changing the target image and clearing the stack through editing the static image stored there. Solved an issue of the keyboard shortcuts not running when focus was shifted to another element.
 
  ### Timothy
+ **First Deliverable**
  - To test my code I consistently used and ran the program with different input files. This was useful for when I needed to adjust the code to allow negative values on the slider I added. I would rigoursly test the program to also see if the tick spacing would be easy for users. I asked my flatmates to test the program themselves and try to find bugs since they weren't familiar with how it works.
  - After notified by my teammates, I had to allow multilingual accessibility support to my tool instructions, as I had forgotten.
+
+**Second Deliverable**
+- Did multiple tests, again with different input files and found that the Emboss and another filter hadn't worked and would break the image. We notified Cayden who was doing the filter tasks which he then fixed the bugs. 
+- To test, I would just get my mate who isn't familiar with this sort've stuff at all to just test the program with me next to him where I would try to see what would make it more user friendly, or if any bugs shwoed up

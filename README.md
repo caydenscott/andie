@@ -103,3 +103,4 @@ Anything else anyone did?
 **Second Deliverable**
 - Did multiple tests, again with different input files and found that the Emboss and another filter hadn't worked and would break the image. We notified Cayden who was doing the filter tasks which he then fixed the bugs. 
 - To test, I would just get my mate who isn't familiar with this sort've stuff at all to just test the program with me next to him where I would try to see what would make it more user friendly, or if any bugs shwoed up
+- Something I did notice while my mate was testing the program was that the toolbar would appear differently depending on the user's operating system. I had adjusted the JPanel to fixed dimensions to tidy it up. 

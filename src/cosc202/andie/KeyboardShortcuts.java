@@ -1,3 +1,4 @@
+
 // package cosc202.andie;
 
 // import javax.swing.JOptionPane;
@@ -37,19 +38,19 @@
 //                 FileSaveAsAction saveAsAction = fileActions.new FileSaveAsAction(null, null, null, null);
 
                 
-//                 if(k.getKeyCode() == KeyEvent.VK_Z && k.isControlDown() & !k.isShiftDown()){
+//                 if(k.getKeyCode() == KeyEvent.VK_Z && k.isControlDown() & !k.isShiftDown() || k.getKeyCode() == KeyEvent.VK_Z && k.isMetaDown() & !k.isShiftDown()){
 //                     //if user presses Ctrl+Z = undo
 //                     undoAction.actionPerformed(null);
-//                 }else if(k.getKeyCode() == KeyEvent.VK_Z && k.isControlDown() & k.isShiftDown()){
+//                 }else if(k.getKeyCode() == KeyEvent.VK_Z && k.isControlDown() & k.isShiftDown() || k.getKeyCode() == KeyEvent.VK_Z && k.isMetaDown() & k.isShiftDown()){
 //                     //if user presses Ctrl+Shift+Z = redo
 //                     redoAction.actionPerformed(null);
-//                 }else if(k.getKeyCode() == KeyEvent.VK_S && k.isControlDown() & !k.isShiftDown()){
+//                 }else if(k.getKeyCode() == KeyEvent.VK_S && k.isControlDown() & !k.isShiftDown() || k.getKeyCode() == KeyEvent.VK_S && k.isMetaDown() & !k.isShiftDown()){
 //                     //if user presses Ctrl+S = save
 //                     saveAction.actionPerformed(null);
-//                 }else if(k.getKeyCode() == KeyEvent.VK_S && k.isControlDown() & k.isShiftDown()){
+//                 }else if(k.getKeyCode() == KeyEvent.VK_S && k.isControlDown() & k.isShiftDown() || k.getKeyCode() == KeyEvent.VK_S && k.isMetaDown() & k.isShiftDown()){
 //                     //if user presses Ctrl+Shift+S = save as
 //                     saveAsAction.actionPerformed(null);
-//                 }else if(k.getKeyCode() == KeyEvent.VK_O && k.isControlDown() & !k.isShiftDown()){
+//                 }else if(k.getKeyCode() == KeyEvent.VK_O && k.isControlDown() & !k.isShiftDown() || k.getKeyCode() == KeyEvent.VK_O && k.isMetaDown() & !k.isShiftDown()){
 //                     //if user presses Ctrl+O = open
 //                     openAction.actionPerformed(null);
 //                     //if user knows UFC2 EE lol

@@ -1,5 +1,5 @@
 ## Folder Structure
-Unchanged from code provided. Still runs the same where Andie class is start point.
+Folder structure changed however still runs the same: Andie class is the main app and start point.
 
 ## Documentation
 Documentation available at https://cosc202-team_n.cspages.otago.ac.nz/andie/doc \n

@@ -2,7 +2,7 @@
 Folder structure changed however still runs the same: Andie class is the main app and start point.
 
 ## Documentation
-Documentation available at https://cosc202-team_n.cspages.otago.ac.nz/andie/doc \n
+Documentation available at https://cosc202-team_n.cspages.otago.ac.nz/andie/doc
 Generated from Javadoc comments, in code comments exist as well within the source code.
 
 ## User Guide
@@ -16,6 +16,7 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
 ## Team Member Contributions
 
 ### Benson
+
 **First Deliverable:**
  - **Export** I wrote the export method and added export action, and I got the idea from save and save as method. I tried to determine the image's format as the save method do, but it won't work, so I set it to png when image export, wherever the image's format is.  
  - **Multilingual support** On this part, I got the idea from Internationalised Hello World. I set the multilingual model and did most of the multilingual work up to that point, so teammates could follow and do multilingual work at the same time when they add the new things in.
@@ -37,6 +38,7 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
  - **Filter Previews** This was done rather late, and ended up causing quite a few issues for me. I simply copy the target buffered image into a new one, resize and scale it, and then if needed, apply a filter to it. Then, I added actionListeners to the sliders and spinners where necessary, such that it updated the smaller image without affecting the stack and main image. The previews also have a method to resize them nicely, while retaining the correct aspect ratio. The maximum length of the width or height is 500 pixels, and the shorter length will be adjusted according to the ratio of the original. If it is less than 500 pixels, the preview will just be the same size as the original image.
 
 ### Daniel
+
 **First Deliverable:**
  - **Resize** I originally investigated using the getGraphics() to access an instance of 2DGraphics to then preform drawImage() to map the image to a smaller image provided by getScaledInstance. However I decided to use affine transforms to resize the image. There are also countless libraries which could have done this job, possibly more efficiently. Images can effectively be treated as matrices of pixels, so by modifying the Identity matrix it is easy enough to scale the image, and to rotate it. It was then a case of creating an output image for the affineTransormOp to map to. This operation also allowed for control of how the operation was applied, I decided to use a bilinear transform.
  - **Rotate** Using matrix transformations of the image, rotating the image was a similar process to resizing it, with more complex maths involved in transform and creation of the correctly sized output image. The method created to rotate images in theory can handle rotating images to any degree, however this was not tested and is not implemented through the UI.
@@ -49,6 +51,8 @@ Generated from Javadoc comments, in code comments exist as well within the sourc
  - **Drawing Shapes** Extending the SelectAreaAction to allow for drawing rectangles, triangles and ovals involved creating new ImageOperations to draw shapes onto the image using Graphics2D, after translating the points gained from the selection to corresponding points on the image. The main job was creating a toolbar for all the options to draw shapes, using the ColourSelector and dealing with all the events in a way that the draw action was static. Implemented toolbar and mouse listener handling to the image panel so that it can handle opening and closing toolbars and ensuring the listeners are closed when a new action is started (so users don't find themselves drawing squares when they expected to crop).
  - **Crop** As with the shape drawing cropping involved extending upon select area to allow for making a smaller image of a specified area. This also used a toolbar - but far simpler - with only an exit button (in possible future updates this could have other crop options, e.g. crop to shape).
  - **FreeDraw** To implement a free drawing feature a SelectPathAction, analogous to the SelectArea class, was created to alow users to select a path through mouse drags. A SelectLine class extending this SelectPathAction then handled drawing onto the image. Again a toolbar with options for the user was used.
+
+ Note:  A few of my commits were done under my personal git username dan-432 rather than dacda462.
 
 ### Timothy
 - **Brightness & Contrast** - I firstly implemented the simple model formula for brightness and contrast in a method for math adjustment using bitwise operators. Within this method I had controlling conditions to ensure that r,g,b values wouldn't go outside the range 0,255 to avoid any problems. I had used some guidance but also discussed ideas with fellow teammates on how to effectively set the correct r,g,b values and there ranges. 

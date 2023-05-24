@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.prefs.Preferences;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.event.*;
+import java.awt.event.KeyEvent;
 
 import cosc202.andie.Andie;
 import cosc202.andie.EditableImage;
@@ -43,15 +45,15 @@ public class FileActions {
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
         actions.add(new FileOpenAction(bundle.getString("file_1"), null, bundle.getString("file_1_desc"),
-                Integer.valueOf(KeyEvent.VK_O)));
+                Integer.valueOf(KeyEvent.VK_O), KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new FileSaveAction(bundle.getString("file_2"), null, bundle.getString("file_2_desc"),
-                Integer.valueOf(KeyEvent.VK_S)));
+                Integer.valueOf(KeyEvent.VK_S), KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new FileSaveAsAction(bundle.getString("file_3"), null, bundle.getString("file_3_desc"),
-                Integer.valueOf(KeyEvent.VK_A)));
+                Integer.valueOf(KeyEvent.VK_A), KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new FileExportAction(bundle.getString("file_4"), null, bundle.getString("file_4_desc"),
-                Integer.valueOf(KeyEvent.VK_E)));
+                Integer.valueOf(KeyEvent.VK_E), KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new FileExitAction(bundle.getString("file_5"), null, bundle.getString("file_5_desc"),
-                Integer.valueOf(0)));
+                Integer.valueOf(0), KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK)));
     }
 
     /**
@@ -90,9 +92,10 @@ public class FileActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null)
          */
-        public FileOpenAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        public FileOpenAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -219,9 +222,10 @@ public class FileActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null)
          */
-        public FileSaveAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        public FileSaveAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -280,9 +284,10 @@ public class FileActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null)
          */
-        public FileSaveAsAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        public FileSaveAsAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -341,9 +346,10 @@ public class FileActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        FileExportAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        FileExportAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -401,11 +407,13 @@ public class FileActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        FileExitAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+        FileExitAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
             super(name, icon);
             putValue(SHORT_DESCRIPTION, desc);
             putValue(MNEMONIC_KEY, mnemonic);
+            putValue(ACCELERATOR_KEY, accelerator);
         }
 
         /**

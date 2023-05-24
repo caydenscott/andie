@@ -30,9 +30,9 @@ public class MacroActions {
         actions = new ArrayList<Action>(); 
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
-        actions.add(new StartAction(bundle.getString("macro_1"), null, bundle.getString("macro_1_desc"), Integer.valueOf(KeyEvent.VK_HOME)));
-        actions.add(new StopAction(bundle.getString("macro_2"), null, bundle.getString("macro_2_desc"), Integer.valueOf(KeyEvent.VK_END)));
-        actions.add(new LoadAction(bundle.getString("macro_3"), null, bundle.getString("macro_3_desc"), Integer.valueOf(KeyEvent.VK_L)));
+        actions.add(new StartAction(bundle.getString("macro_1"), null, bundle.getString("macro_1_desc"), Integer.valueOf(KeyEvent.VK_HOME), KeyStroke.getKeyStroke(KeyEvent.VK_1, KeyEvent.CTRL_DOWN_MASK)));
+        actions.add(new StopAction(bundle.getString("macro_2"), null, bundle.getString("macro_2_desc"), Integer.valueOf(KeyEvent.VK_END), KeyStroke.getKeyStroke(KeyEvent.VK_2, KeyEvent.CTRL_DOWN_MASK)));
+        actions.add(new LoadAction(bundle.getString("macro_3"), null, bundle.getString("macro_3_desc"), Integer.valueOf(KeyEvent.VK_L), KeyStroke.getKeyStroke(KeyEvent.VK_3, KeyEvent.CTRL_DOWN_MASK)));
     }
 
     public JMenu createMenu() {
@@ -57,9 +57,10 @@ public class MacroActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        StartAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        StartAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -106,9 +107,10 @@ public class MacroActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        StopAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        StopAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -156,9 +158,10 @@ public class MacroActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        LoadAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        LoadAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**

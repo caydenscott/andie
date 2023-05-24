@@ -63,11 +63,11 @@ public class ColourActions {
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
         actions.add(new ConvertToGreyAction(bundle.getString("colour_1"), null, bundle.getString("colour_1_desc"),
-                Integer.valueOf(KeyEvent.VK_C)));
+                Integer.valueOf(KeyEvent.VK_C), KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new InvertImageAction(bundle.getString("colour_2"), null, bundle.getString("colour_2_desc"),
-                Integer.valueOf(KeyEvent.VK_I)));
+                Integer.valueOf(KeyEvent.VK_I), KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new BrightnessAndContrastAction(bundle.getString("colour_3"), null,
-                bundle.getString("colour_3_desc"), Integer.valueOf(KeyEvent.VK_B)));
+                bundle.getString("colour_3_desc"), Integer.valueOf(KeyEvent.VK_B), KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK)));
 
     }
 
@@ -107,9 +107,10 @@ public class ColourActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ConvertToGreyAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ConvertToGreyAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -168,8 +169,8 @@ public class ColourActions {
 
     public class InvertImageAction extends ImageAction {
 
-        InvertImageAction(String name, ImageIcon icon, String desc, Integer mneumonic) {
-            super(name, icon, desc, mneumonic);
+        InvertImageAction(String name, ImageIcon icon, String desc, Integer mneumonic, KeyStroke accelerator) {
+            super(name, icon, desc, mneumonic, accelerator);
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -215,8 +216,8 @@ public class ColourActions {
 
     public class BrightnessAndContrastAction extends ImageAction {
 
-        BrightnessAndContrastAction(String name, ImageIcon Icon, String desc, Integer mneumonic) {
-            super(name, Icon, desc, mneumonic);
+        BrightnessAndContrastAction(String name, ImageIcon Icon, String desc, Integer mneumonic, KeyStroke accelerator) {
+            super(name, Icon, desc, mneumonic, accelerator);
         }
 
         public void actionPerformed(ActionEvent e) {

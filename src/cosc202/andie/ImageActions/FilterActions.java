@@ -62,19 +62,19 @@ public class FilterActions {
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
         actions.add(new MeanFilterAction(bundle.getString("filter_1"), null, bundle.getString("filter_1_desc"),
-                Integer.valueOf(KeyEvent.VK_M)));
+                Integer.valueOf(KeyEvent.VK_M), KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new SoftBlurAction(bundle.getString("filter_2"), null, bundle.getString("filter_2_desc"),
-                Integer.valueOf(KeyEvent.VK_B)));
+                Integer.valueOf(KeyEvent.VK_P), KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new SharpenImageAction(bundle.getString("filter_3"), null, bundle.getString("filter_3_desc"),
-                Integer.valueOf(KeyEvent.VK_S)));
+                Integer.valueOf(KeyEvent.VK_S), KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new GaussianFilterAction(bundle.getString("filter_4"), null, bundle.getString("filter_4_desc"),
-                Integer.valueOf(KeyEvent.VK_G)));
+                Integer.valueOf(KeyEvent.VK_G), KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new MedianFilterAction(bundle.getString("filter_5"), null, bundle.getString("filter_5_desc"),
-                Integer.valueOf(KeyEvent.VK_H)));
+                Integer.valueOf(KeyEvent.VK_H), KeyStroke.getKeyStroke(KeyEvent.VK_H, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new EmbossFilterAction(bundle.getString("filter_6"), null, bundle.getString("filter_6_desc"),
-                Integer.valueOf(KeyEvent.VK_J)));
+                Integer.valueOf(KeyEvent.VK_J), KeyStroke.getKeyStroke(KeyEvent.VK_J, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new SobelFilterAction(bundle.getString("filter_7"), null, bundle.getString("filter_7_desc"),
-                Integer.valueOf(KeyEvent.VK_F)));
+                Integer.valueOf(KeyEvent.VK_F), KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK)));
 
     }
 
@@ -114,9 +114,10 @@ public class FilterActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        MeanFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        MeanFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -210,8 +211,8 @@ public class FilterActions {
 
     public class SoftBlurAction extends ImageAction {
 
-        SoftBlurAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        SoftBlurAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -259,8 +260,8 @@ public class FilterActions {
 
     public class SharpenImageAction extends ImageAction {
 
-        SharpenImageAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        SharpenImageAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -317,9 +318,10 @@ public class FilterActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        GaussianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        GaussianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -428,9 +430,10 @@ public class FilterActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        MedianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        MedianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -540,9 +543,10 @@ public class FilterActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        EmbossFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        EmbossFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -655,9 +659,10 @@ public class FilterActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        SobelFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        SobelFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**

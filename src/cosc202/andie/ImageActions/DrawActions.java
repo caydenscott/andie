@@ -61,9 +61,9 @@ public class DrawActions {
         //        bundle.getString("transform_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
 
         actions.add(new DrawShapeAction(bundle.getString("draw_1"), null,
-            bundle.getString("draw_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
+            bundle.getString("draw_1_desc"), Integer.valueOf(KeyEvent.VK_R), KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new DrawFreeAction(bundle.getString("draw_2"), null,
-            bundle.getString("draw_2_desc"), Integer.valueOf(KeyEvent.VK_R)));
+            bundle.getString("draw_2_desc"), Integer.valueOf(KeyEvent.VK_R), KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_DOWN_MASK)));
         
     }
 
@@ -107,9 +107,10 @@ public class DrawActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        DrawShapeAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        DrawShapeAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
 
             // set default shape variables
             shapeColour = Color.BLACK;
@@ -366,9 +367,10 @@ public class DrawActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null)
          */
-        DrawFreeAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        DrawFreeAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
 
             // set default shape variables
             lineColour = Color.BLACK;

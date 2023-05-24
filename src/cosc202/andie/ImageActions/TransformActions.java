@@ -51,17 +51,17 @@ public class TransformActions {
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
         actions.add(new ResizeTransformationAction(bundle.getString("transform_1"), null,
-                bundle.getString("transform_1_desc"), Integer.valueOf(KeyEvent.VK_R)));
+                bundle.getString("transform_1_desc"), Integer.valueOf(KeyEvent.VK_R), KeyStroke.getKeyStroke(KeyEvent.VK_4, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new ClockwiseRotateTransformationAction(bundle.getString("transform_2"), null,
-                bundle.getString("transform_2_desc"), Integer.valueOf(KeyEvent.VK_C)));
+                bundle.getString("transform_2_desc"), Integer.valueOf(KeyEvent.VK_C), KeyStroke.getKeyStroke(KeyEvent.VK_5, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new AnticlockwiseRotateTransformationAction(bundle.getString("transform_3"), null,
-                bundle.getString("transform_3_desc"), Integer.valueOf(KeyEvent.VK_A)));
+                bundle.getString("transform_3_desc"), Integer.valueOf(KeyEvent.VK_A), KeyStroke.getKeyStroke(KeyEvent.VK_6, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new HorizontalFlipTransformationAction(bundle.getString("transform_4"), null,
-                bundle.getString("transform_4_desc"), Integer.valueOf(KeyEvent.VK_H)));
+                bundle.getString("transform_4_desc"), Integer.valueOf(KeyEvent.VK_H), KeyStroke.getKeyStroke(KeyEvent.VK_7, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new VerticalFlipTransformationAction(bundle.getString("transform_5"), null,
-                bundle.getString("transform_5_desc"), Integer.valueOf(KeyEvent.VK_V)));
+                bundle.getString("transform_5_desc"), Integer.valueOf(KeyEvent.VK_V), KeyStroke.getKeyStroke(KeyEvent.VK_8, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new CropAction(bundle.getString("transform_6"), null,
-            bundle.getString("transform_6_desc"), Integer.valueOf(KeyEvent.VK_V)));
+            bundle.getString("transform_6_desc"), Integer.valueOf(KeyEvent.VK_V), KeyStroke.getKeyStroke(KeyEvent.VK_9, KeyEvent.CTRL_DOWN_MASK)));
     }
 
     /**
@@ -102,9 +102,10 @@ public class TransformActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ResizeTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ResizeTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -173,9 +174,10 @@ public class TransformActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ClockwiseRotateTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ClockwiseRotateTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -227,9 +229,10 @@ public class TransformActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        AnticlockwiseRotateTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        AnticlockwiseRotateTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -281,9 +284,10 @@ public class TransformActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        HorizontalFlipTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        HorizontalFlipTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -334,9 +338,10 @@ public class TransformActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        VerticalFlipTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        VerticalFlipTransformationAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -388,9 +393,10 @@ public class TransformActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        CropAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        CropAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**

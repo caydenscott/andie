@@ -31,9 +31,9 @@ public class LanguageActions {
         actions = new ArrayList<Action>(); 
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle"); 
-        actions.add(new EnglishAction(bundle.getString("language_1"), null, bundle.getString("language_1_desc"), Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new MaoriAction(bundle.getString("language_2"), null, bundle.getString("language_2_desc"), Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new ItalianoAction(bundle.getString("language_3"), null, bundle.getString("language_3_desc"), Integer.valueOf(KeyEvent.VK_I)));
+        actions.add(new EnglishAction(bundle.getString("language_1"), null, bundle.getString("language_1_desc"), Integer.valueOf(KeyEvent.VK_N), KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK)));
+        actions.add(new MaoriAction(bundle.getString("language_2"), null, bundle.getString("language_2_desc"), Integer.valueOf(KeyEvent.VK_C), KeyStroke.getKeyStroke(KeyEvent.VK_8, KeyEvent.CTRL_DOWN_MASK)));
+        actions.add(new ItalianoAction(bundle.getString("language_3"), null, bundle.getString("language_3_desc"), Integer.valueOf(KeyEvent.VK_I), KeyStroke.getKeyStroke(KeyEvent.VK_9, KeyEvent.CTRL_DOWN_MASK)));
     }
 
     /**
@@ -71,9 +71,10 @@ public class LanguageActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        EnglishAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        EnglishAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -120,9 +121,10 @@ public class LanguageActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        MaoriAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        MaoriAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -169,9 +171,10 @@ public class LanguageActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ItalianoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ItalianoAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**

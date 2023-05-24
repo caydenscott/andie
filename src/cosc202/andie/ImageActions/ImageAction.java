@@ -53,10 +53,11 @@ public abstract class ImageAction extends AbstractAction {
      * @param icon An icon to use to represent the action (ignored if null).
      * @param desc A brief description of the action  (ignored if null).
      * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+     * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
      */
 
      //////KeyStroke accelerator
-    ImageAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+    ImageAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
         super(name, icon);
         if (desc != null) {
            putValue(SHORT_DESCRIPTION, desc);
@@ -64,9 +65,9 @@ public abstract class ImageAction extends AbstractAction {
         if (mnemonic != null) {
             putValue(MNEMONIC_KEY, mnemonic);
         }
-        /**if(accelerator != null){
+        if(accelerator != null){
             putValue(ACCELERATOR_KEY, accelerator);
-        }*/
+        }
 
     }
 

@@ -51,13 +51,13 @@ public class EditActions {
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
         actions.add(new UndoAction(bundle.getString("edit_1"), null, bundle.getString("edit_1_desc"),
-                Integer.valueOf(KeyEvent.VK_U)));
+                Integer.valueOf(KeyEvent.VK_U), KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK)));
         actions.add(new RedoAction(bundle.getString("edit_2"), null, bundle.getString("edit_2_desc"),
-                Integer.valueOf(KeyEvent.VK_R)));
+                Integer.valueOf(KeyEvent.VK_R), KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK)));
 
         // add actions
         actions.add(new ToolbarAction(bundle.getString("edit_3"), null, bundle.getString("edit_3_desc"),
-                Integer.valueOf(KeyEvent.VK_R)));
+                Integer.valueOf(KeyEvent.VK_R), KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK)));
 
                 
     }
@@ -98,9 +98,10 @@ public class EditActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor.
          */
-        public UndoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        public UndoAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
 
         }
 
@@ -141,9 +142,10 @@ public class EditActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        public RedoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        public RedoAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -180,9 +182,10 @@ public class EditActions {
          * @param icon     An icon to use to represent the action (ignored if null).
          * @param desc     A brief description of the action (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ToolbarAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ToolbarAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
 
         }
 
@@ -251,9 +254,9 @@ public class EditActions {
             // });
 
             undoButton.addActionListener(new UndoAction(bundle.getString("edit_1"), null, bundle.getString("edit_1_desc"),
-            Integer.valueOf(KeyEvent.VK_U)));
+            Integer.valueOf(KeyEvent.VK_U), KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK)));
             redoButton.addActionListener(new RedoAction(bundle.getString("edit_2"), null, bundle.getString("edit_2_desc"),
-                Integer.valueOf(KeyEvent.VK_R)));
+                Integer.valueOf(KeyEvent.VK_R), KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK)));
 
 
             // embossButton.addActionListener(new ActionListener() {
@@ -306,11 +309,11 @@ public class EditActions {
 
             FilterActions filterActions = new FilterActions();
 
-            ImageAction embossAction = filterActions.new EmbossFilterAction(bundle.getString("filter_6"), null, null, null);
-            ImageAction sharpenAction = filterActions.new SharpenImageAction(bundle.getString("filter_3"), null, null, null);
-            ImageAction gaussianAction = filterActions.new GaussianFilterAction(bundle.getString("filter_4"), null, null, null);
-            ImageAction medianAction = filterActions.new MedianFilterAction(bundle.getString("filter_5"), null, null, null);
-            ImageAction sobelAction = filterActions.new SobelFilterAction(bundle.getString("filter_7"), null, null, null);
+            ImageAction embossAction = filterActions.new EmbossFilterAction(bundle.getString("filter_6"), null, null, null, null);
+            ImageAction sharpenAction = filterActions.new SharpenImageAction(bundle.getString("filter_3"), null, null, null, null);
+            ImageAction gaussianAction = filterActions.new GaussianFilterAction(bundle.getString("filter_4"), null, null, null,null);
+            ImageAction medianAction = filterActions.new MedianFilterAction(bundle.getString("filter_5"), null, null, null,null);
+            ImageAction sobelAction = filterActions.new SobelFilterAction(bundle.getString("filter_7"), null, null, null,null);
             
             embossButton.addActionListener(embossAction);
             sharpenButton.addActionListener(sharpenAction);
@@ -320,8 +323,8 @@ public class EditActions {
             
             ViewActions viewActions = new ViewActions();
 
-            ZoomInAction zoomInAction = viewActions.new ZoomInAction(bundle.getString("view_1"), null, null, null);
-            ZoomOutAction zoomOutAction = viewActions.new ZoomOutAction(bundle.getString("view_2"), null, null, null);
+            ZoomInAction zoomInAction = viewActions.new ZoomInAction(bundle.getString("view_1"), null, null, null, null);
+            ZoomOutAction zoomOutAction = viewActions.new ZoomOutAction(bundle.getString("view_2"), null, null, null, null);
             
             zoomInButton.addActionListener(zoomInAction);
             zoomOutButton.addActionListener(zoomOutAction);

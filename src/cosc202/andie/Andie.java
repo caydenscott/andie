@@ -120,11 +120,11 @@ public class Andie {
         LanguageActions languageActions = new LanguageActions();
         menuBar.add(languageActions.createMenu());
 
-        KeyboardShortcuts shortcuts = new KeyboardShortcuts();
+        // KeyboardShortcuts shortcuts = new KeyboardShortcuts();
         
-        imagePanel.addKeyShortcutListener(shortcuts.getKeyAdapter());
-        //frame.addKeyListener(shortcuts.getKeyAdapter());
-        imagePanel.requestFocusInWindow();
+        // imagePanel.addKeyShortcutListener(shortcuts.getKeyAdapter());
+        // //frame.addKeyListener(shortcuts.getKeyAdapter());
+        // imagePanel.requestFocusInWindow();
         
         frame.setJMenuBar(menuBar);
         frame.pack();

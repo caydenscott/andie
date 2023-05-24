@@ -41,9 +41,9 @@ public class ViewActions {
         actions = new ArrayList<Action>(); 
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
         ResourceBundle bundle = ResourceBundle.getBundle("languages/MessageBundle");
-        actions.add(new ZoomInAction(bundle.getString("view_1"), null, bundle.getString("view_1_desc"), Integer.valueOf(KeyEvent.VK_PLUS)));
-        actions.add(new ZoomOutAction(bundle.getString("view_2"), null, bundle.getString("view_2_desc"), Integer.valueOf(KeyEvent.VK_MINUS)));
-        actions.add(new ZoomFullAction(bundle.getString("view_3"), null, bundle.getString("view_3_desc"), Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new ZoomInAction(bundle.getString("view_1"), null, bundle.getString("view_1_desc"), Integer.valueOf(KeyEvent.VK_PLUS), KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_DOWN_MASK)));
+        actions.add(new ZoomOutAction(bundle.getString("view_2"), null, bundle.getString("view_2_desc"), Integer.valueOf(KeyEvent.VK_MINUS), KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_DOWN_MASK)));
+        actions.add(new ZoomFullAction(bundle.getString("view_3"), null, bundle.getString("view_3_desc"), Integer.valueOf(KeyEvent.VK_1), KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.SHIFT_DOWN_MASK)));
     }
 
     /**
@@ -84,9 +84,10 @@ public class ViewActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ZoomInAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ZoomInAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -129,9 +130,10 @@ public class ViewActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ZoomOutAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ZoomOutAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
@@ -174,9 +176,10 @@ public class ViewActions {
          * @param icon An icon to use to represent the action (ignored if null).
          * @param desc A brief description of the action  (ignored if null).
          * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         * @param accelerator An accelerator key to use as a short cut, added into the contructor (ignored if null).
          */
-        ZoomFullAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
+        ZoomFullAction(String name, ImageIcon icon, String desc, Integer mnemonic, KeyStroke accelerator) {
+            super(name, icon, desc, mnemonic, accelerator);
         }
 
         /**
